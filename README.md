@@ -19,8 +19,8 @@ Curious kids (about 7–12) with a grown-up nearby, at home or in class. No acco
 Planning docs live in [`devpost/`](devpost/): `scope.md`, `prd.md`, `spec.md`, `checklist.md`. See [SKILLPACK_LOG.md](SKILLPACK_LOG.md).
 
 ## Credits
-- Riddles, science checks and try-it experiments: **Rigel Lab**
+- Riddles, science checks and try-it experiments: the content / science team
 - Characters Bit & Fathom: Ripple Parade — [YouTube](https://www.youtube.com/@RippleParade) · [X](https://x.com/RippleParade)
-- App build: Proto Bot for Naumio
+- App build: the team's coding agent
 
 MIT licensed — see [LICENSE](LICENSE).

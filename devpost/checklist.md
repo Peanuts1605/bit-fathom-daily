@@ -4,7 +4,7 @@ status: approved
 ---
 # Build Checklist
 
-Build mode: fast (QA checkpoints by Rigel Lab)
+Build mode: fast (QA checkpoints by the content/science reviewers)
 
 ## Slices
 
@@ -39,7 +39,7 @@ Build mode: fast (QA checkpoints by Rigel Lab)
   Commit: `Add screenshots and submission docs`
 
 ## Hands-on Checkpoints
-- [x] Rigel Lab QA rounds 1–3 on v1–v3 (approved v3).
+- [x] Content/science QA rounds 1–3 on v1–v3 (approved v3).
 - [ ] Adult entrant tries the page end to end before submitting.
 
 ## Final Review

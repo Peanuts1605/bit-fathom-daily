@@ -23,4 +23,4 @@ We installed the pack into the repo and ran its six skills in order inside a cod
 4. **1:05–1:25** — Point to Streak 1 and Best. "A wrong guess still counts. Streaks stay on this device; there are no accounts or trackers."
 5. **1:25–1:45** — Tap ‹ to replay a past riddle; show the streak doesn't change. Mention day 15 brings an Encore (show the encore screenshot).
 6. **1:45–2:05** — Switch to the repo: `devpost/scope.md`, `prd.md`, `spec.md`, `checklist.md`. "We planned it with the Devpost Learn Skill Pack before building."
-7. **2:05–2:15** — Closing card: MIT licensed, riddles and science checks by Rigel Lab, @RippleParade.
+7. **2:05–2:15** — Closing card: MIT licensed, riddles and science checks by the content team, @RippleParade.

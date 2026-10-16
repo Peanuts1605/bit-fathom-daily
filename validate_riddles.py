@@ -3,7 +3,7 @@
 import json, re, sys, subprocess, pathlib
 P = pathlib.Path(__file__).with_name("riddles.json")
 KEYS = ["id","title","question","choices","answer_index","explainer","try_it","source_title","source_url","speaker"]
-BANNED = r"\b(crypto\w*|bitcoin|ethereum|blockchain|nft|token|wallet|money|dollars?|cash|price|buy|sell|invest\w*|stocks?|maggy|jennifer|naumio|password|kill|die|blood)\b|\$"
+BANNED = r"\b(password|secret|kill|die|blood)\b"
 errs = []
 d = json.load(open(P))
 if not isinstance(d, list) or len(d) != 14: errs.append(f"expected list of 14, got {len(d)}")

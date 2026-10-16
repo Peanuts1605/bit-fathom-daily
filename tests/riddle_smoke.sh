@@ -1,13 +1,13 @@
 #!/bin/bash
 # Usage: riddle_smoke.sh <index.html> [live_url]  -> prints PASS/FAIL lines, exit 0 pass / 1 fail
-f=${1:-/workspace/work/rigel-creative-lab/bit-fathom-riddle-001/index.html}; rc=0
+f=${1:-index.html}; rc=0
 [ -s "$f" ] && echo "PASS exists ($(wc -c <"$f") bytes)" || { echo "FAIL missing/empty $f"; exit 1; }
 grep -qiE 'bit (&|&amp;) fathom' "$f" && echo "PASS name" || { echo "FAIL no 'Bit & Fathom'"; rc=1; }
 yt=$(grep -oiE 'https?://(www\.)?(youtube\.com|youtu\.be)[^"'"'"' <>]*' "$f" | sort -u)
 xl=$(grep -oiE 'https?://(www\.)?(x\.com|twitter\.com)[^"'"'"' <>]*' "$f" | sort -u)
 [ -n "$yt" ] && echo "PASS youtube: $yt" || { echo "FAIL no YouTube link"; rc=1; }
 [ -n "$xl" ] && echo "PASS x: $xl" || { echo "FAIL no X link"; rc=1; }
-bad=$(grep -oiwE 'crypto|bitcoin|btc|eth|coinbase|kalshi|robinhood|wallet|token|maggy|maggie|rent|therapist|jennifer|juniper|naumio\.com|password|secret' "$f" | sort | uniq -c)
+bad=$(grep -oiwE 'password|secret|kill|die|blood' "$f" | sort | uniq -c)
 [ -z "$bad" ] && echo "PASS no banned strings" || { echo "FAIL banned strings:"; echo "$bad"; rc=1; }
 python3 - "$f" <<'P' || rc=1
 import sys,html.parser

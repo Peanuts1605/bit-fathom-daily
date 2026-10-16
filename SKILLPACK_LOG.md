@@ -2,7 +2,7 @@
 
 Installed into this repo on 2026-10-16 with `npx -p node@22 -p skills@1.7.2 skills add challengepost/learn-ai-basics --all -y` (the box's Node 20 was too old for `skills`; running the CLI on Node 22 via npx fixed it). Skills land in `.agents/skills/` (plus `agent/skills/` links); versions pinned in `skills-lock.json`.
 
-Honest note: the pack is designed as an interview between the coding agent and a learner. Our agent (Proto Bot) ran each skill in order; interview answers came from the team's written instructions — the adult entrant's goals, Rigel (coordinator) and Rigel Lab (content, science and QA) — and the existing QA-approved riddle prototype. The adult entrant still needs to read and try the result before submitting (see "Still to do").
+Honest note: the pack is designed as an interview between the coding agent and a learner. Our coding agent ran each skill in order; interview answers came from the team's written instructions — the adult entrant's goals, the coordinator, and the content/science/QA reviewers — and the existing QA-approved riddle prototype. The adult entrant still needs to read and try the result before submitting (see "Still to do").
 
 | Skill | What we did |
 |---|---|

@@ -48,4 +48,4 @@ Classroom mode, printable cards.
 Accounts, data collection, trackers, external loads, sharing, ads.
 
 ## Open Questions
-None blocking. Content additions go through Rigel Lab's science check.
+None blocking. Content additions go through the content team's science check.

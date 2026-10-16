@@ -26,7 +26,7 @@ A kid opens one page on a phone, answers today's riddle, sees feedback and a try
 14 riddles, one daily pick by local date, 3–4 choice answers, explanation + try-it + source, streak and best streak in device storage, archive of past riddles, encore loop after day 14. Single static HTML file.
 
 ## Later
-More riddles from Rigel Lab; audio read-aloud; printable classroom cards; installable home-screen app.
+More riddles from the content team; audio read-aloud; printable classroom cards; installable home-screen app.
 
 ## Explicitly Cut
 Accounts, logins, leaderboards, sharing, analytics, ads, cookies, external fonts/scripts, money/crypto of any kind, push notifications, AI chat with kids.
