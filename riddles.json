@@ -1,0 +1,233 @@
+[
+  {
+    "id": "001",
+    "title": "Can a Robot See Red?",
+    "question": "My camera pointed at a strawberry and said \"red!\" Does that mean I see red like you do?",
+    "choices": [
+      "Yes, robots see colors exactly like people",
+      "Kind of: it measures light and turns it into numbers",
+      "No, robots only see black and white"
+    ],
+    "answer_index": 1,
+    "explainer": "A camera sensor is a grid of tiny light buckets with red, green and blue filters, and each one turns light into a number. Bit sees a big red number and small green and blue numbers, and its program says \"that's red!\" Your eyes use cone cells tuned to light too, but your brain turns it into an experience.",
+    "try_it": "In a dark room, with a grown-up, gently cover a phone flashlight with your fingertip. It glows red because red light passes through skin best, which is how smartwatch pulse sensors work!",
+    "source_title": "NASA Science: Visible Light",
+    "source_url": "https://science.nasa.gov/ems/09_visiblelight/",
+    "speaker": "bit"
+  },
+  {
+    "id": "002",
+    "title": "Who Lets Electricity Go Only One Way?",
+    "question": "I'm a tiny glowing gadget with two legs, one long and one short. Plug me in backwards and I stay dark and sulky. Plug me in the right way and I shine without getting very hot like old light bulbs. What am I?",
+    "choices": [
+      "A tiny light bulb with a wire inside",
+      "An LED, a light-emitting diode",
+      "A battery"
+    ],
+    "answer_index": 1,
+    "explainer": "A diode is a one-way street for electricity, so an LED only glows when its long leg goes to plus. Inside, electrons cross between two special layers and give off their extra energy as light. LEDs make light far more efficiently than old bulbs, so much less energy turns into heat.",
+    "try_it": "With a grown-up, look around your home for LEDs: on chargers, TVs and remote controls. Count how many colors you find!",
+    "source_title": "ENERGY STAR: Learn About LED Lighting",
+    "source_url": "https://www.energystar.gov/products/light_bulbs/learn-about-led-lighting",
+    "speaker": "fathom"
+  },
+  {
+    "id": "003",
+    "title": "What Color Is a Sunset on Mars?",
+    "question": "On Earth, sunsets glow orange and red. Our rover friend on Mars sent home a sunset photo. What color was the sky around the setting Sun?",
+    "choices": [
+      "Orange, just like on Earth",
+      "Blue!",
+      "Green, because Mars is an alien planet",
+      "No color at all, Mars has no air"
+    ],
+    "answer_index": 1,
+    "explainer": "Mars has thin air full of super-fine dust that lets blue light through best near the Sun. NASA's Curiosity rover photographed a blue Martian sunset in 2015. Mars is an upside-down planet: dusty pinkish days and blue sunsets!",
+    "try_it": "Look at sunset photos from Earth and NASA's Mars sunset photo side by side, then draw both skies with crayons. Never look straight at the real Sun.",
+    "source_title": "NASA Science: Sunset in Mars' Gale Crater",
+    "source_url": "https://science.nasa.gov/resource/sunset-in-mars-gale-crater/",
+    "speaker": "bit"
+  },
+  {
+    "id": "004",
+    "title": "How Long Does It Take to Text Voyager 1?",
+    "question": "I want to send a quick \"Hi!\" to Voyager 1, the spacecraft launched in 1977 that is now the farthest human-made object from Earth. The message travels as radio waves at the speed of light. How long until Voyager 1 gets it?",
+    "choices": [
+      "About 1 second",
+      "About 1 hour",
+      "About a whole day",
+      "About 1 year"
+    ],
+    "answer_index": 2,
+    "explainer": "Light is super fast, but space is super big. In November 2026, Voyager 1 reaches one light-day from Earth, the distance light travels in 24 hours. So one text plus a reply takes about 2 days!",
+    "try_it": "Play \"slow text\" with a family member: pass notes between rooms, but wait a full minute before each delivery. How hard is it to chat?",
+    "source_title": "NASA Science: Voyager 1 - What Is a Light-Day?",
+    "source_url": "https://science.nasa.gov/mission/voyager/voyager-1/voyager-1-what-is-a-light-day/",
+    "speaker": "bit"
+  },
+  {
+    "id": "005",
+    "title": "The Hair-Raising Comb",
+    "question": "I combed my hair on a dry day, and now my comb can pick up tiny bits of paper with no glue, no magnets and no batteries. What tiny thing jumped onto my comb?",
+    "choices": [
+      "Electrons",
+      "Water drops",
+      "Air bubbles"
+    ],
+    "answer_index": 0,
+    "explainer": "Rubbing some materials together moves tiny negative charges called electrons from one to the other. Your comb now has extra electrons, and that static charge tugs on light things like paper. That little zap from a doorknob is electrons leaving too!",
+    "try_it": "Tear a tissue into tiny pieces on a table. Run a plastic comb through dry hair a few times, then hold it just above the pieces and watch them jump!",
+    "source_title": "Library of Congress: How Does Static Electricity Work?",
+    "source_url": "https://www.loc.gov/everyday-mysteries/categories/physics/item/how-does-static-electricity-work/",
+    "speaker": "bit"
+  },
+  {
+    "id": "006",
+    "title": "The Planet Where a Day Beats a Year",
+    "question": "On one planet, a single day lasts longer than its whole year. You could have a birthday before tomorrow arrives! Which planet is it?",
+    "choices": [
+      "Venus",
+      "Jupiter",
+      "Mars",
+      "Neptune"
+    ],
+    "answer_index": 0,
+    "explainer": "Venus spins super slowly: one day there lasts 243 Earth days. But it travels around the Sun in only 225 Earth days. Slow spinner, speedy traveler!",
+    "try_it": "Put a chair in the middle of a room as the Sun. Walk one slow lap around it while turning your body less than once. Congrats, you're Venus!",
+    "source_title": "NASA Science: Venus Facts",
+    "source_url": "https://science.nasa.gov/venus/venus-facts/",
+    "speaker": "fathom"
+  },
+  {
+    "id": "007",
+    "title": "A Computer's Two Favorite Numbers",
+    "question": "Every photo, song and game in a computer is stored using only two digits, over and over. Which two?",
+    "choices": [
+      "1 and 2",
+      "0 and 9",
+      "10 and 100",
+      "0 and 1"
+    ],
+    "answer_index": 3,
+    "explainer": "Computers use the binary number system, with only two digits: 0 and 1. Each 0 or 1 is called a bit, like a tiny switch that is off or on. String enough bits together and you can store anything!",
+    "try_it": "Make five cards with 1, 2, 4, 8 and 16 dots. Flip cards face-up (1) or face-down (0) to make every number from 0 to 31!",
+    "source_title": "CS Unplugged (University of Canterbury): Binary Numbers",
+    "source_url": "https://www.csunplugged.org/en/topics/binary-numbers/",
+    "speaker": "bit"
+  },
+  {
+    "id": "008",
+    "title": "How Does a Machine Learn?",
+    "question": "Nobody wrote me a rule for every cat in the world, but I can still spot cats in photos. How did I learn?",
+    "choices": [
+      "Someone typed in a rule for every cat",
+      "I guess randomly and get lucky",
+      "I studied tons of examples"
+    ],
+    "answer_index": 2,
+    "explainer": "Machine learning is a kind of AI that learns patterns from lots of examples instead of following only hand-written rules. It works best with thousands or millions of examples. More good examples usually means a smarter guesser!",
+    "try_it": "Show a family member 10 drawings sorted into \"zorbles\" and \"not zorbles\" by a hidden rule, like \"has a circle.\" Can they learn the rule from examples alone?",
+    "source_title": "MIT Sloan: Machine Learning, Explained",
+    "source_url": "https://mitsloan.mit.edu/ideas-made-to-matter/machine-learning-explained",
+    "speaker": "fathom"
+  },
+  {
+    "id": "009",
+    "title": "The First Flying Robot on Another Planet",
+    "question": "I'm a small robot that flew through the thin air of Mars, 72 times! What kind of flying machine am I?",
+    "choices": [
+      "A hot-air balloon",
+      "A paper airplane",
+      "A rocket",
+      "A helicopter"
+    ],
+    "answer_index": 3,
+    "explainer": "NASA's Ingenuity Mars Helicopter first flew on April 19, 2021. It went on to make 72 flights before its last one in January 2024. That was the first powered, controlled flight on another planet!",
+    "try_it": "With a grown-up, cut a paper strip, slit the top into two blades, fold them opposite ways and add a paper clip to the bottom. Drop it from a step and watch it spin like a rotor!",
+    "source_title": "NASA Science: Ingenuity Mars Helicopter",
+    "source_url": "https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/",
+    "speaker": "bit"
+  },
+  {
+    "id": "010",
+    "title": "The Thunder Countdown",
+    "question": "I see a lightning flash, then count 10 seconds before I hear the thunder. About how far away was the lightning?",
+    "choices": [
+      "About 2 miles",
+      "About 10 miles",
+      "Right on top of me"
+    ],
+    "answer_index": 0,
+    "explainer": "Light reaches you almost instantly, but sound takes about 5 seconds to travel a mile. Count the seconds and divide by 5 to get the miles. 10 seconds means about 2 miles away, which is still close enough to stay inside!",
+    "try_it": "Next storm, stay indoors with a grown-up and watch from a window. Count from flash to boom, divide by 5, and track whether the storm is coming closer or moving away.",
+    "source_title": "National Weather Service: Understanding Lightning - Thunder",
+    "source_url": "https://www.weather.gov/safety/lightning-science-thunder",
+    "speaker": "fathom"
+  },
+  {
+    "id": "011",
+    "title": "Why Does a Compass Point North?",
+    "question": "A compass needle always swings to point the same way, even in a dark closet. What's pulling it?",
+    "choices": [
+      "The wind",
+      "The Moon",
+      "Earth's magnetic field"
+    ],
+    "answer_index": 2,
+    "explainer": "Earth acts a lot like a giant bar magnet with a north and a south pole. A compass needle is a tiny magnet, so it lines up with Earth's magnetic field. That's how explorers find their way without GPS!",
+    "try_it": "Open a compass, or a compass app with a grown-up, and slowly turn around in a circle. Then place a fridge magnet near the compass and watch the needle get confused!",
+    "source_title": "NOAA NCEI: Geomagnetism Frequently Asked Questions",
+    "source_url": "https://www.ncei.noaa.gov/products/geomagnetism-frequently-asked-questions",
+    "speaker": "bit"
+  },
+  {
+    "id": "012",
+    "title": "Sixteen Sunrises a Day",
+    "question": "Astronauts on the International Space Station circle Earth so fast they can see lots of sunrises in one day. About how many?",
+    "choices": [
+      "1",
+      "4",
+      "16",
+      "100"
+    ],
+    "answer_index": 2,
+    "explainer": "The space station zooms at about five miles every second. It orbits Earth about every 90 minutes, making 16 orbits in 24 hours. Every orbit brings a new sunrise, so good morning, again and again!",
+    "try_it": "Hold a flashlight still as the Sun and slowly walk a globe or ball around in front of it with a sticker on top. Count each time the sticker comes into the light: that's a sunrise!",
+    "source_title": "NASA: Space Station Facts and Figures",
+    "source_url": "https://www.nasa.gov/international-space-station/space-station-facts-and-figures/",
+    "speaker": "fathom"
+  },
+  {
+    "id": "013",
+    "title": "The Moon's Shy Side",
+    "question": "Every night you look up, the Moon shows you the same face. Why do we never see its other side from Earth?",
+    "choices": [
+      "The Moon doesn't spin at all",
+      "The other side is always dark",
+      "It spins exactly as fast as it circles Earth"
+    ],
+    "answer_index": 2,
+    "explainer": "The Moon spins once for every trip it makes around Earth. Scientists call this synchronous rotation. So the same side always faces us, and the far side stays hidden!",
+    "try_it": "Have a friend stand in the middle as Earth. Walk in a circle around them while always facing them. Notice you spun around once too, and they never saw your back!",
+    "source_title": "NASA Science: Moon Facts",
+    "source_url": "https://science.nasa.gov/moon/facts/",
+    "speaker": "bit"
+  },
+  {
+    "id": "014",
+    "title": "Who Keeps Your Phone on Time?",
+    "question": "Your phone's clock almost never runs fast or slow. Deep down, what does it get its time from?",
+    "choices": [
+      "A tiny sundial inside the phone",
+      "Atomic clocks that count atom wiggles",
+      "A clock tower in a big city",
+      "Guessing"
+    ],
+    "answer_index": 1,
+    "explainer": "Phones and computers get their time from atomic clocks, like the ones run by NIST. Cesium atoms in these clocks react to microwaves that wiggle exactly 9,192,631,770 times per second. Count that many wiggles and you've measured one perfect second!",
+    "try_it": "Start a phone stopwatch and try to stop it at exactly 10 seconds without looking. Try five times and see how close your brain clock gets!",
+    "source_title": "NIST: How Do You Measure a Second?",
+    "source_url": "https://www.nist.gov/how-do-you-measure-it/how-do-you-measure-second",
+    "speaker": "fathom"
+  }
+]

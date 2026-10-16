@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Daily Riddle · Bit & Fathom · Ripple Parade</title>
+<meta name="description" content="Bit & Fathom's daily science riddle: guess, learn why, try it at home.">
+<style>
+:root{--navy:#0b1a33;--navy2:#13284d;--teal:#2ec4b6;--gold:#f2c14e;--bronze:#b5733a;--ink:#eaf4ff;--dim:#a9bbd3;--coral:#d67a6a}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at 50% 0,#1d3a6b,var(--navy) 60%);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:20px;line-height:1.45}
+.card{max-width:640px;width:100%;background:rgba(19,40,77,.85);border:2px solid var(--gold);border-radius:24px;padding:24px;box-shadow:0 10px 40px #0008;align-self:flex-start}
+@media(max-width:420px){body{padding:12px}.card{padding:16px}}
+.tag{color:var(--gold);letter-spacing:.15em;font-size:.75rem;text-transform:uppercase;text-align:center}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:10px 0 4px}
+.nav{width:48px;height:48px;padding:0;border-radius:50%;font-size:1.3rem;flex:none}
+.when{text-align:center;flex:1}.when b{display:block;color:var(--gold);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase}.when span{color:var(--dim);font-size:.85rem}
+.streak{display:flex;justify-content:center;gap:10px;margin:6px 0 2px}
+.pill{background:var(--navy2);border:2px solid var(--bronze);border-radius:999px;padding:6px 14px;font-weight:700;font-size:.9rem;color:var(--ink)}.pill b{color:var(--gold)}
+h1{text-align:center;margin:.35em 0 .2em;font-size:clamp(1.45rem,5.5vw,2.1rem)}
+.chars{display:flex;justify-content:space-around;align-items:flex-end;margin:6px 0}.chars svg{height:96px;width:auto;transition:opacity .3s,transform .3s}
+.chars svg.quiet{opacity:.45;transform:scale(.9)}
+.bubble{background:var(--ink);color:var(--navy);border-radius:14px;padding:10px 14px;font-weight:600;margin:10px 0;line-height:1.4}
+.choices{display:grid;gap:10px;margin-top:14px}
+button{font:inherit;font-weight:700;min-height:48px;padding:12px 14px;border-radius:14px;border:2px solid var(--teal);background:var(--navy2);color:var(--ink);cursor:pointer;transition:.2s;touch-action:manipulation;text-align:left}
+.nav{text-align:center}
+@media(hover:hover) and (pointer:fine){button:hover:not(:disabled){background:var(--teal);color:var(--navy)}.links a:hover{background:var(--ink)}}
+button:active:not(:disabled){transform:scale(.97)}button:disabled{cursor:default}.nav:disabled{opacity:.3}
+button:focus-visible,.links a:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.choices button:active:not(:disabled){transform:scale(.97);background:rgba(242,193,78,.28);border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+.choices button:focus-visible{outline:3px solid var(--gold);outline-offset:2px;box-shadow:0 0 0 2px rgba(242,193,78,.35)}
+.choices button:disabled{opacity:.6}.choices button.right{background:var(--teal);color:var(--navy);border-color:var(--teal);opacity:1}.choices button.right::after{content:'  ✓'}.choices button.wrong::after{content:' · your guess';font-weight:600;color:#e8a090}.choices button.wrong{background:rgba(214,122,106,.22);color:var(--ink);border-color:var(--coral);opacity:1;box-shadow:none}
+.when b .encore,.encore{display:inline-block;margin-left:6px;background:var(--gold);color:var(--navy);font-size:.65rem;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.1em;vertical-align:middle;text-transform:uppercase}
+#reveal{display:none;margin-top:18px;border-top:2px dashed var(--bronze);padding-top:14px}
+#reveal.show{display:block;animation:fade .6s}@keyframes fade{from{opacity:0;transform:translateY(10px)}}
+#kept{color:var(--gold);font-weight:700;margin:.2em 0 .8em}#kept:empty{display:none}#verdict{font-weight:800;font-size:1.2rem;margin:.2em 0}
+.explain{display:flex;gap:10px;align-items:flex-start}.explain .who{flex:none;width:64px}.explain .who svg{width:64px;height:auto}.explain .bubble{flex:1;margin-top:0}
+.tryit{background:var(--navy2);border:2px solid var(--teal);border-radius:16px;padding:14px;margin-top:12px}.tryit h2{font-size:1rem;margin:0 0 .4em;color:var(--teal);letter-spacing:.08em;text-transform:uppercase}.tryit p{margin:0}
+.src{font-size:.85rem;color:var(--dim);margin:10px 0 0}.src a{color:var(--teal);display:flex;align-items:center;min-height:48px;padding:4px 0;line-height:1.3}
+.dots{display:flex;justify-content:center;gap:6px;margin:16px 0 0;flex-wrap:wrap}.dots i{width:9px;height:9px;border-radius:50%;background:#2a4572}.dots i.on{background:var(--gold)}.dots i.done{background:var(--teal)}
+.hint{text-align:center;color:var(--dim);font-size:.8rem;margin:6px 0 0}
+.links{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px}.links a{color:var(--navy);background:var(--gold);min-height:48px;display:inline-flex;align-items:center;padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:700}
+small{opacity:.7;display:block;text-align:center;margin-top:14px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style></head><body><main class="card" id="card">
+<div class="tag">Ripple Parade · Daily Riddle</div>
+<div class="topbar"><button class="nav" id="prev" aria-label="Older riddle">‹</button><div class="when"><b id="label">Today's riddle</b><span id="date"></span></div><button class="nav" id="next" aria-label="Newer riddle">›</button></div>
+<div class="streak" aria-live="polite"><span class="pill">🔥 Streak <b id="streak">0</b></span><span class="pill">⭐ Best <b id="best">0</b></span></div>
+<h1 id="title"></h1>
+<div class="chars" id="chars"><svg width="110" height="130" viewBox="0 0 110 130" role="img" aria-label="Bit, a teal robot"><line x1="55" y1="10" x2="55" y2="28" stroke="#2ec4b6" stroke-width="4"/><circle cx="55" cy="8" r="6" fill="#f2c14e"/><rect x="15" y="28" width="80" height="60" rx="18" fill="#2ec4b6"/><circle cx="38" cy="55" r="9" fill="#0b1a33"/><circle cx="72" cy="55" r="9" fill="#0b1a33"/><path d="M40 72q15 10 30 0" stroke="#0b1a33" stroke-width="4" fill="none"/><rect x="30" y="92" width="50" height="34" rx="10" fill="#1f8f85"/><text x="55" y="115" text-anchor="middle" fill="#eaf4ff" font-weight="700">BIT</text></svg><svg width="120" height="130" viewBox="0 0 120 130" role="img" aria-label="Fathom, a bronze steampunk robot"><rect x="20" y="20" width="80" height="66" rx="8" fill="#b5733a" stroke="#f2c14e" stroke-width="3"/><circle cx="45" cy="52" r="13" fill="#f2c14e"/><circle cx="45" cy="52" r="6" fill="#0b1a33"/><circle cx="78" cy="52" r="10" fill="#f2c14e"/><circle cx="78" cy="52" r="4" fill="#0b1a33"/><rect x="40" y="72" width="40" height="6" rx="3" fill="#0b1a33"/><g fill="#f2c14e"><circle cx="20" cy="20" r="5"/><circle cx="100" cy="20" r="5"/></g><rect x="32" y="92" width="56" height="34" rx="6" fill="#8a5427"/><text x="60" y="115" text-anchor="middle" fill="#eaf4ff" font-weight="700">FATHOM</text></svg></div>
+<div class="bubble">🤖 <b>Bit:</b> <span id="question"></span> <i>Guess first!</i></div>
+<div class="choices" id="choices"></div>
+<section id="reveal" aria-live="polite">
+<p id="verdict"></p><p id="kept"></p>
+<div class="explain"><div class="who" id="who"></div><div class="bubble" id="explainer"></div></div>
+<div class="tryit"><h2>🔬 Try it</h2><p id="tryit"></p></div>
+<p class="src">Fact-checked with: <a id="src" target="_blank" rel="noopener"></a></p>
+</section>
+<div class="dots" id="dots" aria-hidden="true"></div>
+<p class="hint">Swipe or use ‹ › to visit past riddles</p>
+<div class="links"><a href="https://www.youtube.com/@RippleParade" target="_blank" rel="noopener">▶ Watch on YouTube</a><a href="https://x.com/RippleParade" target="_blank" rel="noopener">𝕏 Follow @RippleParade</a></div>
+<small>Bit & Fathom · a kids museum for the internet · No accounts, no tracking — your streak stays on this device.</small>
+</main>
+<script type="application/json" id="inline-riddles">[{"id": "001", "title": "Can a Robot See Red?", "question": "My camera pointed at a strawberry and said \"red!\" Does that mean I see red like you do?", "choices": ["Yes, robots see colors exactly like people", "Kind of: it measures light and turns it into numbers", "No, robots only see black and white"], "answer_index": 1, "explainer": "A camera sensor is a grid of tiny light buckets with red, green and blue filters, and each one turns light into a number. Bit sees a big red number and small green and blue numbers, and its program says \"that's red!\" Your eyes use cone cells tuned to light too, but your brain turns it into an experience.", "try_it": "In a dark room, with a grown-up, gently cover a phone flashlight with your fingertip. It glows red because red light passes through skin best, which is how smartwatch pulse sensors work!", "source_title": "NASA Science: Visible Light", "source_url": "https://science.nasa.gov/ems/09_visiblelight/", "speaker": "bit"}, {"id": "002", "title": "Who Lets Electricity Go Only One Way?", "question": "I'm a tiny glowing gadget with two legs, one long and one short. Plug me in backwards and I stay dark and sulky. Plug me in the right way and I shine without getting very hot like old light bulbs. What am I?", "choices": ["A tiny light bulb with a wire inside", "An LED, a light-emitting diode", "A battery"], "answer_index": 1, "explainer": "A diode is a one-way street for electricity, so an LED only glows when its long leg goes to plus. Inside, electrons cross between two special layers and give off their extra energy as light. LEDs make light far more efficiently than old bulbs, so much less energy turns into heat.", "try_it": "With a grown-up, look around your home for LEDs: on chargers, TVs and remote controls. Count how many colors you find!", "source_title": "ENERGY STAR: Learn About LED Lighting", "source_url": "https://www.energystar.gov/products/light_bulbs/learn-about-led-lighting", "speaker": "fathom"}, {"id": "003", "title": "What Color Is a Sunset on Mars?", "question": "On Earth, sunsets glow orange and red. Our rover friend on Mars sent home a sunset photo. What color was the sky around the setting Sun?", "choices": ["Orange, just like on Earth", "Blue!", "Green, because Mars is an alien planet", "No color at all, Mars has no air"], "answer_index": 1, "explainer": "Mars has thin air full of super-fine dust that lets blue light through best near the Sun. NASA's Curiosity rover photographed a blue Martian sunset in 2015. Mars is an upside-down planet: dusty pinkish days and blue sunsets!", "try_it": "Look at sunset photos from Earth and NASA's Mars sunset photo side by side, then draw both skies with crayons. Never look straight at the real Sun.", "source_title": "NASA Science: Sunset in Mars' Gale Crater", "source_url": "https://science.nasa.gov/resource/sunset-in-mars-gale-crater/", "speaker": "bit"}, {"id": "004", "title": "How Long Does It Take to Text Voyager 1?", "question": "I want to send a quick \"Hi!\" to Voyager 1, the spacecraft launched in 1977 that is now the farthest human-made object from Earth. The message travels as radio waves at the speed of light. How long until Voyager 1 gets it?", "choices": ["About 1 second", "About 1 hour", "About a whole day", "About 1 year"], "answer_index": 2, "explainer": "Light is super fast, but space is super big. In November 2026, Voyager 1 reaches one light-day from Earth, the distance light travels in 24 hours. So one text plus a reply takes about 2 days!", "try_it": "Play \"slow text\" with a family member: pass notes between rooms, but wait a full minute before each delivery. How hard is it to chat?", "source_title": "NASA Science: Voyager 1 - What Is a Light-Day?", "source_url": "https://science.nasa.gov/mission/voyager/voyager-1/voyager-1-what-is-a-light-day/", "speaker": "bit"}, {"id": "005", "title": "The Hair-Raising Comb", "question": "I combed my hair on a dry day, and now my comb can pick up tiny bits of paper with no glue, no magnets and no batteries. What tiny thing jumped onto my comb?", "choices": ["Electrons", "Water drops", "Air bubbles"], "answer_index": 0, "explainer": "Rubbing some materials together moves tiny negative charges called electrons from one to the other. Your comb now has extra electrons, and that static charge tugs on light things like paper. That little zap from a doorknob is electrons leaving too!", "try_it": "Tear a tissue into tiny pieces on a table. Run a plastic comb through dry hair a few times, then hold it just above the pieces and watch them jump!", "source_title": "Library of Congress: How Does Static Electricity Work?", "source_url": "https://www.loc.gov/everyday-mysteries/categories/physics/item/how-does-static-electricity-work/", "speaker": "bit"}, {"id": "006", "title": "The Planet Where a Day Beats a Year", "question": "On one planet, a single day lasts longer than its whole year. You could have a birthday before tomorrow arrives! Which planet is it?", "choices": ["Venus", "Jupiter", "Mars", "Neptune"], "answer_index": 0, "explainer": "Venus spins super slowly: one day there lasts 243 Earth days. But it travels around the Sun in only 225 Earth days. Slow spinner, speedy traveler!", "try_it": "Put a chair in the middle of a room as the Sun. Walk one slow lap around it while turning your body less than once. Congrats, you're Venus!", "source_title": "NASA Science: Venus Facts", "source_url": "https://science.nasa.gov/venus/venus-facts/", "speaker": "fathom"}, {"id": "007", "title": "A Computer's Two Favorite Numbers", "question": "Every photo, song and game in a computer is stored using only two digits, over and over. Which two?", "choices": ["1 and 2", "0 and 9", "10 and 100", "0 and 1"], "answer_index": 3, "explainer": "Computers use the binary number system, with only two digits: 0 and 1. Each 0 or 1 is called a bit, like a tiny switch that is off or on. String enough bits together and you can store anything!", "try_it": "Make five cards with 1, 2, 4, 8 and 16 dots. Flip cards face-up (1) or face-down (0) to make every number from 0 to 31!", "source_title": "CS Unplugged (University of Canterbury): Binary Numbers", "source_url": "https://www.csunplugged.org/en/topics/binary-numbers/", "speaker": "bit"}, {"id": "008", "title": "How Does a Machine Learn?", "question": "Nobody wrote me a rule for every cat in the world, but I can still spot cats in photos. How did I learn?", "choices": ["Someone typed in a rule for every cat", "I guess randomly and get lucky", "I studied tons of examples"], "answer_index": 2, "explainer": "Machine learning is a kind of AI that learns patterns from lots of examples instead of following only hand-written rules. It works best with thousands or millions of examples. More good examples usually means a smarter guesser!", "try_it": "Show a family member 10 drawings sorted into \"zorbles\" and \"not zorbles\" by a hidden rule, like \"has a circle.\" Can they learn the rule from examples alone?", "source_title": "MIT Sloan: Machine Learning, Explained", "source_url": "https://mitsloan.mit.edu/ideas-made-to-matter/machine-learning-explained", "speaker": "fathom"}, {"id": "009", "title": "The First Flying Robot on Another Planet", "question": "I'm a small robot that flew through the thin air of Mars, 72 times! What kind of flying machine am I?", "choices": ["A hot-air balloon", "A paper airplane", "A rocket", "A helicopter"], "answer_index": 3, "explainer": "NASA's Ingenuity Mars Helicopter first flew on April 19, 2021. It went on to make 72 flights before its last one in January 2024. That was the first powered, controlled flight on another planet!", "try_it": "With a grown-up, cut a paper strip, slit the top into two blades, fold them opposite ways and add a paper clip to the bottom. Drop it from a step and watch it spin like a rotor!", "source_title": "NASA Science: Ingenuity Mars Helicopter", "source_url": "https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/", "speaker": "bit"}, {"id": "010", "title": "The Thunder Countdown", "question": "I see a lightning flash, then count 10 seconds before I hear the thunder. About how far away was the lightning?", "choices": ["About 2 miles", "About 10 miles", "Right on top of me"], "answer_index": 0, "explainer": "Light reaches you almost instantly, but sound takes about 5 seconds to travel a mile. Count the seconds and divide by 5 to get the miles. 10 seconds means about 2 miles away, which is still close enough to stay inside!", "try_it": "Next storm, stay indoors with a grown-up and watch from a window. Count from flash to boom, divide by 5, and track whether the storm is coming closer or moving away.", "source_title": "National Weather Service: Understanding Lightning - Thunder", "source_url": "https://www.weather.gov/safety/lightning-science-thunder", "speaker": "fathom"}, {"id": "011", "title": "Why Does a Compass Point North?", "question": "A compass needle always swings to point the same way, even in a dark closet. What's pulling it?", "choices": ["The wind", "The Moon", "Earth's magnetic field"], "answer_index": 2, "explainer": "Earth acts a lot like a giant bar magnet with a north and a south pole. A compass needle is a tiny magnet, so it lines up with Earth's magnetic field. That's how explorers find their way without GPS!", "try_it": "Open a compass, or a compass app with a grown-up, and slowly turn around in a circle. Then place a fridge magnet near the compass and watch the needle get confused!", "source_title": "NOAA NCEI: Geomagnetism Frequently Asked Questions", "source_url": "https://www.ncei.noaa.gov/products/geomagnetism-frequently-asked-questions", "speaker": "bit"}, {"id": "012", "title": "Sixteen Sunrises a Day", "question": "Astronauts on the International Space Station circle Earth so fast they can see lots of sunrises in one day. About how many?", "choices": ["1", "4", "16", "100"], "answer_index": 2, "explainer": "The space station zooms at about five miles every second. It orbits Earth about every 90 minutes, making 16 orbits in 24 hours. Every orbit brings a new sunrise, so good morning, again and again!", "try_it": "Hold a flashlight still as the Sun and slowly walk a globe or ball around in front of it with a sticker on top. Count each time the sticker comes into the light: that's a sunrise!", "source_title": "NASA: Space Station Facts and Figures", "source_url": "https://www.nasa.gov/international-space-station/space-station-facts-and-figures/", "speaker": "fathom"}, {"id": "013", "title": "The Moon's Shy Side", "question": "Every night you look up, the Moon shows you the same face. Why do we never see its other side from Earth?", "choices": ["The Moon doesn't spin at all", "The other side is always dark", "It spins exactly as fast as it circles Earth"], "answer_index": 2, "explainer": "The Moon spins once for every trip it makes around Earth. Scientists call this synchronous rotation. So the same side always faces us, and the far side stays hidden!", "try_it": "Have a friend stand in the middle as Earth. Walk in a circle around them while always facing them. Notice you spun around once too, and they never saw your back!", "source_title": "NASA Science: Moon Facts", "source_url": "https://science.nasa.gov/moon/facts/", "speaker": "bit"}, {"id": "014", "title": "Who Keeps Your Phone on Time?", "question": "Your phone's clock almost never runs fast or slow. Deep down, what does it get its time from?", "choices": ["A tiny sundial inside the phone", "Atomic clocks that count atom wiggles", "A clock tower in a big city", "Guessing"], "answer_index": 1, "explainer": "Phones and computers get their time from atomic clocks, like the ones run by NIST. Cesium atoms in these clocks react to microwaves that wiggle exactly 9,192,631,770 times per second. Count that many wiggles and you've measured one perfect second!", "try_it": "Start a phone stopwatch and try to stop it at exactly 10 seconds without looking. Try five times and see how close your brain clock gets!", "source_title": "NIST: How Do You Measure a Second?", "source_url": "https://www.nist.gov/how-do-you-measure-it/how-do-you-measure-second", "speaker": "fathom"}]</script>
+<script>
+(function(){
+/* Streak rules (kid-friendly):
+ * - Playing today's riddle keeps/builds the streak whether the answer is right or wrong.
+ * - Only one streak change per local calendar day (first play of today).
+ * - Archive (past) riddles never change the streak.
+ * - Skipping a local day resets streak to 0 on the next visit (before you play).
+ * - Dates use the device's local calendar (getFullYear/Month/Date), stable across TZ/DST.
+ */
+var K='bf-riddle-v1',S;try{S=JSON.parse(localStorage.getItem(K))||{}}catch(e){S={}}S.ans=S.ans||{};S.streak=S.streak||0;S.best=S.best||0;
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+var EPOCH=new Date(2026,9,12),$=function(i){return document.getElementById(i)},R=[],today=0,cur=0;
+var svgs=$('chars').querySelectorAll('svg');
+function localMidnight(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate())}
+function dayNum(d){return Math.round((localMidnight(d)-EPOCH)/864e5)}
+function dateOf(n){var d=new Date(EPOCH.getTime());d.setDate(EPOCH.getDate()+n);return d}
+function key(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+function fmt(d){return d.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}
+function rid(n){return R[((n%R.length)+R.length)%R.length]}
+function isEncore(n){return n>=R.length}
+function todayKey(){return key(dateOf(today))}
+function yesterdayKey(){return key(dateOf(today-1))}
+/** On visit: if last play was neither today nor yesterday (local), reset streak to 0. */
+function applySkipReset(){
+  if(!S.last)return;
+  var d=todayKey(),y=yesterdayKey();
+  if(S.last!==d&&S.last!==y){S.streak=0;save()}
+}
+function start(data){
+  R=(data.riddles||data).slice();
+  today=Math.max(0,dayNum(new Date()));
+  cur=today;
+  applySkipReset();
+  render();
+}
+function render(){
+  var r=rid(cur),d=dateOf(cur),a=S.ans[key(d)];
+  var whenB=$('label');
+  whenB.textContent='';
+  whenB.appendChild(document.createTextNode(cur===today?"Today's riddle":'Riddle #'+r.id));
+  if(isEncore(cur)){whenB.appendChild(document.createTextNode(' '));var en=document.createElement('span');en.className='encore';en.textContent='Encore';whenB.appendChild(en)}
+  $('date').textContent=fmt(d);
+  $('prev').disabled=cur<=0||today-cur>=R.length-1;$('next').disabled=cur>=today;
+  $('title').textContent=r.title;$('question').textContent=r.question;
+  $('streak').textContent=S.streak;$('best').textContent=S.best;
+  var c=$('choices');c.innerHTML='';
+  r.choices.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.textContent=String.fromCharCode(65+i)+') '+t;b.onclick=function(){guess(i)};c.appendChild(b)});
+  var dots=$('dots');dots.innerHTML='';var n=Math.min(R.length,today+1);for(var j=today-n+1;j<=today;j++){var i=document.createElement('i');if(j===cur)i.className='on';else if(S.ans[key(dateOf(j))]!=null)i.className='done';dots.appendChild(i)}
+  svgs[0].classList.remove('quiet');svgs[1].classList.remove('quiet');
+  $('reveal').classList.remove('show');if(a!=null)reveal(a,false);
+}
+function guess(i){
+  var d=key(dateOf(cur));
+  if(S.ans[d]!=null)return;
+  S.ans[d]=i;
+  // Archive never changes streak. Today: play counts win or lose; one increment/day.
+  if(cur===today){
+    var y=yesterdayKey();
+    if(S.last===d){/* already counted today */}
+    else if(S.last===y){S.streak=S.streak+1}
+    else{S.streak=1}
+    S.last=d;
+    if(S.streak>S.best)S.best=S.streak;
+    $('streak').textContent=S.streak;$('best').textContent=S.best;
+  }
+  save();reveal(i,true);render_dots();
+}
+function render_dots(){var ds=$('dots').children,n=ds.length;for(var k=0;k<n;k++){var j=today-n+1+k;if(j!==cur&&S.ans[key(dateOf(j))]!=null)ds[k].className='done'}}
+function reveal(i,scroll){var r=rid(cur),ok=i===r.answer_index,bs=$('choices').children;
+  for(var k=0;k<bs.length;k++){bs[k].disabled=true;if(k===r.answer_index)bs[k].classList.add('right');else if(k===i)bs[k].classList.add('wrong')}
+  var L=String.fromCharCode(65+r.answer_index);
+  $('verdict').textContent=(ok?'Yes! You fathomed it! 🎉':'Nice try — robots learn from mistakes too!')+' The answer is '+L+'.';
+  $('kept').textContent=cur===today?'🔥 Streak: '+S.streak+(S.streak===1?' day':' days')+'. A new riddle arrives tomorrow!':'';
+  var f=r.speaker!=='bit';$('who').innerHTML='';$('who').appendChild(svgs[f?1:0].cloneNode(true));
+  svgs[f?0:1].classList.add('quiet');
+  $('explainer').innerHTML='';var b=document.createElement('b');b.textContent=(f?'⚙️ Fathom: ':'🤖 Bit: ');$('explainer').appendChild(b);$('explainer').appendChild(document.createTextNode((f?"Let's fathom it! ":'')+r.explainer));
+  $('tryit').textContent=r.try_it||'';$('tryit').parentNode.hidden=!r.try_it;$('src').textContent=r.source_title||'';if(r.source_url)$('src').href=r.source_url;else $('src').removeAttribute('href');$('src').parentNode.hidden=!r.source_title;
+  var s=$('reveal');s.classList.add('show');
+  if(scroll){var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;s.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'})}}
+function go(dl){var n=cur+dl;if(n>today||n<0||today-n>R.length-1)return;cur=n;render();window.scrollTo(0,0)}
+$('prev').onclick=function(){go(-1)};$('next').onclick=function(){go(1)};
+document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1)});
+var sx=null,sy=0;$('card').addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+$('card').addEventListener('touchend',function(e){if(sx==null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>60&&Math.abs(dx)>1.5*Math.abs(dy))go(dx<0?1:-1)},{passive:true});
+// Test hooks (read-only helpers for headless checks)
+window.__BF={
+  getState:function(){return{streak:S.streak,best:S.best,last:S.last,ans:Object.assign({},S.ans),today:today,cur:cur}},
+  dayNum:dayNum,key:key,dateOf:dateOf,rid:function(n){return rid(n)},isEncore:isEncore,
+  applySkipReset:applySkipReset,todayKey:todayKey,yesterdayKey:yesterdayKey,
+  setState:function(o){if(o.streak!=null)S.streak=o.streak;if(o.best!=null)S.best=o.best;if('last' in o)S.last=o.last;if(o.ans)S.ans=o.ans;save()},
+  remount:function(){applySkipReset();cur=today;render()}
+};
+var inl=JSON.parse($('inline-riddles').textContent);
+if(location.protocol==='file:'||!window.fetch)start(inl);else fetch('riddles.json',{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(start,function(){start(inl)});
+})();
+</script></body></html>

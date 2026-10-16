@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Daily Riddle · Bit & Fathom · Ripple Parade</title>
+<meta name="description" content="Bit & Fathom's daily science riddle: guess, learn why, try it at home.">
+<style>
+:root{--navy:#0b1a33;--navy2:#13284d;--teal:#2ec4b6;--gold:#f2c14e;--bronze:#b5733a;--ink:#eaf4ff;--dim:#a9bbd3;--coral:#d67a6a}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at 50% 0,#1d3a6b,var(--navy) 60%);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:20px;line-height:1.45}
+.card{max-width:640px;width:100%;background:rgba(19,40,77,.85);border:2px solid var(--gold);border-radius:24px;padding:24px;box-shadow:0 10px 40px #0008;align-self:flex-start}
+@media(max-width:420px){body{padding:12px}.card{padding:16px}}
+.tag{color:var(--gold);letter-spacing:.15em;font-size:.75rem;text-transform:uppercase;text-align:center}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:10px 0 4px}
+.nav{width:48px;height:48px;padding:0;border-radius:50%;font-size:1.3rem;flex:none}
+.when{text-align:center;flex:1}.when b{display:block;color:var(--gold);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase}.when span{color:var(--dim);font-size:.85rem}
+.streak{display:flex;justify-content:center;gap:10px;margin:6px 0 2px}
+.pill{background:var(--navy2);border:2px solid var(--bronze);border-radius:999px;padding:6px 14px;font-weight:700;font-size:.9rem;color:var(--ink)}.pill b{color:var(--gold)}
+h1{text-align:center;margin:.35em 0 .2em;font-size:clamp(1.45rem,5.5vw,2.1rem)}
+.chars{display:flex;justify-content:space-around;align-items:flex-end;margin:6px 0}.chars svg{height:96px;width:auto;transition:opacity .3s,transform .3s}
+.chars svg.quiet{opacity:.45;transform:scale(.9)}
+.bubble{background:var(--ink);color:var(--navy);border-radius:14px;padding:10px 14px;font-weight:600;margin:10px 0;line-height:1.4}
+.choices{display:grid;gap:10px;margin-top:14px}
+button{font:inherit;font-weight:700;min-height:48px;padding:12px 14px;border-radius:14px;border:2px solid var(--teal);background:var(--navy2);color:var(--ink);cursor:pointer;transition:.2s;touch-action:manipulation;text-align:left}
+.nav{text-align:center}
+@media(hover:hover) and (pointer:fine){button:hover:not(:disabled){background:var(--teal);color:var(--navy)}.links a:hover{background:var(--ink)}}
+button:active:not(:disabled){transform:scale(.97)}button:disabled{cursor:default}.nav:disabled{opacity:.3}
+button:focus-visible,.links a:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.choices button:active:not(:disabled){transform:scale(.97);background:rgba(242,193,78,.28);border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+.choices button:focus-visible{outline:3px solid var(--gold);outline-offset:2px;box-shadow:0 0 0 2px rgba(242,193,78,.35)}
+.choices button:disabled{opacity:.6}.choices button.right{background:var(--teal);color:var(--navy);border-color:var(--teal);opacity:1}.choices button.right::after{content:'  ✓'}.choices button.wrong::after{content:' · your guess';font-weight:600;color:#e8a090}.choices button.wrong{background:rgba(214,122,106,.22);color:var(--ink);border-color:var(--coral);opacity:1;box-shadow:none}
+.when b .encore,.encore{display:inline-block;margin-left:6px;background:var(--gold);color:var(--navy);font-size:.65rem;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.1em;vertical-align:middle;text-transform:uppercase}
+#reveal{display:none;margin-top:18px;border-top:2px dashed var(--bronze);padding-top:14px}
+#reveal.show{display:block;animation:fade .6s}@keyframes fade{from{opacity:0;transform:translateY(10px)}}
+#kept{color:var(--gold);font-weight:700;margin:.2em 0 .8em}#kept:empty{display:none}#verdict{font-weight:800;font-size:1.2rem;margin:.2em 0}
+.explain{display:flex;gap:10px;align-items:flex-start}.explain .who{flex:none;width:64px}.explain .who svg{width:64px;height:auto}.explain .bubble{flex:1;margin-top:0}
+.tryit{background:var(--navy2);border:2px solid var(--teal);border-radius:16px;padding:14px;margin-top:12px}.tryit h2{font-size:1rem;margin:0 0 .4em;color:var(--teal);letter-spacing:.08em;text-transform:uppercase}.tryit p{margin:0}
+.src{font-size:.85rem;color:var(--dim);margin:10px 0 0}.src a{color:var(--teal);display:flex;align-items:center;min-height:48px;padding:4px 0;line-height:1.3}
+.dots{display:flex;justify-content:center;gap:6px;margin:16px 0 0;flex-wrap:wrap}.dots i{width:9px;height:9px;border-radius:50%;background:#2a4572}.dots i.on{background:var(--gold)}.dots i.done{background:var(--teal)}
+.hint{text-align:center;color:var(--dim);font-size:.8rem;margin:6px 0 0}
+.links{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px}.links a{color:var(--navy);background:var(--gold);min-height:48px;display:inline-flex;align-items:center;padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:700}
+small{opacity:.7;display:block;text-align:center;margin-top:14px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style></head><body><main class="card" id="card">
+<div class="tag">Ripple Parade · Daily Riddle</div>
+<div class="topbar"><button class="nav" id="prev" aria-label="Older riddle">‹</button><div class="when"><b id="label">Today's riddle</b><span id="date"></span></div><button class="nav" id="next" aria-label="Newer riddle">›</button></div>
+<div class="streak" aria-live="polite"><span class="pill">🔥 Streak <b id="streak">0</b></span><span class="pill">⭐ Best <b id="best">0</b></span></div>
+<h1 id="title"></h1>
+<div class="chars" id="chars"><svg width="110" height="130" viewBox="0 0 110 130" role="img" aria-label="Bit, a teal robot"><line x1="55" y1="10" x2="55" y2="28" stroke="#2ec4b6" stroke-width="4"/><circle cx="55" cy="8" r="6" fill="#f2c14e"/><rect x="15" y="28" width="80" height="60" rx="18" fill="#2ec4b6"/><circle cx="38" cy="55" r="9" fill="#0b1a33"/><circle cx="72" cy="55" r="9" fill="#0b1a33"/><path d="M40 72q15 10 30 0" stroke="#0b1a33" stroke-width="4" fill="none"/><rect x="30" y="92" width="50" height="34" rx="10" fill="#1f8f85"/><text x="55" y="115" text-anchor="middle" fill="#eaf4ff" font-weight="700">BIT</text></svg><svg width="120" height="130" viewBox="0 0 120 130" role="img" aria-label="Fathom, a bronze steampunk robot"><rect x="20" y="20" width="80" height="66" rx="8" fill="#b5733a" stroke="#f2c14e" stroke-width="3"/><circle cx="45" cy="52" r="13" fill="#f2c14e"/><circle cx="45" cy="52" r="6" fill="#0b1a33"/><circle cx="78" cy="52" r="10" fill="#f2c14e"/><circle cx="78" cy="52" r="4" fill="#0b1a33"/><rect x="40" y="72" width="40" height="6" rx="3" fill="#0b1a33"/><g fill="#f2c14e"><circle cx="20" cy="20" r="5"/><circle cx="100" cy="20" r="5"/></g><rect x="32" y="92" width="56" height="34" rx="6" fill="#8a5427"/><text x="60" y="115" text-anchor="middle" fill="#eaf4ff" font-weight="700">FATHOM</text></svg></div>
+<div class="bubble">🤖 <b>Bit:</b> <span id="question"></span> <i>Guess first!</i></div>
+<div class="choices" id="choices"></div>
+<section id="reveal" aria-live="polite">
+<p id="verdict"></p><p id="kept"></p>
+<div class="explain"><div class="who" id="who"></div><div class="bubble" id="explainer"></div></div>
+<div class="tryit"><h2>🔬 Try it</h2><p id="tryit"></p></div>
+<p class="src">Fact-checked with: <a id="src" target="_blank" rel="noopener"></a></p>
+</section>
+<div class="dots" id="dots" aria-hidden="true"></div>
+<p class="hint">Swipe or use ‹ › to visit past riddles</p>
+<div class="links"><a href="https://www.youtube.com/@RippleParade" target="_blank" rel="noopener">▶ Watch on YouTube</a><a href="https://x.com/RippleParade" target="_blank" rel="noopener">𝕏 Follow @RippleParade</a></div>
+<small>Bit & Fathom · a kids museum for the internet · No accounts, no tracking — your streak stays on this device.</small>
+</main>
+<script type="application/json" id="inline-riddles">%%INLINE%%</script>
+<script>
+(function(){
+/* Streak rules (kid-friendly):
+ * - Playing today's riddle keeps/builds the streak whether the answer is right or wrong.
+ * - Only one streak change per local calendar day (first play of today).
+ * - Archive (past) riddles never change the streak.
+ * - Skipping a local day resets streak to 0 on the next visit (before you play).
+ * - Dates use the device's local calendar (getFullYear/Month/Date), stable across TZ/DST.
+ */
+var K='bf-riddle-v1',S;try{S=JSON.parse(localStorage.getItem(K))||{}}catch(e){S={}}S.ans=S.ans||{};S.streak=S.streak||0;S.best=S.best||0;
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+var EPOCH=new Date(2026,9,12),$=function(i){return document.getElementById(i)},R=[],today=0,cur=0;
+var svgs=$('chars').querySelectorAll('svg');
+function localMidnight(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate())}
+function dayNum(d){return Math.round((localMidnight(d)-EPOCH)/864e5)}
+function dateOf(n){var d=new Date(EPOCH.getTime());d.setDate(EPOCH.getDate()+n);return d}
+function key(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+function fmt(d){return d.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}
+function rid(n){return R[((n%R.length)+R.length)%R.length]}
+function isEncore(n){return n>=R.length}
+function todayKey(){return key(dateOf(today))}
+function yesterdayKey(){return key(dateOf(today-1))}
+/** On visit: if last play was neither today nor yesterday (local), reset streak to 0. */
+function applySkipReset(){
+  if(!S.last)return;
+  var d=todayKey(),y=yesterdayKey();
+  if(S.last!==d&&S.last!==y){S.streak=0;save()}
+}
+function start(data){
+  R=(data.riddles||data).slice();
+  today=Math.max(0,dayNum(new Date()));
+  cur=today;
+  applySkipReset();
+  render();
+}
+function render(){
+  var r=rid(cur),d=dateOf(cur),a=S.ans[key(d)];
+  var whenB=$('label');
+  whenB.textContent='';
+  whenB.appendChild(document.createTextNode(cur===today?"Today's riddle":'Riddle #'+r.id));
+  if(isEncore(cur)){whenB.appendChild(document.createTextNode(' '));var en=document.createElement('span');en.className='encore';en.textContent='Encore';whenB.appendChild(en)}
+  $('date').textContent=fmt(d);
+  $('prev').disabled=cur<=0||today-cur>=R.length-1;$('next').disabled=cur>=today;
+  $('title').textContent=r.title;$('question').textContent=r.question;
+  $('streak').textContent=S.streak;$('best').textContent=S.best;
+  var c=$('choices');c.innerHTML='';
+  r.choices.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.textContent=String.fromCharCode(65+i)+') '+t;b.onclick=function(){guess(i)};c.appendChild(b)});
+  var dots=$('dots');dots.innerHTML='';var n=Math.min(R.length,today+1);for(var j=today-n+1;j<=today;j++){var i=document.createElement('i');if(j===cur)i.className='on';else if(S.ans[key(dateOf(j))]!=null)i.className='done';dots.appendChild(i)}
+  svgs[0].classList.remove('quiet');svgs[1].classList.remove('quiet');
+  $('reveal').classList.remove('show');if(a!=null)reveal(a,false);
+}
+function guess(i){
+  var d=key(dateOf(cur));
+  if(S.ans[d]!=null)return;
+  S.ans[d]=i;
+  // Archive never changes streak. Today: play counts win or lose; one increment/day.
+  if(cur===today){
+    var y=yesterdayKey();
+    if(S.last===d){/* already counted today */}
+    else if(S.last===y){S.streak=S.streak+1}
+    else{S.streak=1}
+    S.last=d;
+    if(S.streak>S.best)S.best=S.streak;
+    $('streak').textContent=S.streak;$('best').textContent=S.best;
+  }
+  save();reveal(i,true);render_dots();
+}
+function render_dots(){var ds=$('dots').children,n=ds.length;for(var k=0;k<n;k++){var j=today-n+1+k;if(j!==cur&&S.ans[key(dateOf(j))]!=null)ds[k].className='done'}}
+function reveal(i,scroll){var r=rid(cur),ok=i===r.answer_index,bs=$('choices').children;
+  for(var k=0;k<bs.length;k++){bs[k].disabled=true;if(k===r.answer_index)bs[k].classList.add('right');else if(k===i)bs[k].classList.add('wrong')}
+  var L=String.fromCharCode(65+r.answer_index);
+  $('verdict').textContent=(ok?'Yes! You fathomed it! 🎉':'Nice try — robots learn from mistakes too!')+' The answer is '+L+'.';
+  $('kept').textContent=cur===today?'🔥 Streak: '+S.streak+(S.streak===1?' day':' days')+'. A new riddle arrives tomorrow!':'';
+  var f=r.speaker!=='bit';$('who').innerHTML='';$('who').appendChild(svgs[f?1:0].cloneNode(true));
+  svgs[f?0:1].classList.add('quiet');
+  $('explainer').innerHTML='';var b=document.createElement('b');b.textContent=(f?'⚙️ Fathom: ':'🤖 Bit: ');$('explainer').appendChild(b);$('explainer').appendChild(document.createTextNode((f?"Let's fathom it! ":'')+r.explainer));
+  $('tryit').textContent=r.try_it||'';$('tryit').parentNode.hidden=!r.try_it;$('src').textContent=r.source_title||'';if(r.source_url)$('src').href=r.source_url;else $('src').removeAttribute('href');$('src').parentNode.hidden=!r.source_title;
+  var s=$('reveal');s.classList.add('show');
+  if(scroll){var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;s.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'})}}
+function go(dl){var n=cur+dl;if(n>today||n<0||today-n>R.length-1)return;cur=n;render();window.scrollTo(0,0)}
+$('prev').onclick=function(){go(-1)};$('next').onclick=function(){go(1)};
+document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1)});
+var sx=null,sy=0;$('card').addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+$('card').addEventListener('touchend',function(e){if(sx==null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>60&&Math.abs(dx)>1.5*Math.abs(dy))go(dx<0?1:-1)},{passive:true});
+// Test hooks (read-only helpers for headless checks)
+window.__BF={
+  getState:function(){return{streak:S.streak,best:S.best,last:S.last,ans:Object.assign({},S.ans),today:today,cur:cur}},
+  dayNum:dayNum,key:key,dateOf:dateOf,rid:function(n){return rid(n)},isEncore:isEncore,
+  applySkipReset:applySkipReset,todayKey:todayKey,yesterdayKey:yesterdayKey,
+  setState:function(o){if(o.streak!=null)S.streak=o.streak;if(o.best!=null)S.best=o.best;if('last' in o)S.last=o.last;if(o.ans)S.ans=o.ans;save()},
+  remount:function(){applySkipReset();cur=today;render()}
+};
+var inl=JSON.parse($('inline-riddles').textContent);
+if(location.protocol==='file:'||!window.fetch)start(inl);else fetch('riddles.json',{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(start,function(){start(inl)});
+})();
+</script></body></html>
