@@ -63,7 +63,8 @@ with sync_playwright() as p:
     check('normal storage: notice hidden',not t.locator('#noStore').is_visible())
     # 5. share + stats
     play_today(t); txt=t.evaluate('()=>window.__BF.shareText()')
-    check('share text emoji grid, no answer text','🟩' in txt and 'Riddle #005' in txt and 'Electrons' not in txt,txt.replace('\n',' | '))
+    check('share text single symbol, no answer/position','🟩 Got it!' in txt and 'Riddle #005' in txt and 'Electrons' not in txt and '⬜' not in txt and txt.count('🟩')+txt.count('🟥')==1 and 'Streak' in txt,txt.replace('\n',' | '))
+    check('share link uses location.origin','workers.dev' not in txt or t.evaluate('()=>location.origin') in txt,txt.replace('\n',' | '))
     check('stats played 1 / 100%',t.locator('#stPlayed').inner_text()=='1' and t.locator('#stPct').inner_text()=='100%')
     check('how-to-play present',t.locator('#howto summary').count()==1)
     fs=t.evaluate("()=>[getComputedStyle(document.querySelector('#choices button')).fontSize,getComputedStyle(document.querySelector('#question')).fontSize,getComputedStyle(document.querySelector('.hint')).fontSize,getComputedStyle(document.querySelector('small')).opacity]")

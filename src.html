@@ -40,7 +40,7 @@ button:focus-visible,.links a:focus-visible,a:focus-visible{outline:3px solid va
 small{display:block;text-align:center;margin-top:14px;font-size:16px;color:var(--ink)}
 .notice{background:#4a2a12;border:2px solid var(--gold);border-radius:14px;padding:12px 14px;margin:10px 0;font-size:18px}.notice[hidden]{display:none}
 .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}.row button{text-align:center;font-size:20px}
-#shareMsg{text-align:center;color:var(--gold);font-weight:700;font-size:18px;min-height:1.4em;margin:6px 0 0}
+#shareMsg{text-align:center;color:var(--gold);font-weight:700;font-size:18px;min-height:1.4em;margin:6px 0 0;white-space:pre-line}
 .panel{background:var(--navy2);border:2px solid var(--bronze);border-radius:16px;padding:14px;margin-top:14px;font-size:18px}.panel h2{font-size:20px;margin:0 0 .4em;color:var(--gold)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}.stats b{display:block;font-size:26px;color:var(--gold)}.stats span{font-size:16px}
 details.panel summary{cursor:pointer;font-weight:800;color:var(--gold);min-height:44px;display:flex;align-items:center;font-size:20px}details.panel ol{margin:.4em 0 0;padding-left:1.3em}
@@ -64,7 +64,7 @@ details.panel summary{cursor:pointer;font-weight:800;color:var(--gold);min-heigh
 <p id="shareMsg" aria-live="polite"></p>
 </section>
 <section class="panel" aria-labelledby="statsH"><h2 id="statsH">📊 Your stats</h2><div class="stats"><div><b id="stPlayed">0</b><span>Played</span></div><div><b id="stPct">0%</b><span>Right</span></div><div><b id="stStreak">0</b><span>Streak</span></div><div><b id="stBest">0</b><span>Best</span></div></div></section>
-<details class="panel" id="howto"><summary>❓ How to play</summary><ol><li>Read Bit's riddle and <b>guess first</b>.</li><li>Tap an answer. Right or wrong, you learn <b>why</b>.</li><li>Try the experiment at home 🔬.</li><li>Play <b>today's</b> riddle every day to grow your 🔥 streak. Wrong guesses still count!</li><li>Use ‹ › to replay past riddles (they don't change your streak).</li><li>Tap 📤 Share to send your result. It shows only emoji, never the answer.</li></ol></details>
+<details class="panel" id="howto"><summary>❓ How to play</summary><ol><li>Read Bit's riddle and <b>guess first</b>.</li><li>Tap an answer. Right or wrong, you learn <b>why</b>.</li><li>Try the experiment at home 🔬.</li><li>Play <b>today's</b> riddle every day to grow your 🔥 streak. Wrong guesses still count!</li><li>Use ‹ › to replay past riddles (they don't change your streak).</li><li>Tap 📤 Share to send your result. It shows one 🟩 or 🟥, your riddle number and streak, never the answer.</li></ol></details>
 <div class="dots" id="dots" aria-hidden="true"></div>
 <p class="hint">Swipe or use ‹ › to visit past riddles</p>
 <div class="links"><a href="https://www.youtube.com/@RippleParade" target="_blank" rel="noopener">▶ Watch on YouTube</a><a href="https://x.com/RippleParade" target="_blank" rel="noopener">𝕏 Follow @RippleParade</a></div>
@@ -156,9 +156,8 @@ function guess(i){
 }
 function stats(){var p=0,w=0;for(var k in S.ans){var n=kday(k);if(n<0||n>today)continue;p++;if(S.ans[k]===rid(n).answer_index)w++}
   $('stPlayed').textContent=p;$('stPct').textContent=(p?Math.round(100*w/p):0)+'%';$('stStreak').textContent=S.streak;$('stBest').textContent=S.best}
-function shareText(){var r=rid(cur),a=S.ans[key(dateOf(cur))],ok=a===r.answer_index,g='';
-  for(var k=0;k<r.choices.length;k++)g+=(k===a?(ok?'🟩':'🟥'):'⬜');
-  return 'Bit & Fathom Daily Riddle #'+r.id+'\n'+g+' '+(ok?'Got it!':'Learned something!')+(cur===today?'\n🔥 Streak '+S.streak:'')+'\nhttps://bit-fathom-daily-preview.gigantic-stranger.workers.dev/'}
+function shareText(){var r=rid(cur),a=S.ans[key(dateOf(cur))],ok=a===r.answer_index;
+  return 'Bit & Fathom Daily Riddle #'+r.id+'\n'+(ok?'🟩 Got it!':'🟥 Learned something!')+(cur===today?'\n🔥 Streak '+S.streak:'')+'\n'+location.origin+'/'}
 $('share').onclick=function(){var t=shareText(),m=$('shareMsg');
   function copied(){m.textContent='✅ Copied! Paste it to share.'}
   function fallback(){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(copied,function(){m.textContent=t});else m.textContent=t}
