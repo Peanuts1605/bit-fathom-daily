@@ -18,9 +18,9 @@ We installed the pack into the repo and ran its six skills in order inside a cod
 
 ## Video script (about 2 minutes)
 1. **0:00–0:10** — Title card, then the live page on a phone. "Bit & Fathom Daily Riddle: one science riddle a day for curious kids."
-2. **0:10–0:35** — Read today's riddle (The Hair-Raising Comb). Tap B, Water drops. Show the coral "your guess", the teal ✓ on Electrons and "Nice try — robots learn from mistakes too!"
-3. **0:35–0:55** — Scroll: Bit's explanation, the Try It (tissue + comb), the fact-check link. "Every answer ends in something to try at home, and a real source."
-4. **0:55–1:15** — Streak, Best and Stats. Tap 📤 Share: an emoji-only result, no spoilers. "A wrong guess still counts. Everything stays on this device; no accounts or trackers."
+2. **0:10–0:35** — Read today's actual riddle and choices (they change with the local date). Tap one of its incorrect answers. Show the coral "your guess", the teal ✓ on the correct choice and "Nice try — robots learn from mistakes too!"
+3. **0:35–0:55** — Scroll: the robot's explanation, today's Try It and the fact-check link. "Every answer ends in something to try at home, and a real source."
+4. **0:55–1:15** — Streak, Best and Stats. Tap 📤 Share: a shareable result with emoji, no answer spoilers. "A wrong guess still counts. Everything stays on this device; no accounts or trackers."
 5. **1:15–1:35** — Tap ‹ to replay a past riddle; the streak doesn't change. Open ❓ How to play.
 6. **1:35–1:52** — The repo: `devpost/scope.md`, `prd.md`, `spec.md`, `checklist.md`. "We planned it with the Devpost Learn Skill Pack before building."
 7. **1:52–2:00** — Closing card: MIT licensed, @RippleParade.
