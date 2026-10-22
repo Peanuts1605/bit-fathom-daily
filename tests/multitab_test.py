@@ -39,9 +39,11 @@ with sync_playwright() as p:
     check('merge-on-save: newer disk streak not overwritten',raw['streak']==5 and '2026-10-16' in raw['ans'],raw)
     c.close()
     # 2. Next day after the multi-tab scenario: streak must not be 0 before playing, and becomes 6 after
-    c=b.new_context(); c.add_init_script(fake(2026,10,17)); t=c.new_page(); t.goto(URL); t.wait_for_function(READY)
-    t.evaluate("()=>{localStorage.setItem('bf-riddle-v1',JSON.stringify({streak:5,best:5,last:'2026-10-16',ans:{'2026-10-16':0,'2026-10-14':0}}))}")
-    t.reload(); t.wait_for_function(READY)
+    # Seed saved progress before the page's own scripts run (an init script, once per tab). Setting it from the
+    # page and then reloading raced Chrome's storage flush (~3 in 8 runs saw a blank save after the reload).
+    c=b.new_context(); c.add_init_script(fake(2026,10,17))
+    c.add_init_script("if(!sessionStorage.getItem('seeded')){sessionStorage.setItem('seeded','1');localStorage.setItem('bf-riddle-v1',JSON.stringify({streak:5,best:5,last:'2026-10-16',ans:{'2026-10-16':0,'2026-10-14':0}}))}")
+    t=c.new_page(); t.goto(URL); t.wait_for_function(READY)
     check('next day: streak still 5 before play',st(t)['streak']==5,st(t)); play_today(t,False)
     check('next day: play -> 6',st(t)['streak']==6,st(t)); c.close()
     # 3. Tab left open across midnight rolls over
