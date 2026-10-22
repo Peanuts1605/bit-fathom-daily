@@ -91,7 +91,8 @@ function localMidnight(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate
 function dayNum(d){return Math.round((localMidnight(d)-EPOCH)/864e5)}
 function dateOf(n){var d=new Date(EPOCH.getTime());d.setDate(EPOCH.getDate()+n);return d}
 function key(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
-function kday(k){if(!k)return -1e9;var p=String(k).split('-');return dayNum(new Date(+p[0],p[1]-1,+p[2]))}
+// Lens F3 Low (2026-10-22): an unreadable or junk saved date counts as very old (-1e9), so the streak resets.
+function kday(k){if(!k)return -1e9;var p=String(k).split('-'),n=dayNum(new Date(+p[0],p[1]-1,+p[2]));return isNaN(n)?-1e9:n}
 function fmt(d){return d.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}
 function rid(n){return R[((n%R.length)+R.length)%R.length]}
 function isEncore(n){return n>=R.length}
@@ -144,9 +145,9 @@ function guess(i){
   S.ans[d]=i;
   // Archive never changes streak. Today: play counts win or lose; one increment/day.
   if(cur===today){
-    var y=yesterdayKey();
-    if(S.last===d){/* already counted today */}
-    else if(S.last===y){S.streak=S.streak+1}
+    var l=kday(S.last); // Lens F3: compare day numbers, so padded '2027-03-12' == unpadded '2027-3-12'
+    if(l===today){/* already counted today */}
+    else if(l===today-1){S.streak=S.streak+1}
     else{S.streak=1}
     S.last=d;
     if(S.streak>S.best)S.best=S.streak;
