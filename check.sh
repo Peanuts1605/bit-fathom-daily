@@ -35,6 +35,7 @@ step smoke bash tests/riddle_smoke.sh index.html ${1:-}
 step streak-date "$PYTHON" tests/streak_date_test.py
 step streak-padded "$PYTHON" tests/streak_padded_test.py index.html
 step multitab "$PYTHON" tests/multitab_test.py
+step clock-skew "$PYTHON" tests/clock_skew_test.py
 if grep -q 'fetch(' index.html; then echo "FAIL network fetch present"; fails=$((fails+1)); else echo "PASS no runtime fetch"; fi
 if [ "$warns" -ne 0 ]; then echo "WARN $warns link(s) (HTTP 403, listed above; not a failure)"; fi
 if [ "$fails" -ne 0 ]; then echo "CHECK FAIL ($fails step(s))"; exit 1; fi
