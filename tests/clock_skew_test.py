@@ -51,5 +51,18 @@ with sync_playwright() as p:
     c=b.new_context(); c.add_init_script(fake(2026,10,17)); c.add_init_script(seed(d))
     t=c.new_page(); t.goto(URL); t.wait_for_function(READY); play_today(t); d=disk(t)
     check('year 2099 then next day: streak 4',d and d['streak']==4 and d['last']=='2026-10-17',d)
+    # Lens C5: future last Oct 17 saved (streak 6) and Oct 17 already answered while skewed. Real days 16, 17, 18.
+    c=b.new_context(); c.add_init_script(fake(2026,10,16)); c.add_init_script(seed({'streak':6,'best':6,'last':'2026-10-17','ans':{'2026-10-17':0}}))
+    t=c.new_page(); t.goto(URL); t.wait_for_function(READY); play_today(t); d=disk(t)
+    check('C5 real Oct 16 play: no double count, streak 6, real date saved',d and d['streak']==6 and d['last']=='2026-10-16',d); c.close()
+    c=b.new_context(); c.add_init_script(fake(2026,10,17)); c.add_init_script(seed(d))
+    t=c.new_page(); t.goto(URL); t.wait_for_function(READY)
+    answered=t.locator('#choices button:disabled').count()>0
+    try: t.wait_for_function("()=>{try{return JSON.parse(localStorage.getItem('bf-riddle-v1')).last==='2026-10-17'}catch(e){return false}}",timeout=3000)
+    except Exception: pass  # the check below reports it
+    d=disk(t); check('C5 real Oct 17 (already answered): streak 6, last becomes Oct 17, no increment',answered and st(t)['streak']==6 and d['last']=='2026-10-17' and d['streak']==6,(answered,st(t),d)); c.close()
+    c=b.new_context(); c.add_init_script(fake(2026,10,18)); c.add_init_script(seed(d))
+    t=c.new_page(); t.goto(URL); t.wait_for_function(READY); shown=t.locator('#streak').inner_text(); play_today(t); d=disk(t)
+    check('C5 real Oct 18: streak kept (shown 6), play -> 7',shown=='6' and d and d['streak']==7,(shown,d)); c.close()
     c.close(); b.close()
 print('RESULT','PASS' if fail==0 else f'FAIL ({fail})'); raise SystemExit(1 if fail else 0)

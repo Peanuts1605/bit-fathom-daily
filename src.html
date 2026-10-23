@@ -114,7 +114,7 @@ function sync(){if(OK)S=merge(S,load())}
 function save(){if(!OK)return;S=merge(S,load());try{localStorage.setItem(K,JSON.stringify(S))}catch(e){OK=false;notice()}}
 function notice(){$('noStore').hidden=OK}
 /** On visit: if last play was neither today nor yesterday (local), reset streak to 0. */
-function applySkipReset(){if(stale(S))S.streak=0}
+function applySkipReset(){var tk=todayKey();/* Lens C5: today was already answered while the clock was ahead, and last is yesterday or that future date. Count today as played, with no increment, so the streak is not lost tomorrow. */if(S.ans[tk]!=null&&S.last!==tk&&lday(S.last)>=today-1){S.last=tk;save()}if(stale(S))S.streak=0}
 /** Recompute "today" (focus, tab shown, midnight). Keeps you on today's riddle if you were on it. */
 function refreshDay(){if(!R.length)return;var t=Math.max(0,dayNum(new Date()));sync();if(t!==today){var was=cur===today;today=t;if(was||cur>today)cur=today}applySkipReset();render()}
 var mt=null;function armMidnight(){clearTimeout(mt);var n=new Date(),m=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1,0,0,1);mt=setTimeout(function(){refreshDay();armMidnight()},Math.max(1000,m-n))}
