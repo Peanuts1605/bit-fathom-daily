@@ -94,8 +94,10 @@ function key(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
 // Lens F3 Low (2026-10-22): an unreadable or junk saved date counts as very old (-1e9), so the streak resets.
 function kday(k){if(!k)return -1e9;var p=String(k).split('-'),n=dayNum(new Date(+p[0],p[1]-1,+p[2]));return isNaN(n)?-1e9:n}
 // Clock skew (Proto 2026-10-23): a saved date later than the real today means the device clock was ahead.
-// Count it as yesterday, so the streak is kept, grows on the next play, and today's date gets saved (no freeze).
-function lday(k){var n=kday(k),t=Math.max(0,dayNum(new Date()));return n>t?t-1:n}
+// Count it as TODAY: the streak is kept, a second play the same real day does not count twice (Tinker's
+// edge case), and the play saves the real date, so the next real day grows the streak (no freeze).
+function lday(k){var n=kday(k),t=Math.max(0,dayNum(new Date()));return n>t?t:n}
+function future(k){return kday(k)>Math.max(0,dayNum(new Date()))}
 function fmt(d){return d.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}
 function rid(n){return R[((n%R.length)+R.length)%R.length]}
 function isEncore(n){return n>=R.length}
@@ -106,7 +108,7 @@ function stale(o){return o.last&&kday(o.last)<today-1}
 /** Merge two copies of saved progress (this tab + storage) without losing either. */
 function merge(a,b){
   var m={ans:Object.assign({},b.ans,a.ans)},la=lday(a.last),lb=lday(b.last);
-  if(la>lb){m.last=a.last;m.streak=a.streak}else if(lb>la){m.last=b.last;m.streak=b.streak}else{m.last=a.last||b.last;m.streak=Math.max(a.streak,b.streak)}
+  if(la>lb){m.last=a.last;m.streak=a.streak}else if(lb>la){m.last=b.last;m.streak=b.streak}else{m.last=(a.last&&!future(a.last))?a.last:(b.last&&!future(b.last))?b.last:(a.last||b.last);m.streak=Math.max(a.streak,b.streak)}
   m.best=Math.max(a.best,b.best,m.streak);if(stale(m))m.streak=0;return m}
 function sync(){if(OK)S=merge(S,load())}
 function save(){if(!OK)return;S=merge(S,load());try{localStorage.setItem(K,JSON.stringify(S))}catch(e){OK=false;notice()}}
