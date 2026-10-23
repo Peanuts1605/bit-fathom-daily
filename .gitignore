@@ -3,3 +3,6 @@
 .env.*
 !.env.example
 node_modules/
+
+# project Python for check.sh (make it: bash tooling/setup-pyenv.sh); never commit it
+/tooling/pyenv/

@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
-"""Lens QA regressions: multi-tab stale overwrite, next-day zero, midnight rollover, blocked storage, share/stats."""
+"""Lens QA regressions: multi-tab stale overwrite, next-day zero, midnight rollover, blocked storage, share/stats.
+Tinker 2026-10-23 race fix: no fixed sleeps. Chrome hands one tab's localStorage write to another tab
+asynchronously, so a step that needs another tab's save now WAITS until that tab can see it (Lens 10/23:
+about 1 in 20 runs false-FAILed when tab 2 acted on 100 ms of sleep). A wait that never comes true is a FAIL."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-URL=(Path(__file__).resolve().parent.parent/'index.html').as_uri(); fail=0
+import functools, http.server, threading
+# Serve the page over http://127.0.0.1 (a random free port), like kids load it over https. Under load, headless
+# Chrome on file:// sometimes dropped one tab's saves for any NEW page or reload (blank storage), which false-FAILed.
+_srv=http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(type('Q',(http.server.SimpleHTTPRequestHandler,),
+    {'log_message':lambda *a:None}),directory=str(Path(__file__).resolve().parent.parent)))
+threading.Thread(target=_srv.serve_forever,daemon=True).start()
+URL=f'http://127.0.0.1:{_srv.server_address[1]}/index.html'; fail=0
 def check(n,c,d=''):
     global fail; fail+=0 if c else 1; print(('PASS ' if c else 'FAIL ')+n+(f' ({d})' if d else ''))
 def fake(y,m,d,H=12,M=0,S=0):
@@ -11,9 +20,16 @@ def fake(y,m,d,H=12,M=0,S=0):
     class F extends R{{constructor(...a){{a.length?super(...a):super(now())}}static now(){{return now()}}}};F.parse=R.parse;F.UTC=R.UTC;window.Date=F}})();"""
 READY='window.__BF && document.querySelectorAll("#choices button").length>0'
 def st(pg): return pg.evaluate('()=>window.__BF.getState()')
+def wait_js(pg,js,arg=None,what='',ms=5000):  # wait on real state; a timeout is reported as a FAIL, not a crash
+    try: pg.wait_for_function(js,arg=arg,timeout=ms); return True
+    except Exception: check('wait: '+what,False,f'not true within {ms} ms'); return False
+SAVED="(k)=>{try{return JSON.parse(localStorage.getItem('bf-riddle-v1')).ans[k]!=null}catch(e){return false}}"
+def wait_saved(pg,k,who): return wait_js(pg,SAVED,k,f'{who} sees the save for {k}')  # this tab's view of storage
+def wait_cur(pg,back): return wait_js(pg,'(n)=>{const s=window.__BF.getState();return s.cur===s.today-n}',back,f'archive -{back} shown')
 def play_today(pg,right=True):
     a=pg.evaluate('()=>window.__BF.rid(window.__BF.getState().today).answer_index')
-    pg.locator('#choices button').nth(a if right else (a+1)%4).click(); pg.wait_for_timeout(100)
+    pg.locator('#choices button').nth(a if right else (a+1)%4).click()
+    wait_js(pg,'()=>document.querySelectorAll("#choices button:disabled").length>0',None,'answer shown')  # click handled
 with sync_playwright() as p:
     b=p.chromium.launch(executable_path='/usr/bin/google-chrome')
     # 1. Lens repro: streak 4, two tabs, tab1 plays today (5), stale tab2 plays a past riddle, reload tab1
@@ -21,20 +37,22 @@ with sync_playwright() as p:
     t1=c.new_page(); t1.goto(URL); t1.wait_for_function(READY)
     t1.evaluate("()=>{window.__BF.setState({streak:4,best:4,last:'2026-10-15',ans:{'2026-10-15':0}});window.__BF.remount()}")
     t2=c.new_page(); t2.goto(URL); t2.wait_for_function(READY)
-    play_today(t1); check('tab1 today -> 5',st(t1)['streak']==5,st(t1)['streak'])
+    play_today(t1); wait_saved(t1,'2026-10-16','tab1'); check('tab1 today -> 5',st(t1)['streak']==5,st(t1)['streak'])
+    wait_saved(t2,'2026-10-16','tab2')  # THE race: tab 2 must see tab 1's save before tab 2 saves
     t2.evaluate("()=>{window.__BF.remount()}")  # stale-tab path is merge-on-save; storage event also syncs
-    t2.locator('#prev').click(); t2.locator('#prev').click(); t2.wait_for_timeout(50)
-    t2.locator('#choices button').nth(0).click(); t2.wait_for_timeout(100)
+    t2.locator('#prev').click(); t2.locator('#prev').click(); wait_cur(t2,2)
+    t2.locator('#choices button').nth(0).click(); wait_saved(t2,'2026-10-14','tab2')
+    wait_saved(t1,'2026-10-14','tab1')  # and tab 1 sees tab 2's save before it reloads
     t1.reload(); t1.wait_for_function(READY); s=st(t1)
     check('multi-tab: streak survives stale tab save',s['streak']==5,s)
     check('multi-tab: today play kept','2026-10-16' in s['ans'],s['ans'])
     check('multi-tab: archive play kept','2026-10-14' in s['ans'],s['ans'])
-    check('storage event synced tab2 streak',st(t2)['streak']==5,st(t2)['streak'])
+    wait_js(t2,'()=>window.__BF.getState().streak===5',None,'tab2 streak becomes 5'); check('storage event synced tab2 streak',st(t2)['streak']==5,st(t2)['streak'])
     c.close()
     # 1b. Pure stale write (no storage event): tab2 S older than disk
     c=b.new_context(); c.add_init_script(fake(2026,10,16)); t=c.new_page(); t.goto(URL); t.wait_for_function(READY)
     t.evaluate("()=>{window.__BF.setState({streak:4,best:4,last:'2026-10-15',ans:{}});localStorage.setItem('bf-riddle-v1',JSON.stringify({streak:5,best:5,last:'2026-10-16',ans:{'2026-10-16':1}}))}")
-    t.locator('#prev').click(); t.locator('#choices button').nth(0).click(); t.wait_for_timeout(100)
+    t.locator('#prev').click(); wait_cur(t,1); t.locator('#choices button').nth(0).click(); wait_saved(t,'2026-10-15','tab')
     import json; raw=json.loads(t.evaluate("()=>localStorage.getItem('bf-riddle-v1')"))
     check('merge-on-save: newer disk streak not overwritten',raw['streak']==5 and '2026-10-16' in raw['ans'],raw)
     c.close()
@@ -48,7 +66,8 @@ with sync_playwright() as p:
     check('next day: play -> 6',st(t)['streak']==6,st(t)); c.close()
     # 3. Tab left open across midnight rolls over
     c=b.new_context(); c.add_init_script(fake(2026,10,16,23,59,58)); t=c.new_page(); t.goto(URL); t.wait_for_function(READY)
-    play_today(t); d0=st(t)['today']; t.wait_for_timeout(4500); s=st(t)
+    play_today(t); d0=st(t)['today']
+    wait_js(t,'(d)=>window.__BF.getState().today===d+1',d0,'midnight passes',8000); s=st(t)  # midnight is ~2 s away
     check('midnight rollover: today advances',s['today']==d0+1,(d0,s['today']))
     check('midnight rollover: shows new riddle unanswered',t.locator('#choices button:disabled').count()==0)
     play_today(t); check('midnight rollover: streak 2',st(t)['streak']==2,st(t)); c.close()
