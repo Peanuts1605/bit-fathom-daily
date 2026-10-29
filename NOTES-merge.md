@@ -27,15 +27,25 @@ Up to `choices.length - 1` guesses. A wrong pick strikes that option out. The ex
 
 `#NNN` and `/r/NNN/` are the 1-based local day from the epoch (12 Oct 2026 = #001). #018 is 29 Oct 2026. The riddle content loops every 14 days; the puzzle number does not. The archive label, the share text, and the URL all use that puzzle number. An encore adds a separate “Encore of #id” chip for the looping riddle.
 
-Static `/r/NNN/` pages and og cards are generated for every day from **#001 through 31 Jan 2027** (#112), plus `og/today.png`. A request for any other `/r/NNN/` is rewritten to `r/fallback/` (`dist/_redirects`), which redirects the browser to `/?d=NNN` and shows the generic card.
+Static `/r/NNN/` pages and og cards are generated for every day from **#001 through 31 Jan 2027** (#112), plus `og/today.png`. The screen label uses that same puzzle number, including on an encore day (`Today's riddle #018` plus `Encore of #004`).
 
 Share text and `og:url` use the build-time origin `BF_ORIGIN` (default `https://bit-fathom-daily-next.gigantic-stranger.workers.dev`), including on localhost and in Capacitor.
 
-## Bundle vs Workers Static Assets
+`/r/*` is handled by `worker/share-routes.js`, not by `_redirects`. workerd rejects `/r/* /r/fallback/index.html 200` as a loop, and `_redirects` run before assets, so a catch-all would hide the real pages. The Worker runs first for `/r/*`: it serves the asset when it exists, redirects a later puzzle number to `/?d=NNN`, sends a non-canonical number such as `/r/0029` to `/r/029/`, and returns the generic card for `/r/abc` and `/r/000`.
 
-`dist/` is the inline-worker bundle (HTML, shell, woff2 subsets, backgrounds, `/r/` pages). The build exits non-zero if `dist/` is over 2.5 MB. Og cards are written to `static-assets/og/` and are not part of that measurement. Publish `static-assets/` as Workers Static Assets so `https://<host>/og/NNN.png` resolves, and keep `dist/` as the worker HTML bundle. `_headers` and `_redirects` live in `dist/`. Fonts ship as WOFF2 subsets; the kit TTF files stay in `assets/fonts/` and are not copied into `dist/`.
+## Deploy (Workers Static Assets)
 
-`./check.sh` builds twice. The first build sets `BF_TEST_HOOK=1` so the tests can call `window.__BF`. The second build leaves `index.html` without that hook. `BF_SKIP_OG=1` on the second build reuses cards already written in that same check; it prints the skip and does not run unless the variable is set. A normal `python build.py` always renders the cards and always requires pngquant.
+`wrangler.jsonc` is the deploy config. Name: `bit-fathom-daily-next`. Main: `worker/share-routes.js`. Assets: `publish/`, with `run_worker_first` for `/r/*`.
+
+```
+python3 build.py
+npx wrangler dev --local
+npx wrangler deploy
+```
+
+`build.py` writes `dist/` (the 2.5 MB HTML budget) and then `publish/` by copying `dist/` and merging `static-assets/og/` at `publish/og/` so `/og/NNN.png` resolves. Do not deploy from `./check.sh`. The inline packer in `review/gen.py` is retired: it ignored `_headers` and hardcoded `unsafe-inline`.
+
+`./check.sh` builds twice. The first build sets `BF_TEST_HOOK=1` so the tests can call `window.__BF`. The second build leaves `index.html` without that hook. `BF_SKIP_OG=1` on the second build reuses cards already written in that same check; it prints the skip and does not run unless the variable is set. A normal `python build.py` always renders the cards and always requires pngquant. Review screenshots from the check go to a temp directory, so the check does not rewrite `review/share-loop/`.
 
 ## App-only riddles — candidates for #015+
 

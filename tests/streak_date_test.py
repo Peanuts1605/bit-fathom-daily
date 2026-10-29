@@ -87,9 +87,9 @@ with sync_playwright() as p:
 
     # --- Encore on day 14 (0-based: day 14 = 15th day = first loop of 001) ---
     ctx, pg = page_at(2026, 10, 26)  # epoch Oct12 + 14 days = Oct26
-    st = pg.evaluate('() => ({day: window.__BF.dayNum(new Date()), id: window.__BF.rid(window.__BF.getState().today).id, encore: !!document.querySelector(".encore"), label: document.getElementById("label").textContent})')
+    st = pg.evaluate('() => ({day: window.__BF.dayNum(new Date()), id: window.__BF.rid(window.__BF.getState().today).id, encore: !!document.querySelector(".encore"), label: document.querySelector(".when").textContent})')
     check('day 14 maps to 001', st['id'] == '001' and st['day'] == 14, str(st))
-    check('Encore label on day 14+', st['encore'] is True and 'Encore' in st['label'], st['label'])
+    check('Encore label on day 14+', st['encore'] is True and 'Encore' in st['label'] and '#015' in st['label'], st['label'])
     ctx.close()
 
     # day 15 -> 002 encore

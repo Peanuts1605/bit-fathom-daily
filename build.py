@@ -1,25 +1,27 @@
 #!/usr/bin/env python3
 """Build the Daily Riddle site.
 
-dist/ is the inline-worker bundle (HTML, shell, fonts, backgrounds). It must
-stay <= 2.5 MB. og cards live in static-assets/og/ and are served as Workers
-Static Assets, not inlined into the worker.
-
-Puzzle pages run from #001 (12 Oct 2026) through at least 31 Jan 2027.
-Unknown /r/NNN/ URLs are rewritten to r/fallback/ (see dist/_redirects).
+dist/ is the HTML bundle (shell, fonts, backgrounds, /r/ pages). It must stay
+<= 2.5 MB. og cards are rendered to static-assets/og/ and are not part of that
+measurement. publish/ merges dist/ with og/ at /og/ for wrangler (see
+wrangler.jsonc). Unknown /r/ paths are handled by worker/share-routes.js, not
+by _redirects: a splat runs before assets on Cloudflare and a rule that points
+back under /r/ is rejected as a loop.
 """
-import base64, hashlib, json, os, re, shutil, subprocess, sys
+import base64, hashlib, importlib.util, json, os, re, shutil, subprocess, sys
 from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT / 'dist'
+PUBLISH = ROOT / 'publish'
 OG_DIR = ROOT / 'static-assets' / 'og'
 ORIGIN = os.environ.get('BF_ORIGIN', 'https://bit-fathom-daily-next.gigantic-stranger.workers.dev').rstrip('/')
 EPOCH = date(2026, 10, 12)
 THROUGH = date(2027, 1, 31)
 BUDGET = 2_500_000
-UNICODES = 'U+0000-00FF,U+0131,U+0152-0153,U+02C6,U+2013-2014,U+2018-201A,U+201C-201E,U+2022,U+2026,U+2030,U+20AC,U+2122'
+# U+2039–203A are the archive arrows ‹ ›. They live in the source TTFs.
+UNICODES = 'U+0000-00FF,U+0131,U+0152-0153,U+02C6,U+2013-2014,U+2018-201A,U+201C-201E,U+2022,U+2026,U+2030,U+2039-203A,U+20AC,U+2122'
 
 
 def puzzle_count():
@@ -172,10 +174,11 @@ def fallback_page():
 FALLBACK_JS = """(function(){
   var m = location.pathname.match(/\\/r\\/(\\d+)/);
   if (!m) return;
-  var n = String(parseInt(m[1], 10));
-  if (!n || n === 'NaN') return;
-  while (n.length < 3) n = '0' + n;
-  location.replace('/?d=' + n);
+  var n = parseInt(m[1], 10);
+  if (!n || n < 1) return;
+  var s = String(n);
+  while (s.length < 3) s = '0' + s;
+  location.replace('/?d=' + s);
 })();
 """
 
@@ -199,7 +202,6 @@ def write_headers(policy):
         f'  {nosniff}\n'
     )
     (DIST / '_headers').write_text(text)
-    (DIST / '_redirects').write_text('/r/* /r/fallback/index.html 200\n')
 
 
 def require_pngquant():
@@ -254,6 +256,20 @@ def dir_size(path):
     return sum(f.stat().st_size for f in path.rglob('*') if f.is_file())
 
 
+def merge_publish():
+    """Wrangler serves one assets directory. /og/NNN.png must resolve beside the HTML."""
+    if PUBLISH.exists():
+        shutil.rmtree(PUBLISH)
+    shutil.copytree(DIST, PUBLISH)
+    og_out = PUBLISH / 'og'
+    og_out.mkdir(parents=True, exist_ok=True)
+    pngs = list(OG_DIR.glob('*.png')) if OG_DIR.exists() else []
+    if not pngs:
+        raise SystemExit('FAIL build: no og pngs to merge into publish/og')
+    for png in pngs:
+        shutil.copy(png, og_out / png.name)
+
+
 def main():
     require_pngquant()
     try:
@@ -299,15 +315,15 @@ def main():
     if os.environ.get('BF_SKIP_OG') == '1' and have >= count + 1:
         print(f'skip og render ({have} pngs already in static-assets/og)')
     else:
-        import importlib.util
         spec = importlib.util.spec_from_file_location('render_og', ROOT / 'og' / 'render_og.py')
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
         mod.render_all()
+    merge_publish()
     total = dir_size(DIST)
     og_total = dir_size(OG_DIR) if OG_DIR.exists() else 0
     print(f'dist bytes {total} ({total/1_000_000:.2f} MB), puzzles 001-{count:03d} through {THROUGH.isoformat()}')
-    print(f'static-assets/og bytes {og_total} ({og_total/1_000_000:.2f} MB) excluded from the worker bundle')
+    print(f'static-assets/og bytes {og_total} ({og_total/1_000_000:.2f} MB) merged into publish/og, excluded from dist')
     if total > BUDGET:
         print('FAIL dist over 2.5MB — Workers Static Assets hold og/; the HTML bundle must still fit')
         raise SystemExit(1)

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Refresh review/share-loop/ after the tests. Not imported by the e2e suite."""
-import functools, http.server, shutil, subprocess, threading
+import functools, http.server, os, shutil, subprocess, tempfile, threading
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / 'dist'
 OG = ROOT / 'static-assets' / 'og'
-REVIEW = ROOT / 'review' / 'share-loop'
+REVIEW = Path(os.environ['BF_REVIEW_DIR']) if os.environ.get('BF_REVIEW_DIR') else Path(tempfile.mkdtemp(prefix='bf-review-'))
 CHROME = '/usr/bin/google-chrome'
 READY = 'document.querySelectorAll("#choices button").length>0'
 

@@ -35,7 +35,6 @@ function key(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
 function kday(k){if(!k)return -1e9;var p=String(k).split('-'),n=dayNum(new Date(+p[0],p[1]-1,+p[2]));return isNaN(n)?-1e9:n}
 function lday(k){var n=kday(k),t=Math.max(0,dayNum(new Date()));return n>t?t:n}
 function future(k){return kday(k)>Math.max(0,dayNum(new Date()))}
-function fmt(d){return d.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}
 function rid(n){return R[((n%R.length)+R.length)%R.length]}
 function isEncore(n){return n>=R.length}
 function todayKey(){return key(dateOf(today))}
@@ -274,9 +273,20 @@ function render(){
   var r=rid(cur), d=dateOf(cur), p=currentPlay();
   var whenB=$('label');
   whenB.textContent='';
-  whenB.appendChild(document.createTextNode(cur===today?"Today's riddle":('Riddle #'+window.BFShare.pad(cur+1))));
-  if(isEncore(cur)){whenB.appendChild(document.createTextNode(' ')); var en=document.createElement('span'); en.className='encore'; en.textContent='Encore of #'+r.id; whenB.appendChild(en)}
-  $('date').textContent=fmt(d);
+  var puzzleNo=window.BFShare.pad(cur+1);
+  whenB.appendChild(document.createTextNode(cur===today?("Today's riddle #"+puzzleNo):('Riddle #'+puzzleNo)));
+  var dateEl=$('date');
+  dateEl.textContent='';
+  var wday=document.createElement('span');
+  wday.className='wday';
+  wday.textContent=d.toLocaleDateString(undefined,{weekday:'long'})+', ';
+  dateEl.appendChild(wday);
+  dateEl.appendChild(document.createTextNode(d.toLocaleDateString(undefined,{month:'long',day:'numeric'})));
+  if(isEncore(cur)){
+    dateEl.appendChild(document.createTextNode(' '));
+    var en=document.createElement('span'); en.className='encore'; en.textContent='Encore of #'+r.id;
+    dateEl.appendChild(en);
+  }
   $('prev').disabled=cur<=0||today-cur>=R.length-1;
   $('next').disabled=cur>=today;
   $('title').textContent=r.hook||r.title;

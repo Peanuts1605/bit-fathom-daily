@@ -1,0 +1,12 @@
+{
+  // Workers Static Assets for bit-fathom-daily-next. Do not wrangler deploy from check.sh.
+  // publish/ is built by build.py: dist/ plus og cards at /og/.
+  "name": "bit-fathom-daily-next",
+  "main": "worker/share-routes.js",
+  "compatibility_date": "2025-04-01",
+  "assets": {
+    "directory": "./publish",
+    "binding": "ASSETS",
+    "run_worker_first": ["/r/*"]
+  }
+}

@@ -12,15 +12,17 @@ set -euo pipefail
 cd "$(dirname "$0")"
 export PYTHONDONTWRITEBYTECODE=1
 has_pw(){ [ -n "$1" ] && "$1" -c 'import playwright' 2>/dev/null; }
-setup_fail(){ echo "FAIL setup: $1"; echo "    fix: bash tooling/setup-pyenv.sh  (or: PYTHON=/path/to/python-with-playwright ./check.sh)"; exit 2; }
+setup_fail(){ echo "FAIL setup: $1"; echo "    fix: ${2:-bash tooling/setup-pyenv.sh}"; exit 2; }
 if [ -n "${PYTHON:-}" ]; then has_pw "$PYTHON" || setup_fail "PYTHON=$PYTHON cannot import playwright"
 elif has_pw tooling/pyenv/bin/python; then PYTHON=tooling/pyenv/bin/python
 elif has_pw "$(command -v python3 || true)"; then PYTHON=$(command -v python3)
 else setup_fail "no Python with Playwright (no tooling/pyenv, and python3 has none)"; fi
 echo "USING $PYTHON (playwright $("$PYTHON" -c 'import importlib.metadata as m;print(m.version("playwright"))'))"
-command -v pngquant >/dev/null || setup_fail "pngquant is not installed (apt install pngquant)"
-"$PYTHON" -c 'import PIL' >/dev/null 2>&1 || setup_fail "Pillow is missing (pip install -r requirements.txt)"
-"$PYTHON" -c 'import fontTools' >/dev/null 2>&1 || setup_fail "fonttools is missing (pip install -r requirements.txt)"
+command -v pngquant >/dev/null || setup_fail "pngquant is not installed" "apt install pngquant"
+"$PYTHON" -c 'import PIL' >/dev/null 2>&1 || setup_fail "Pillow is missing (requirements.txt)" "bash tooling/setup-pyenv.sh"
+"$PYTHON" -c 'import fontTools' >/dev/null 2>&1 || setup_fail "fonttools is missing (requirements.txt)" "bash tooling/setup-pyenv.sh"
+command -v node >/dev/null || setup_fail "node is not installed" "install Node.js, then npm ci (wrangler is a devDependency)"
+command -v npm >/dev/null || setup_fail "npm is not installed" "install Node.js, then npm ci (wrangler is a devDependency)"
 fails=0; warns=0
 step(){ # step <label> <cmd...>: run, keep the full log, print its last line, record failure
   local label=$1; shift; local log; log=$(mktemp)
@@ -31,9 +33,10 @@ step(){ # step <label> <cmd...>: run, keep the full log, print its last line, re
   else local rc=$?; echo "FAIL $label (exit $rc): $(tail -1 "$log")"; sed 's/^/    | /' "$log" | tail -15; fails=$((fails+1)); fi
   rm -f "$log"
 }
+if [ ! -x node_modules/.bin/wrangler ]; then step wrangler npm ci; fi
 step build env BF_TEST_HOOK=1 "$PYTHON" build.py
-if [ "${LINKS:-0}" = 1 ]; then step riddles python3 validate_riddles.py
-else echo "SKIP source-link network check (set LINKS=1 to run it)"; step riddles env BF_SKIP_LINKS=1 python3 validate_riddles.py; fi
+if [ "${LINKS:-0}" = 1 ]; then step riddles "$PYTHON" validate_riddles.py
+else echo "SKIP source-link network check (set LINKS=1 to run it)"; step riddles env BF_SKIP_LINKS=1 "$PYTHON" validate_riddles.py; fi
 step smoke bash tests/riddle_smoke.sh index.html ${1:-}
 step streak-date "$PYTHON" tests/streak_date_test.py
 step streak-padded "$PYTHON" tests/streak_padded_test.py index.html
@@ -50,6 +53,8 @@ step release env BF_SKIP_OG=1 "$PYTHON" build.py
 if grep -q 'if(true)' dist/index.html || grep -q 'if(true)' index.html; then echo "FAIL release build left the test hook on"; fails=$((fails+1)); else echo "PASS release build omits test hook"; fi
 step review "$PYTHON" tests/capture_review.py
 if grep -q 'fetch(' index.html || grep -q 'fetch(' dist/index.html; then echo "FAIL network fetch present"; fails=$((fails+1)); else echo "PASS no runtime fetch"; fi
+dirty=$(git status --porcelain)
+if [ -n "$dirty" ]; then echo "FAIL git status not clean after check"; echo "$dirty"; fails=$((fails+1)); else echo "PASS git status clean"; fi
 if [ "$warns" -ne 0 ]; then echo "WARN $warns note(s) (listed above; not a failure)"; fi
 if [ "$fails" -ne 0 ]; then echo "CHECK FAIL ($fails step(s))"; exit 1; fi
 echo "CHECK PASS"

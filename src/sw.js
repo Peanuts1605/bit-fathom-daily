@@ -1,16 +1,30 @@
-/* App shell only. Old cache names are deleted on activate. Runtime cache stays capped. */
-const C='bf-riddle-share-v4';
+/* App shell only. Old cache names are deleted on activate.
+   Query strings share one cache entry. Shell files are never trimmed out. */
+const C='bf-riddle-share-v5';
 const MAX=8;
 const SHELL=['./','./index.html','./manifest.json','./icon.svg'];
 function shellRequest(url){
   var path=url.pathname;
-  return path==='/' || /\/index\.html$/.test(path) || /\/manifest\.json$/.test(path) || /\/icon\.svg$/.test(path);
+  return path==='/' || path==='/index.html' || path==='/manifest.json' || path==='/icon.svg';
+}
+function cacheKey(request){
+  var u=new URL(request.url);
+  u.search='';
+  u.hash='';
+  return new Request(u.toString(), {method:'GET'});
+}
+function isPinned(request){
+  var path=new URL(request.url).pathname;
+  return path==='/' || path==='/index.html' || path==='/manifest.json' || path==='/icon.svg';
 }
 function trim(cache){
   return cache.keys().then(function(keys){
-    var extra=keys.length-MAX;
+    var pinned=[], rest=[];
+    keys.forEach(function(k){ (isPinned(k)?pinned:rest).push(k); });
+    var room=Math.max(0, MAX-pinned.length);
+    var extra=rest.length-room;
     if(extra<=0) return;
-    return Promise.all(keys.slice(0, extra).map(function(k){return cache.delete(k)}));
+    return Promise.all(rest.slice(0, extra).map(function(k){return cache.delete(k)}));
   });
 }
 self.addEventListener('install',function(e){
@@ -30,10 +44,10 @@ self.addEventListener('fetch',function(e){
   e.respondWith(
     fetch(e.request).then(function(r){
       var cp=r.clone();
-      caches.open(C).then(function(c){return c.put(e.request, cp).then(function(){return trim(c)})});
+      caches.open(C).then(function(c){return c.put(cacheKey(e.request), cp).then(function(){return trim(c)})});
       return r;
     }).catch(function(){
-      return caches.match(e.request,{ignoreSearch:true}).then(function(hit){return hit||caches.match('./index.html')});
+      return caches.match(cacheKey(e.request)).then(function(hit){return hit||caches.match('./index.html')});
     })
   );
 });

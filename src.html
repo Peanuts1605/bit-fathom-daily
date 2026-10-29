@@ -62,6 +62,7 @@ button:disabled{cursor:default;opacity:.72}
 .when{flex:1;text-align:center}
 .when b{display:block;color:var(--gold);font-size:16px;letter-spacing:0;text-transform:none}
 .when span{font-size:16px}
+@media(max-width:759px){.wday{display:none}}
 .encore{display:inline-block;margin-left:6px;background:var(--gold);color:var(--navy);font-size:14px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:0}
 .play{width:100%}
 .cardface{background:rgba(244,252,252,.96);color:var(--ink);border-radius:28px;padding:8px 10px;box-shadow:0 18px 50px rgba(0,0,0,.35);display:grid;grid-template-columns:44% 1fr;gap:4px 8px;align-items:start}
@@ -106,8 +107,9 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:760;font-size:clamp(
 .dots i{width:9px;height:9px;border-radius:50%;background:#2a4572}
 .dots i.on{background:var(--gold)}
 .dots i.done{background:var(--teal)}
-.hint{text-align:center;font-size:16px;margin:8px auto;max-width:70ch}
-.howto{background:rgba(19,40,77,.88);border-radius:16px;padding:8px 14px;margin:8px auto 0;max-width:70ch}
+.hint{text-align:center;font-size:16px;line-height:1.5;margin:8px auto;max-width:52ch}
+.howto{background:rgba(19,40,77,.88);border-radius:16px;padding:8px 14px;margin:8px auto 0;max-width:52ch;line-height:1.5}
+.howto li{line-height:1.5}
 .howto summary{min-height:48px;display:flex;align-items:center;cursor:pointer;font-weight:800;color:var(--gold)}
 .links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
 .links a{color:var(--navy);background:var(--gold);min-height:48px;display:inline-flex;align-items:center;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:800}
@@ -141,15 +143,20 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(7,21,38,.92
 .gbox input{font:inherit;font-size:18px;width:100%;padding:12px;border-radius:12px;border:2px solid var(--navy);margin:8px 0}
 #gErr{min-height:1.2em;color:#9a3b1e;margin:0 0 8px}
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-@media(min-width:1000px){
+@media(min-width:760px){
   .app{padding-top:calc(env(safe-area-inset-top) + 12px)}
   .cardface{grid-template-columns:minmax(280px,42%) 1fr;gap:12px 24px;padding:22px}
   .hero{grid-row:1 / span 5;align-self:center;max-height:none;overflow:visible}
   .bit{width:100%;height:auto;max-height:none;object-fit:contain;object-position:center top}
   .headcopy,#question,.choices,#whynot,#reveal{grid-column:2}
-  h1,#question,.bubble,.tryit,.hint,small,.grown p,.howto,.rise{max-width:70ch}
+  h1,#question,.bubble,.tryit,small,.grown p,.rise{max-width:70ch}
+  .hint,.howto{max-width:52ch}
   .play{width:100%}
   #question{line-height:1.35}
+}
+@media(min-width:760px) and (max-width:999px){
+  .hero{max-height:220px;align-self:start}
+  .bit{height:200px;width:auto;max-width:100%;min-height:0;object-fit:contain;object-position:center}
 }
 @media(max-width:420px){
   .strip b{font-size:18px}

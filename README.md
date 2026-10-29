@@ -7,9 +7,20 @@ Curious kids (about 7–12) with a grown-up nearby, at home or in class. No acco
 
 ## Run it
 - Just open `index.html` in a browser, or `python3 -m http.server` and visit http://localhost:8000.
-- Rebuild after editing riddles or the template: `python3 build.py` (inlines `riddles.json` into `src.html` → `index.html`).
+- Rebuild after editing riddles or the template: `python3 build.py` (inlines `riddles.json` into `src.html` → `index.html`, and writes `publish/` for wrangler).
 - Validate riddles: `python3 validate_riddles.py`
-- Tests (needs Python Playwright + Chrome): `python3 tests/streak_date_test.py`, `bash tests/riddle_smoke.sh index.html`, screenshots: `python3 tests/shots.py`
+- Tests (needs Python Playwright + Chrome): `./check.sh`
+- Python for the check: `bash tooling/setup-pyenv.sh` (installs `requirements.txt` into `tooling/pyenv`). pngquant is a system package (`apt install pngquant`).
+
+## Deploy
+Config is `wrangler.jsonc` (Worker name `bit-fathom-daily-next`). `build.py` fills `publish/` with the HTML bundle plus `/og/` cards. `worker/share-routes.js` serves real `/r/NNN/` pages and the fallback for everything else.
+
+```
+npx wrangler dev --local
+npx wrangler deploy
+```
+
+`./check.sh` runs the local worker. It does not deploy. The old inline-worker packer (`review/gen.py`) is retired.
 
 ## How it works
 - Today's riddle comes from the device's local date (riddle 001 = Oct 12, 2026), looping with an **Encore** badge after 14 days.

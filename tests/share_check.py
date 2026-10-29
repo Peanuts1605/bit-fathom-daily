@@ -41,6 +41,9 @@ with sync_playwright() as p:
     check('no option letters', not re.search(r'\b[A-D]\)', text))
     canon = 'https://bit-fathom-daily-next.gigantic-stranger.workers.dev'
     check('canonical share host', canon in text and '127.0.0.1' not in text and 'file://' not in text, text.split('\n')[-1])
+    lab_today = page.locator('#label').inner_text()
+    shared_no = re.search(r'Daily #(\d{3})', text)
+    check('today shows the share number', bool(shared_no) and f'#{shared_no.group(1)}' in lab_today, lab_today.replace('\n', ' '))
     rise = page.locator('#rise').inner_text()
     check('streak label', 'day streak' in rise, rise)
     page.locator('#prev').click()
@@ -52,13 +55,17 @@ with sync_playwright() as p:
       twoMin: window.BFCount.liveText(120000),
       oneHour: window.BFCount.liveText(3600000),
       both: window.BFCount.liveText(3660000),
-      zero: window.BFCount.liveText(0)
+      zero: window.BFCount.liveText(0),
+      secs: window.BFCount.liveText(42000),
+      oneSec: window.BFCount.liveText(1000)
     })''')
     check('1 minute', plurals['oneMin'] == 'Next riddle in 1 minute', plurals['oneMin'])
     check('2 minutes', plurals['twoMin'] == 'Next riddle in 2 minutes', plurals['twoMin'])
     check('1 hour', plurals['oneHour'] == 'Next riddle in 1 hour', plurals['oneHour'])
     check('1 hour and 1 minute', plurals['both'] == 'Next riddle in 1 hour and 1 minute', plurals['both'])
-    check('0 minutes', plurals['zero'] == 'Next riddle in 0 minutes', plurals['zero'])
+    check('last minute is not 0 minutes', plurals['zero'] == 'Next riddle in less than a minute' and '0 minutes' not in plurals['zero'], plurals['zero'])
+    check('42 seconds', plurals['secs'] == 'Next riddle in 42 seconds', plurals['secs'])
+    check('1 second', plurals['oneSec'] == 'Next riddle in 1 second', plurals['oneSec'])
     c1 = page.locator('#count').inner_text()
     page.wait_for_timeout(1100)
     c2 = page.locator('#count').inner_text()

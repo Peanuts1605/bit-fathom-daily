@@ -31,7 +31,7 @@
   function play(name){
     if(!soundOn) return;
     var a=ctx(); if(!a) return;
-    if(a.state==='suspended'){try{a.resume()}catch(e){}}
+    if(a.state==='suspended'){try{var resumed=a.resume(); if(resumed&&resumed.catch) resumed.catch(function(){})}catch(e){}}
     var t=a.currentTime+0.01;
     if(name==='tap'){
       tone('triangle',740,t,0.05,0.04,2200);

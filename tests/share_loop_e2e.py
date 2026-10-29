@@ -421,6 +421,27 @@ def focus_share(browser, width, height):
     ctx.close()
 
 
+def band_999(browser):
+    ctx = browser.new_context(viewport={'width': 999, 'height': 900})
+    page = ctx.new_page()
+    open_ready(page)
+    m = metrics(page)
+    q_top = m['qTop']
+    fit = (
+        m['nChoices'] >= 4
+        and m['scrollY'] == 0
+        and q_top >= 0
+        and m['lastTop'] >= 0
+        and m['lastBottom'] <= m['navTop'] + 1
+    )
+    check(
+        '999x900 question and options above nav',
+        fit,
+        f"n {m['nChoices']} q {q_top:.0f} bottom {m['lastBottom']:.0f} nav {m['navTop']:.0f}",
+    )
+    ctx.close()
+
+
 def short_phone(browser):
     ctx = browser.new_context(
         viewport={'width': 375, 'height': 667},
@@ -469,6 +490,7 @@ def main():
         scripted_stats(browser, 'reduced', reduced, shots=False)
         hscroll_320(browser)
         short_phone(browser)
+        band_999(browser)
         focus_share(browser, 320, 700)
         focus_share(browser, 375, 667)
         focus_share(browser, 768, 1024)
