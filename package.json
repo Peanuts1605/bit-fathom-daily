@@ -1,0 +1,6 @@
+{
+  "name": "bit-fathom-daily-riddle",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Bit & Fathom Daily Riddle. Static PWA in dist/, ready for Capacitor (webDir is dist). No native build in this task."
+}

@@ -3,6 +3,7 @@
 import json, re, sys, subprocess, pathlib
 P = pathlib.Path(__file__).with_name("riddles.json")
 KEYS = ["id","title","question","choices","answer_index","explainer","try_it","source_title","source_url","speaker"]
+OPTIONAL = ["topic","hook","bit_line"]
 BANNED = r"\b(password|secret|kill|die|blood)\b"
 errs = []
 warns = []  # (id, http code, url): links that answered 403 to curl
@@ -16,7 +17,14 @@ titles = [r.get("title","").strip().lower() for r in d]
 if len(set(titles)) != len(titles): errs.append("duplicate titles")
 for r in d:
     i = r.get("id")
-    if list(r.keys()) != KEYS: errs.append(f"{i}: keys {list(r.keys())}")
+    missing=[k for k in KEYS if k not in r]
+    extra=[k for k in r.keys() if k not in KEYS and k not in OPTIONAL]
+    if missing or extra: errs.append(f"{i}: keys missing={missing} extra={extra}")
+    if "hook" in r:
+        wc=len(str(r["hook"]).split())
+        if wc<1 or wc>12: errs.append(f"{i}: hook has {wc} words")
+    if "topic" in r and not (isinstance(r["topic"], str) and r["topic"].strip()): errs.append(f"{i}: bad topic")
+    if "bit_line" in r and not (isinstance(r["bit_line"], str) and r["bit_line"].strip()): errs.append(f"{i}: bad bit_line")
     for k in KEYS:
         if k == "answer_index": continue
         if k == "choices":

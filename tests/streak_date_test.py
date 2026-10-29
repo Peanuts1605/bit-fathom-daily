@@ -100,11 +100,14 @@ with sync_playwright() as p:
 
     # --- Streak: wrong answer still counts as played (kid-friendly), +1 once ---
     ctx, pg = page_at(2026, 10, 16)
-    # pick wrong: answer_index 0 for 005, click button 2
+    # Misses allowed = choices.length-1. Exhaust them so the riddle resolves as "learned".
     ans = pg.evaluate('() => window.__BF.rid(window.__BF.getState().today).answer_index')
-    wrong = 1 if ans != 1 else 2
-    pg.click(f'#choices button:nth-child({wrong+1})')
-    pg.wait_for_timeout(200)
+    nbtn = pg.evaluate('() => document.querySelectorAll("#choices button").length')
+    for i in range(nbtn):
+        if i == ans:
+            continue
+        pg.click(f'#choices button:nth-child({i+1})')
+        pg.wait_for_timeout(80)
     st = pg.evaluate('() => window.__BF.getState()')
     check('wrong answer sets streak to 1', st['streak'] == 1, str(st))
     check('wrong marked on UI', pg.evaluate('() => !!document.querySelector(".choices button.wrong")'))

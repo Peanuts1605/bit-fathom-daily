@@ -1,0 +1,19 @@
+/* Local shim for Tinker's juice kit. Swap this file for experiments/_shared/juice.css later. */
+.is-down{transform:scale(0.97)}
+.juice-pop{animation:juice-pop .42s cubic-bezier(0.2,0,0,1) both}
+@keyframes juice-pop{0%{transform:scale(.9)}100%{transform:scale(1)}}
+.juice-shake{animation:juice-shake .28s linear}
+@keyframes juice-shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-7px)}
+  40%{transform:translateX(7px)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(3px)}
+}
+.juice-flash{animation:juice-flash .28s linear}
+@keyframes juice-flash{0%,100%{filter:none}40%{filter:saturate(1.4) brightness(1.08)}}
+.juice-confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40}
+@media (prefers-reduced-motion:reduce){
+  .is-down,.juice-pop,.juice-shake,.juice-flash{animation:none!important;transform:none!important}
+  .juice-shake{outline:3px solid #d67a6a}
+}

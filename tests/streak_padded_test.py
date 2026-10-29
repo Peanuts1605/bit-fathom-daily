@@ -24,7 +24,8 @@ CASES = [
 ]
 fails = 0
 with sync_playwright() as p:
-    b = p.chromium.launch()
+    chrome = pathlib.Path('/usr/bin/google-chrome')
+    b = p.chromium.launch(**({'executable_path': str(chrome)} if chrome.exists() else {}))
     for name, (y,m,d,H,M), last, st, want in CASES:
         c = b.new_context(timezone_id='America/New_York', viewport={'width':375,'height':812})
         c.route('**/*', lambda r: r.continue_() if r.request.url.startswith('file:') else r.abort())

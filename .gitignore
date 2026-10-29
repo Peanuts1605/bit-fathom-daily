@@ -6,3 +6,8 @@ node_modules/
 
 # project Python for check.sh (make it: bash tooling/setup-pyenv.sh); never commit it
 /tooling/pyenv/
+
+# generated site (./check.sh rebuilds it). Review samples live in review/share-loop/
+/dist/
+__pycache__/
+*.pyc

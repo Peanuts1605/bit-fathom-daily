@@ -13,7 +13,10 @@
     "try_it": "In a dark room, with a grown-up, gently cover a phone flashlight with your fingertip. It glows red because red light passes through skin best, which is how smartwatch pulse sensors work!",
     "source_title": "NASA Science: Visible Light",
     "source_url": "https://science.nasa.gov/ems/09_visiblelight/",
-    "speaker": "bit"
+    "speaker": "bit",
+    "topic": "Robots",
+    "hook": "Can a camera see red like you do?",
+    "bit_line": "Your eyes feel color. My camera just counts it."
   },
   {
     "id": "002",
@@ -29,7 +32,10 @@
     "try_it": "With a grown-up, look around your home for LEDs: on chargers, TVs and remote controls. Count how many colors you find!",
     "source_title": "ENERGY STAR: Learn About LED Lighting",
     "source_url": "https://www.energystar.gov/products/light_bulbs/learn-about-led-lighting",
-    "speaker": "fathom"
+    "speaker": "fathom",
+    "topic": "Electricity",
+    "hook": "What only glows one way when plugged in?",
+    "bit_line": "One-way street. No sulking when the legs are right."
   },
   {
     "id": "003",
@@ -46,7 +52,10 @@
     "try_it": "Look at sunset photos from Earth and NASA's Mars sunset photo side by side, then draw both skies with crayons. Never look straight at the real Sun.",
     "source_title": "NASA Science: Sunset in Mars' Gale Crater",
     "source_url": "https://science.nasa.gov/resource/sunset-in-mars-gale-crater/",
-    "speaker": "bit"
+    "speaker": "bit",
+    "topic": "Space",
+    "hook": "What color is a sunset on Mars?",
+    "bit_line": "Blue sunsets. I would pack the good crayons."
   },
   {
     "id": "004",
@@ -63,7 +72,10 @@
     "try_it": "Play \"slow text\" with a family member: pass notes between rooms, but wait a full minute before each delivery. How hard is it to chat?",
     "source_title": "NASA Science: Voyager 1 - What Is a Light-Day?",
     "source_url": "https://science.nasa.gov/mission/voyager/voyager-1/voyager-1-what-is-a-light-day/",
-    "speaker": "bit"
+    "speaker": "bit",
+    "topic": "Space",
+    "hook": "How long until a text reaches Voyager 1?",
+    "bit_line": "I sent hi. The reply comes after a whole weekend."
   },
   {
     "id": "005",
@@ -79,7 +91,10 @@
     "try_it": "Tear a tissue into tiny pieces on a table. Run a plastic comb through dry hair a few times, then hold it just above the pieces and watch them jump!",
     "source_title": "Library of Congress: How Does Static Electricity Work?",
     "source_url": "https://www.loc.gov/everyday-mysteries/categories/physics/item/how-does-static-electricity-work/",
-    "speaker": "bit"
+    "speaker": "bit",
+    "topic": "Electricity",
+    "hook": "What tiny thing jumps onto a comb?",
+    "bit_line": "That little zap is electrons saying hello."
   },
   {
     "id": "006",
@@ -96,7 +111,10 @@
     "try_it": "Put a chair in the middle of a room as the Sun. Walk one slow lap around it while turning your body less than once. Congrats, you're Venus!",
     "source_title": "NASA Science: Venus Facts",
     "source_url": "https://science.nasa.gov/venus/venus-facts/",
-    "speaker": "fathom"
+    "speaker": "fathom",
+    "topic": "Space",
+    "hook": "Which planet's day outlasts its year?",
+    "bit_line": "Slow spinner, speedy traveler. Happy almost-birthday."
   },
   {
     "id": "007",
@@ -113,7 +131,10 @@
     "try_it": "Make five cards with 1, 2, 4, 8 and 16 dots. Flip cards face-up (1) or face-down (0) to make every number from 0 to 31!",
     "source_title": "CS Unplugged (University of Canterbury): Binary Numbers",
     "source_url": "https://www.csunplugged.org/en/topics/binary-numbers/",
-    "speaker": "bit"
+    "speaker": "bit",
+    "topic": "Computers",
+    "hook": "Which two digits build every computer?",
+    "bit_line": "Off and on. That is my whole language."
   },
   {
     "id": "008",
@@ -129,7 +150,10 @@
     "try_it": "Show a family member 10 drawings sorted into \"zorbles\" and \"not zorbles\" by a hidden rule, like \"has a circle.\" Can they learn the rule from examples alone?",
     "source_title": "MIT Sloan: Machine Learning, Explained",
     "source_url": "https://mitsloan.mit.edu/ideas-made-to-matter/machine-learning-explained",
-    "speaker": "fathom"
+    "speaker": "fathom",
+    "topic": "Learning",
+    "hook": "How can a machine learn to spot cats?",
+    "bit_line": "Show me enough examples and I start to notice."
   },
   {
     "id": "009",
@@ -146,7 +170,10 @@
     "try_it": "With a grown-up, cut a paper strip, slit the top into two blades, fold them opposite ways and add a paper clip to the bottom. Drop it from a step and watch it spin like a rotor!",
     "source_title": "NASA Science: Ingenuity Mars Helicopter",
     "source_url": "https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/",
-    "speaker": "bit"
+    "speaker": "bit",
+    "topic": "Space",
+    "hook": "What kind of robot first flew on Mars?",
+    "bit_line": "Seventy-two flights. My rotors are jealous."
   },
   {
     "id": "010",
@@ -162,7 +189,10 @@
     "try_it": "Next storm, stay indoors with a grown-up and watch from a window. Count from flash to boom, divide by 5, and track whether the storm is coming closer or moving away.",
     "source_title": "National Weather Service: Understanding Lightning - Thunder",
     "source_url": "https://www.weather.gov/safety/lightning-science-thunder",
-    "speaker": "fathom"
+    "speaker": "fathom",
+    "topic": "Weather",
+    "hook": "How far away was that lightning flash?",
+    "bit_line": "Count, divide by five, and stay inside."
   },
   {
     "id": "011",
@@ -178,7 +208,10 @@
     "try_it": "Open a compass, or a compass app with a grown-up, and slowly turn around in a circle. Then place a fridge magnet near the compass and watch the needle get confused!",
     "source_title": "NOAA NCEI: Geomagnetism Frequently Asked Questions",
     "source_url": "https://www.ncei.noaa.gov/products/geomagnetism-frequently-asked-questions",
-    "speaker": "bit"
+    "speaker": "bit",
+    "topic": "Earth",
+    "hook": "What pulls a compass needle north?",
+    "bit_line": "Earth is a giant magnet. I just like pointing."
   },
   {
     "id": "012",
@@ -195,7 +228,10 @@
     "try_it": "Hold a flashlight still as the Sun and slowly walk a globe or ball around in front of it with a sticker on top. Count each time the sticker comes into the light: that's a sunrise!",
     "source_title": "NASA: Space Station Facts and Figures",
     "source_url": "https://www.nasa.gov/international-space-station/space-station-facts-and-figures/",
-    "speaker": "fathom"
+    "speaker": "fathom",
+    "topic": "Space",
+    "hook": "How many sunrises fill one space day?",
+    "bit_line": "Good morning, sixteen times. I would never sleep."
   },
   {
     "id": "013",
@@ -211,7 +247,10 @@
     "try_it": "Have a friend stand in the middle as Earth. Walk in a circle around them while always facing them. Notice you spun around once too, and they never saw your back!",
     "source_title": "NASA Science: Moon Facts",
     "source_url": "https://science.nasa.gov/moon/facts/",
-    "speaker": "bit"
+    "speaker": "bit",
+    "topic": "Space",
+    "hook": "Why does the Moon show only one face?",
+    "bit_line": "I walked a circle facing you. You never saw my back."
   },
   {
     "id": "014",
@@ -228,6 +267,9 @@
     "try_it": "Start a phone stopwatch and try to stop it at exactly 10 seconds without looking. Try five times and see how close your brain clock gets!",
     "source_title": "NIST: How Do You Measure a Second?",
     "source_url": "https://www.nist.gov/how-do-you-measure-it/how-do-you-measure-second",
-    "speaker": "fathom"
+    "speaker": "fathom",
+    "topic": "Time",
+    "hook": "What keeps a phone clock perfectly on time?",
+    "bit_line": "Atom wiggles. That is how I know snack time."
   }
 ]
