@@ -1,0 +1,1 @@
+{"name":"bit-fathom-daily-riddle","version":"0.1.0","private":true,"description":"Bit & Fathom Daily Riddle — static PWA in www/, ready for Capacitor (npx cap init 'Daily Riddle' com.rippleparade.dailyriddle --web-dir=www; npx cap add ios)"}

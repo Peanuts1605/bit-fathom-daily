@@ -1,0 +1,185 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1a33"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Daily Riddle">
+<meta name="description" content="One kid-friendly science riddle a day from Bit &amp; Fathom. Guess first!">
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg"><link rel="apple-touch-icon" href="icon.svg">
+<title>Bit &amp; Fathom Daily Riddle · Ripple Parade</title>
+<style>
+:root{--navy:#0b1a33;--navy2:#13284d;--navy3:#1d3a6b;--teal:#2ec4b6;--teal2:#1f8f85;--cyan:#7fe7ff;--cream:#fff8e7;--gold:#f2c14e;--bronze:#b5733a;--ink:#eaf4ff;--text:#14213d;--ok:#1a7f5a;--miss:#9a3b1e}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:#0b1a33}html,body{margin:0;min-height:100%}
+body{font-family:ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:radial-gradient(120% 70% at 50% 0,var(--navy3),var(--navy) 65%) fixed;color:var(--ink);display:flex;justify-content:center;line-height:1.45}
+.app{width:100%;max-width:480px;min-height:100%;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + 12px) 16px calc(env(safe-area-inset-bottom) + 84px)}
+header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.brand{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.brand b{display:block;color:var(--ink);font-size:1.1rem;letter-spacing:.01em;text-transform:none}
+.streak{display:flex;align-items:center;gap:6px;background:var(--navy2);border:2px solid var(--gold);color:var(--gold);border-radius:999px;padding:6px 12px;font-weight:800;font-size:.95rem}
+.iconbtn{background:var(--navy2);border:2px solid #2b4677;color:var(--ink);border-radius:999px;width:40px;height:40px;font-size:1.05rem;cursor:pointer}
+.stage{display:flex;justify-content:center;align-items:flex-end;gap:18px;margin:6px 0 -14px;position:relative;z-index:1}
+.stage svg{filter:drop-shadow(0 6px 10px #0007)}
+.card{background:var(--cream);color:var(--text);border-radius:24px;padding:26px 18px 18px;box-shadow:0 14px 40px #0009;border:3px solid var(--cyan)}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#146b64;margin-bottom:8px}
+.chip{background:var(--navy);color:var(--cyan);border-radius:999px;padding:3px 10px;letter-spacing:.06em}
+h1{font-size:1.28rem;line-height:1.3;margin:0 0 4px}
+.prompt{font-weight:700;color:var(--bronze);margin:0 0 14px;font-size:.95rem}
+.choices{display:grid;gap:10px}
+.choice{font:inherit;font-weight:700;text-align:left;display:flex;gap:12px;align-items:center;min-height:54px;padding:12px 14px;border-radius:16px;border:2px solid var(--navy);background:#fff;color:var(--text);cursor:pointer;transition:transform .12s,background .2s}
+.choice:active{transform:scale(.98)}
+.choice:focus-visible,.iconbtn:focus-visible,.cta:focus-visible,nav button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.choice .l{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--cyan);color:var(--navy);font-weight:900}
+.choice[disabled]{cursor:default;opacity:.7}
+.choice.right{opacity:1;background:#dff7ec;border-color:var(--ok)}.choice.right .l{background:var(--ok);color:#fff}
+.choice.wrong{opacity:1;background:#fbe5dc;border-color:var(--miss)}.choice.wrong .l{background:var(--miss);color:#fff}
+.reveal{margin-top:16px;border-top:2px dashed var(--bronze);padding-top:14px;animation:up .45s ease-out}
+@keyframes up{from{opacity:0;transform:translateY(10px)}}
+.verdict{font-size:1.15rem;font-weight:900;margin:0 0 10px}
+.bubble{display:flex;gap:10px;align-items:flex-start;background:#eef9fb;border:2px solid #bfe9ef;border-radius:16px;padding:12px;margin:8px 0}
+.bubble.f{background:#fbf0e3;border-color:#ecd2b4}
+.who{flex:none;font-weight:900;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:8px;color:#fff;background:var(--teal2)}
+.bubble.f .who{background:#8a5427}
+.try{font-size:.92rem}
+.cta{display:block;width:100%;margin-top:12px;font:inherit;font-weight:800;padding:14px;border-radius:16px;border:0;background:var(--navy);color:var(--cyan);cursor:pointer}
+.next{text-align:center;color:#4a5a78;font-size:.88rem;margin:10px 0 0}
+section[hidden]{display:none}
+.panel h2{font-size:1.15rem;margin:4px 0 12px;color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat{background:var(--navy2);border:2px solid #2b4677;border-radius:16px;padding:10px;text-align:center}.stat b{display:block;font-size:1.5rem;color:var(--gold)}.stat span{font-size:.75rem;color:#c6d6ef}
+.hist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.hist li{background:var(--cream);color:var(--text);border-radius:14px;padding:10px 12px;display:flex;gap:10px;align-items:center}
+.hist small{display:block;color:#4a5a78}
+.empty{color:#c6d6ef;text-align:center;padding:20px}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;background:#0b1a33f2;border-top:1px solid #2b4677;padding:8px 0 calc(env(safe-area-inset-bottom) + 8px);backdrop-filter:blur(8px)}
+nav div{display:flex;gap:6px;width:100%;max-width:480px;padding:0 16px}
+nav button{flex:1;font:inherit;font-size:.8rem;font-weight:700;background:none;border:0;color:#c6d6ef;padding:6px;border-radius:12px;cursor:pointer}
+nav button span{display:block;font-size:1.25rem}
+nav button[aria-current=page]{color:var(--cyan);background:var(--navy2)}
+.gate{position:fixed;inset:0;background:#000a;display:grid;place-items:center;padding:20px;z-index:9}
+.gate[hidden]{display:none}
+.gbox{background:var(--cream);color:var(--text);border-radius:20px;padding:20px;max-width:360px;width:100%}
+.gbox input{font:inherit;font-size:1.2rem;width:100%;padding:10px;border-radius:12px;border:2px solid var(--navy);margin:8px 0}
+.row{display:flex;gap:8px}.row .cta{margin-top:4px}.ghost{background:#e4e8f0!important;color:var(--text)!important}
+.grown p{font-size:.92rem}
+.toggle{display:flex;justify-content:space-between;align-items:center;background:var(--navy2);border-radius:14px;padding:12px;margin-bottom:10px}
+footer{margin-top:16px;text-align:center;font-size:.75rem;color:#9fb3d4}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div class="app">
+<header>
+ <div class="brand">Ripple Parade<b>Daily Riddle</b></div>
+ <div style="display:flex;gap:8px;align-items:center">
+  <div class="streak" id="streak" aria-label="Streak">🔥 <span id="streakN">0</span></div>
+  <button class="iconbtn" id="soundBtn" aria-label="Sound off" aria-pressed="false">🔇</button>
+ </div>
+</header>
+
+<section id="today" class="panel">
+ <div class="stage" aria-hidden="true">
+  <svg width="92" height="108" viewBox="0 0 110 130"><line x1="55" y1="10" x2="55" y2="28" stroke="#2ec4b6" stroke-width="4"/><circle cx="55" cy="8" r="6" fill="#f2c14e"/><rect x="15" y="28" width="80" height="60" rx="18" fill="#2ec4b6"/><g class="blink"><circle cx="38" cy="55" r="9" fill="#0b1a33"/><circle cx="72" cy="55" r="9" fill="#0b1a33"/></g><path d="M40 72q15 10 30 0" stroke="#0b1a33" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="30" y="92" width="50" height="34" rx="10" fill="#1f8f85"/><text x="55" y="115" text-anchor="middle" fill="#eaf4ff" font-weight="700" font-family="system-ui">BIT</text></svg>
+  <svg width="100" height="108" viewBox="0 0 120 130"><rect x="20" y="20" width="80" height="66" rx="8" fill="#b5733a" stroke="#f2c14e" stroke-width="3"/><circle cx="45" cy="52" r="13" fill="#f2c14e"/><circle cx="45" cy="52" r="6" fill="#0b1a33"/><circle cx="78" cy="52" r="10" fill="#f2c14e"/><circle cx="78" cy="52" r="4" fill="#0b1a33"/><rect x="40" y="72" width="40" height="6" rx="3" fill="#0b1a33"/><g fill="#f2c14e"><circle cx="20" cy="20" r="5"/><circle cx="100" cy="20" r="5"/></g><rect x="32" y="92" width="56" height="34" rx="6" fill="#8a5427"/><text x="60" y="115" text-anchor="middle" fill="#eaf4ff" font-weight="700" font-family="system-ui">FATHOM</text></svg>
+ </div>
+ <article class="card" aria-live="polite">
+  <div class="meta"><span id="dateL"></span><span class="chip" id="topic"></span></div>
+  <h1 id="q"></h1>
+  <p class="prompt" id="prompt">Guess first! 🤔</p>
+  <div class="choices" id="choices" role="group" aria-label="Answer choices"></div>
+  <div class="reveal" id="reveal" hidden>
+   <p class="verdict" id="verdict"></p>
+   <div class="bubble f"><span class="who">Fathom</span><div><b>Let's fathom it!</b> <span id="why"></span></div></div>
+   <div class="bubble" id="tryBox"><span class="who">Bit</span><div class="try" id="try"></div></div>
+   <button class="cta" id="shareBtn">See my streak 🔥</button>
+   <p class="next" id="nextL"></p>
+  </div>
+ </article>
+ <footer>Bit &amp; Fathom · a kids museum for the internet<br>No ads. No tracking. Your progress stays on this device.</footer>
+</section>
+
+<section id="history" class="panel" hidden>
+ <h2>Your riddle journal 📓</h2>
+ <div class="stats"><div class="stat"><b id="sStreak">0</b><span>day streak</span></div><div class="stat"><b id="sBest">0</b><span>best streak</span></div><div class="stat"><b id="sRight">0/0</b><span>fathomed</span></div></div>
+ <ul class="hist" id="histList"></ul>
+</section>
+
+<section id="grown" class="panel grown" hidden>
+ <h2>For grown-ups 👋</h2>
+ <div class="toggle"><span>Sound effects</span><button class="iconbtn" id="soundBtn2" aria-label="Toggle sound">🔇</button></div>
+ <p>Bit &amp; Fathom Daily Riddle shows one short science riddle a day for curious kids. Kids guess first, then a reveal card explains why.</p>
+ <p><b>Privacy:</b> no ads, no accounts, no tracking or analytics. Streaks and history are saved only in this browser's local storage.</p>
+ <p>Made by Ripple Parade. Watch more on our YouTube channel @RippleParade (opens outside the app).</p>
+ <button class="cta ghost" id="resetBtn">Reset progress on this device</button>
+</section>
+</div>
+
+<nav aria-label="Main"><div>
+ <button data-tab="today" aria-current="page"><span>🧩</span>Today</button>
+ <button data-tab="history"><span>📓</span>Journal</button>
+ <button data-tab="grown"><span>🔒</span>Grown-ups</button>
+</div></nav>
+
+<div class="gate" id="gate" hidden role="dialog" aria-modal="true" aria-labelledby="gTitle">
+ <div class="gbox"><h2 id="gTitle" style="margin:0 0 6px;font-size:1.1rem">Grown-ups only</h2>
+ <p style="margin:0">Please answer to continue: <b id="gQ"></b></p>
+ <input id="gA" inputmode="numeric" autocomplete="off" aria-label="Answer">
+ <p id="gErr" style="color:var(--miss);margin:0 0 6px;min-height:1.2em;font-size:.9rem"></p>
+ <div class="row"><button class="cta ghost" id="gNo">Cancel</button><button class="cta" id="gGo">Continue</button></div></div>
+</div>
+
+<script src="riddles.js"></script>
+<script>
+(function(){
+var K='bfdr.v1',R=window.RIDDLES,L='ABCD';
+var st=load();// F-M11-3 (Lens 2026-10-28): saved data is untrusted; accept only {h:{date:{..}}}, else start fresh so taps never go dead
+function load(){var d={h:{},sound:false,best:0};try{var o=JSON.parse(localStorage.getItem(K));if(!o||typeof o!=='object'||Array.isArray(o)||!o.h||typeof o.h!=='object'||Array.isArray(o.h))return d;var h={};Object.keys(o.h).forEach(function(k){var e=o.h[k];if(e&&typeof e==='object'&&!Array.isArray(e))h[k]=e});var b=o.best;return{h:h,sound:o.sound===true,best:(typeof b==='number'&&isFinite(b)&&b>=0)?Math.floor(b):0}}catch(e){return d}}
+function save(){try{localStorage.setItem(K,JSON.stringify(st))}catch(e){}}
+function key(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function dayNum(d){return Math.round(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5)}
+var now=new Date(),today=key(now),START=dayNum(new Date(2026,9,16));
+function riddleFor(d){var n=((dayNum(d)-START)%R.length+R.length)%R.length;return R[n]}
+var r=riddleFor(now);
+function $(i){return document.getElementById(i)}
+function streak(){var s=0,d=new Date(now);if(!st.h[key(d)])d.setDate(d.getDate()-1);while(st.h[key(d)]){s++;d.setDate(d.getDate()-1)}return s}
+// sound (optional, off by default, WebAudio only)
+var ac;function beep(ok){if(!st.sound)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();var notes=ok?[523,659,784]:[392,330];notes.forEach(function(f,i){var o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,ac.currentTime+i*.12);g.gain.exponentialRampToValueAtTime(.15,ac.currentTime+i*.12+.02);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+i*.12+.25);o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+i*.12);o.stop(ac.currentTime+i*.12+.3)})}catch(e){}}
+function paintSound(){['soundBtn','soundBtn2'].forEach(function(i){var b=$(i);b.textContent=st.sound?'🔊':'🔇';b.setAttribute('aria-pressed',st.sound);b.setAttribute('aria-label',st.sound?'Sound on':'Sound off')})}
+function toggleSound(){st.sound=!st.sound;save();paintSound();beep(true)}
+$('soundBtn').onclick=toggleSound;$('soundBtn2').onclick=toggleSound;
+function render(){
+ $('dateL').textContent=now.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+ $('topic').textContent=r.topic;$('q').textContent=r.q;
+ var c=$('choices');c.innerHTML='';
+ r.c.forEach(function(t,i){var b=document.createElement('button');b.className='choice';b.type='button';b.innerHTML='<span class="l">'+L[i]+'</span><span></span>';b.lastChild.textContent=t;b.onclick=function(){pick(i)};c.appendChild(b)});
+ var done=st.h[today];if(done&&done.id===r.id)show(done.g,false);
+ $('streakN').textContent=streak();paintSound();
+}
+function pick(i){if(st.h[today])return;var ok=i===r.a;st.h[today]={id:r.id,g:i,ok:ok};var s=streak();if(s>(st.best||0))st.best=s;save();beep(ok);show(i,true);$('streakN').textContent=s}
+function show(g,anim){
+ var bs=$('choices').children;for(var j=0;j<bs.length;j++){bs[j].disabled=true;if(j===r.a)bs[j].classList.add('right');else if(j===g)bs[j].classList.add('wrong')}
+ var ok=g===r.a;$('prompt').hidden=true;
+ $('verdict').textContent=ok?'You fathomed it! 🎉':'Nice try! Robots learn from mistakes too. 💪';
+ $('verdict').style.color=ok?'var(--ok)':'var(--miss)';
+ $('why').textContent=r.why;
+ if(r.try){$('try').innerHTML='<b>Try it:</b> ';$('try').appendChild(document.createTextNode(r.try))}else{$('try').innerHTML='<b>The answer:</b> ';$('try').appendChild(document.createTextNode(L[r.a]+') '+r.c[r.a]))}
+ $('nextL').textContent='A new riddle unlocks tomorrow. Come back to keep your streak!';
+ var rv=$('reveal');rv.hidden=false;if(anim)setTimeout(function(){rv.scrollIntoView({behavior:'smooth',block:'start'})},80);
+}
+$('shareBtn').onclick=function(){tab('history')};
+function renderHist(){
+ var ks=Object.keys(st.h).sort().reverse(),ul=$('histList');ul.innerHTML='';var right=0;
+ ks.forEach(function(k){var e=st.h[k],rr=R.filter(function(x){return x.id===e.id})[0];if(e.ok)right++;if(!rr)return;var li=document.createElement('li');li.innerHTML='<span style="font-size:1.4rem">'+(e.ok?'✅':'💡')+'</span><div><b></b><small></small></div>';li.querySelector('b').textContent=rr.q.length>70?rr.q.slice(0,68)+'…':rr.q;li.querySelector('small').textContent=new Date(k+'T12:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+rr.topic+' · '+(e.ok?'Fathomed':'Learned something');ul.appendChild(li)});
+ if(!ks.length)ul.innerHTML='<li class="empty" style="background:none;color:#c6d6ef;justify-content:center">No riddles yet. Solve today\'s to start your journal!</li>';
+ $('sStreak').textContent=streak();$('sBest').textContent=st.best||0;$('sRight').textContent=right+'/'+ks.length;
+}
+// parent gate placeholder (simple math; swap for native gate in the iOS build)
+var gTarget,gAns;
+function gate(cb){var a=6+Math.floor(Math.random()*7),b=3+Math.floor(Math.random()*6);gAns=a*b;$('gQ').textContent=a+' × '+b+' = ?';$('gA').value='';$('gErr').textContent='';gTarget=cb;$('gate').hidden=false;$('gA').focus()}
+$('gNo').onclick=function(){$('gate').hidden=true};
+$('gGo').onclick=function(){if(parseInt($('gA').value,10)===gAns){$('gate').hidden=true;gTarget()}else $('gErr').textContent='Not quite. Ask a grown-up!'};
+$('gA').onkeydown=function(e){if(e.key==='Enter')$('gGo').click();if(e.key==='Escape')$('gNo').click()};
+$('resetBtn').onclick=function(){if(confirm('Erase streaks and journal on this device?')){st={h:{},sound:st.sound,best:0};save();location.reload()}};
+function tab(t){if(t==='grown'&&$('grown').hidden)return gate(function(){go(t)});go(t)}
+function go(t){['today','history','grown'].forEach(function(x){$(x).hidden=x!==t});document.querySelectorAll('nav button').forEach(function(b){if(b.dataset.tab===t)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});if(t==='history')renderHist();window.scrollTo(0,0)}
+document.querySelectorAll('nav button').forEach(function(b){b.onclick=function(){tab(b.dataset.tab)}});
+render();
+if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
+})();
+</script></body></html>
