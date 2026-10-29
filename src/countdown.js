@@ -1,6 +1,6 @@
 /* Countdown to the next local midnight. Ticks every second, pauses while hidden.
-   The aria-live label changes when its sentence changes: once a minute until the
-   last minute, then once a second. */
+   The visible sentence can name the seconds. The aria-live label changes once
+   a minute, and through the last minute it stays on "less than a minute". */
 (function(global){
   function msUntilNextLocalMidnight(now){
     var n=now||new Date();
@@ -27,13 +27,18 @@
     if(m===0) return 'Next riddle in '+piece(h,'hour','hours');
     return 'Next riddle in '+piece(h,'hour','hours')+' and '+piece(m,'minute','minutes');
   }
+  function announceText(ms){
+    if(ms<60000) return 'Next riddle in less than a minute';
+    return liveText(ms);
+  }
   function startTicker(opts){
     var timer=null, lastText='';
     function tick(){
       var ms=msUntilNextLocalMidnight(new Date());
       if(opts.el) opts.el.textContent=formatHMS(ms);
+      if(opts.visualEl) opts.visualEl.textContent=liveText(ms);
       if(opts.liveEl){
-        var text=liveText(ms);
+        var text=announceText(ms);
         if(text!==lastText){ lastText=text; opts.liveEl.textContent=text; }
       }
     }
@@ -48,5 +53,5 @@
     arm();
     return {stop:stop, tick:tick, arm:arm};
   }
-  global.BFCount={msUntilNextLocalMidnight:msUntilNextLocalMidnight, formatHMS:formatHMS, liveText:liveText, startTicker:startTicker};
+  global.BFCount={msUntilNextLocalMidnight:msUntilNextLocalMidnight, formatHMS:formatHMS, liveText:liveText, announceText:announceText, startTicker:startTicker};
 })(window);

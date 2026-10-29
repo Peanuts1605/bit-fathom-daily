@@ -442,6 +442,25 @@ def band_999(browser):
     ctx.close()
 
 
+def desktop_1024(browser):
+    ctx = browser.new_context(viewport={'width': 1024, 'height': 768})
+    page = ctx.new_page()
+    open_ready(page)
+    m = metrics(page)
+    fit = (
+        m['nChoices'] >= 4
+        and m['scrollY'] == 0
+        and m['lastTop'] >= 0
+        and m['lastBottom'] <= m['navTop'] + 1
+    )
+    check(
+        '1024x768 last option clears nav',
+        fit,
+        f"n {m['nChoices']} bottom {m['lastBottom']:.0f} nav {m['navTop']:.0f}",
+    )
+    ctx.close()
+
+
 def short_phone(browser):
     ctx = browser.new_context(
         viewport={'width': 375, 'height': 667},
@@ -491,6 +510,7 @@ def main():
         hscroll_320(browser)
         short_phone(browser)
         band_999(browser)
+        desktop_1024(browser)
         focus_share(browser, 320, 700)
         focus_share(browser, 375, 667)
         focus_share(browser, 768, 1024)

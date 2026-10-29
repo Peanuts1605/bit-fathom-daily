@@ -1,4 +1,4 @@
-/* App shell only. Old cache names are deleted on activate.
+/* App shell only. Older bf-riddle caches are deleted on activate.
    Query strings share one cache entry. Shell files are never trimmed out. */
 const C='bf-riddle-share-v5';
 const MAX=8;
@@ -33,7 +33,7 @@ self.addEventListener('install',function(e){
 });
 self.addEventListener('activate',function(e){
   e.waitUntil(caches.keys().then(function(keys){
-    return Promise.all(keys.filter(function(k){return k!==C}).map(function(k){return caches.delete(k)}));
+    return Promise.all(keys.filter(function(k){return k.indexOf('bf-riddle-')===0 && k!==C}).map(function(k){return caches.delete(k)}));
   }));
   self.clients.claim();
 });

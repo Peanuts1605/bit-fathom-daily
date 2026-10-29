@@ -13,7 +13,7 @@ Curious kids (about 7–12) with a grown-up nearby, at home or in class. No acco
 - Python for the check: `bash tooling/setup-pyenv.sh` (installs `requirements.txt` into `tooling/pyenv`). pngquant is a system package (`apt install pngquant`).
 
 ## Deploy
-Config is `wrangler.jsonc` (Worker name `bit-fathom-daily-next`). `build.py` fills `publish/` with the HTML bundle plus `/og/` cards. `worker/share-routes.js` serves real `/r/NNN/` pages and the fallback for everything else.
+Config is `wrangler.jsonc` (Worker name `bit-fathom-daily-next`). `build.py` fills `publish/` with the HTML bundle plus `/og/` cards. `worker/share-routes.js` serves real `/r/NNN/` pages, the generic card for other `/r/` paths, and leaves every other missing path as a 404.
 
 ```
 npx wrangler dev --local

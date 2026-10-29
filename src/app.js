@@ -179,7 +179,7 @@ document.addEventListener('visibilitychange', function(){if(!document.hidden) re
 function applyDeepLink(){
   var d=null;
   try{d=new URLSearchParams(location.search).get('d')}catch(e){}
-  if(!d) return;
+  if(!d||!/^\d{1,5}$/.test(d)) return;
   var n=parseInt(d,10);
   if(!n||n<1) return;
   var idx=n-1;
@@ -567,7 +567,7 @@ function start(data){
   wire();
   render();
   armMidnight();
-  if(window.BFCount) window.BFCount.startTicker({el:$('count'), liveEl:$('countLive')});
+  if(window.BFCount) window.BFCount.startTicker({el:$('count'), visualEl:$('countSay'), liveEl:$('countLive')});
   if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){
     window.addEventListener('load', function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
   }

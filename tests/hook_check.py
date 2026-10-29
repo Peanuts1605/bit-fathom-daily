@@ -22,6 +22,7 @@ check('built hook is the explicit flag', 'if(true)' in built and 'if(%%TESTHOOK%
 check('built page has no hostname gate', 'location.hostname' not in built)
 check('sw cache is versioned', "const C='bf-riddle-share-v5'" in sw and 'caches.delete' in sw)
 check('sw cache is capped', 'const MAX=8' in sw and 'shellRequest' in sw and 'isPinned' in sw and "u.search=''" in sw)
+check('sw deletes only its own caches', "k.indexOf('bf-riddle-')===0" in sw)
 font_path = ROOT / 'dist' / 'assets' / 'fonts' / 'AtkinsonHyperlegibleNext-subset.woff2'
 cmap = TTFont(str(font_path)).getBestCmap() or {}
 check('archive arrows in the font subset', 0x2039 in cmap and 0x203A in cmap)

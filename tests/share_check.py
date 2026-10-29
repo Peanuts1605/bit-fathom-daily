@@ -66,10 +66,33 @@ with sync_playwright() as p:
     check('last minute is not 0 minutes', plurals['zero'] == 'Next riddle in less than a minute' and '0 minutes' not in plurals['zero'], plurals['zero'])
     check('42 seconds', plurals['secs'] == 'Next riddle in 42 seconds', plurals['secs'])
     check('1 second', plurals['oneSec'] == 'Next riddle in 1 second', plurals['oneSec'])
+    announced = page.evaluate('''() => ({
+      last: window.BFCount.announceText(42000),
+      zero: window.BFCount.announceText(0),
+      minute: window.BFCount.announceText(60000),
+      sayHidden: document.getElementById('countSay').getAttribute('aria-hidden'),
+      live: document.getElementById('countLive').getAttribute('aria-live')
+    })''')
+    check('live region stays on less than a minute', announced['last'] == 'Next riddle in less than a minute' and announced['zero'] == announced['last'] and 'second' not in announced['last'], announced['last'])
+    check('minute boundary still announces minutes', announced['minute'] == 'Next riddle in 1 minute', announced['minute'])
+    check('seconds are aria-hidden', announced['sayHidden'] == 'true' and announced['live'] == 'polite', str(announced))
     c1 = page.locator('#count').inner_text()
     page.wait_for_timeout(1100)
     c2 = page.locator('#count').inner_text()
     check('countdown decreases', c1 != c2 and c1 > c2, f'{c1} -> {c2}')
+    page.goto(URL + '?d=001')
+    page.wait_for_function('window.__BF && document.querySelectorAll("#choices button").length>0')
+    lab001 = page.locator('#label').inner_text()
+    check('d=001 opens that riddle', '#001' in lab001, lab001.replace('\n', ' '))
+    page.goto(URL + '?d=' + ('9' * 30))
+    page.wait_for_function('window.__BF && document.getElementById("label").textContent.length>0')
+    lab_huge = page.locator('#label').inner_text()
+    today_no = page.evaluate('() => window.BFShare.pad(window.__BF.getState().today + 1)')
+    check('30 nines do not open riddle 001', f'#{today_no}' in lab_huge and '#001' not in lab_huge, lab_huge.replace('\n', ' '))
+    page.goto(URL + '?d=' + ('9' * 400))
+    page.wait_for_function('window.__BF && document.getElementById("label").textContent.length>0')
+    lab_long = page.locator('#label').inner_text()
+    check('400 digits stay on today', f'#{today_no}' in lab_long, lab_long.replace('\n', ' '))
     browser.close()
 
 print('RESULT', 'PASS' if fail == 0 else f'FAIL ({fail})')

@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Daily Riddle">
 <meta name="description" content="Bit &amp; Fathom's daily science riddle. Guess first, then learn why. No accounts, no tracking.">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-pu4DYeP/OcypFvclSsOi+rpuACwx7t5tuKH7uELZAkk='; worker-src 'self'; style-src 'sha256-RoGpt+G+BsXtW5lVtg/vBJkgQEJvW0bMMdSSNPreUHo='; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-P20yVDgmX4G/CJ5t9BEzNJC2FYRWOStrZXaPdjCog7c='; worker-src 'self'; style-src 'sha256-ZCWnaoHGIoy4/spsUACVhiX2vUF7CtpvogL9OLd3l0s='; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'">
 <meta property="og:url" content="https://bit-fathom-daily-next.gigantic-stranger.workers.dev/">
 <meta property="og:title" content="Bit &amp; Fathom Daily Riddle">
 <meta property="og:description" content="Today's science riddle is waiting. Guess first, then learn why. No spoilers here.">
@@ -54,12 +54,12 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{margin:0;min-height:100%;background:#071526}
-html{overflow-x:hidden;scroll-padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+html{overflow-x:hidden;scroll-padding-bottom:calc(64px + env(safe-area-inset-bottom))}
 body{font-family:"Atkinson Hyperlegible Next",sans-serif;color:var(--cream);line-height:1.45;font-size:20px;overflow-x:hidden}
 img{max-width:100%;height:auto}
 .backdrop{position:fixed;inset:0;z-index:0;background:radial-gradient(120% 80% at 50% 0%,#1d4a6e,var(--navy) 62%)}
 .backdrop img{width:100%;height:100%;object-fit:cover;display:block}
-.app{position:relative;z-index:1;width:min(1180px,calc(100% - 20px));margin:0 auto;padding:calc(env(safe-area-inset-top) + 4px) 0 calc(env(safe-area-inset-bottom) + 76px)}
+.app{position:relative;z-index:1;width:min(1180px,calc(100% - 20px));margin:0 auto;padding:calc(env(safe-area-inset-top) + 4px) 0 calc(env(safe-area-inset-bottom) + 64px)}
 header{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px;flex-wrap:wrap}
 .brand{font-size:14px;letter-spacing:.02em;text-transform:none;color:var(--gold);font-weight:800}
 .brand b{display:block;color:var(--cream);font-size:22px;letter-spacing:0;text-transform:none;font-family:"Bricolage Grotesque",sans-serif}
@@ -120,7 +120,7 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:760;font-size:clamp(
 #count{font-variant-numeric:tabular-nums;font-size:28px;font-family:"Bricolage Grotesque",sans-serif}
 .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .row button{min-height:52px;padding:12px 16px;border-radius:16px;border:0;font-weight:800;font-size:20px;background:var(--navy);color:var(--teal);flex:1}
-#share{scroll-margin-bottom:calc(76px + env(safe-area-inset-bottom))}
+#share{scroll-margin-bottom:calc(64px + env(safe-area-inset-bottom))}
 #shareMsg{min-height:1.3em;font-weight:800;color:#0e7c78;margin:.3em 0}
 .dots{display:flex;gap:6px;justify-content:center;margin:12px 0 0}
 .dots i{width:9px;height:9px;border-radius:50%;background:#2a4572}
@@ -176,6 +176,16 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(7,21,38,.92
 @media(min-width:760px) and (max-width:999px){
   .hero{max-height:220px;align-self:start}
   .bit{height:200px;width:auto;max-width:100%;min-height:0;object-fit:contain;object-position:center}
+}
+@media(min-width:1000px) and (max-height:820px){
+  .app{padding-top:4px}
+  header{margin-bottom:0}
+  .strip{margin-bottom:2px}
+  .cardface{padding:8px 16px;gap:6px 20px}
+  h1{margin:0}
+  #question{margin:0 0 .1em;line-height:1.25}
+  .choices{gap:4px}
+  .choices button{min-height:44px;padding:2px 12px;box-shadow:none}
 }
 @media(max-width:420px){
   .strip b{font-size:18px}
@@ -247,7 +257,8 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(7,21,38,.92
         <p class="src">Fact-checked with: <a id="src" target="_blank" rel="noopener"></a></p>
         <div class="cells" id="grid" aria-label="Share grid"></div>
         <pre class="sharetext" id="sharePreview"></pre>
-        <p class="countdown">Next riddle in <b id="count">--:--:--</b></p>
+        <p class="countdown" aria-hidden="true">Next riddle in <b id="count">--:--:--</b></p>
+        <p id="countSay" class="countdown" aria-hidden="true"></p>
         <p id="countLive" class="sr" aria-live="polite"></p>
         <div class="row">
           <button type="button" id="share">Share</button>
@@ -534,8 +545,8 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(7,21,38,.92
 })(window);
 
 /* Countdown to the next local midnight. Ticks every second, pauses while hidden.
-   The aria-live label changes when its sentence changes: once a minute until the
-   last minute, then once a second. */
+   The visible sentence can name the seconds. The aria-live label changes once
+   a minute, and through the last minute it stays on "less than a minute". */
 (function(global){
   function msUntilNextLocalMidnight(now){
     var n=now||new Date();
@@ -562,13 +573,18 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(7,21,38,.92
     if(m===0) return 'Next riddle in '+piece(h,'hour','hours');
     return 'Next riddle in '+piece(h,'hour','hours')+' and '+piece(m,'minute','minutes');
   }
+  function announceText(ms){
+    if(ms<60000) return 'Next riddle in less than a minute';
+    return liveText(ms);
+  }
   function startTicker(opts){
     var timer=null, lastText='';
     function tick(){
       var ms=msUntilNextLocalMidnight(new Date());
       if(opts.el) opts.el.textContent=formatHMS(ms);
+      if(opts.visualEl) opts.visualEl.textContent=liveText(ms);
       if(opts.liveEl){
-        var text=liveText(ms);
+        var text=announceText(ms);
         if(text!==lastText){ lastText=text; opts.liveEl.textContent=text; }
       }
     }
@@ -583,7 +599,7 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(7,21,38,.92
     arm();
     return {stop:stop, tick:tick, arm:arm};
   }
-  global.BFCount={msUntilNextLocalMidnight:msUntilNextLocalMidnight, formatHMS:formatHMS, liveText:liveText, startTicker:startTicker};
+  global.BFCount={msUntilNextLocalMidnight:msUntilNextLocalMidnight, formatHMS:formatHMS, liveText:liveText, announceText:announceText, startTicker:startTicker};
 })(window);
 
 /* Bit & Fathom Daily Riddle — web streak rules + app shell.
@@ -767,7 +783,7 @@ document.addEventListener('visibilitychange', function(){if(!document.hidden) re
 function applyDeepLink(){
   var d=null;
   try{d=new URLSearchParams(location.search).get('d')}catch(e){}
-  if(!d) return;
+  if(!d||!/^\d{1,5}$/.test(d)) return;
   var n=parseInt(d,10);
   if(!n||n<1) return;
   var idx=n-1;
@@ -1155,7 +1171,7 @@ function start(data){
   wire();
   render();
   armMidnight();
-  if(window.BFCount) window.BFCount.startTicker({el:$('count'), liveEl:$('countLive')});
+  if(window.BFCount) window.BFCount.startTicker({el:$('count'), visualEl:$('countSay'), liveEl:$('countLive')});
   if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){
     window.addEventListener('load', function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
   }

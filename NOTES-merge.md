@@ -31,7 +31,7 @@ Static `/r/NNN/` pages and og cards are generated for every day from **#001 thro
 
 Share text and `og:url` use the build-time origin `BF_ORIGIN` (default `https://bit-fathom-daily-next.gigantic-stranger.workers.dev`), including on localhost and in Capacitor.
 
-`/r/*` is handled by `worker/share-routes.js`, not by `_redirects`. workerd rejects `/r/* /r/fallback/index.html 200` as a loop, and `_redirects` run before assets, so a catch-all would hide the real pages. The Worker runs first for `/r/*`: it serves the asset when it exists, redirects a later puzzle number to `/?d=NNN`, sends a non-canonical number such as `/r/0029` to `/r/029/`, and returns the generic card for `/r/abc` and `/r/000`.
+`/r/*` is handled by `worker/share-routes.js`, not by `_redirects`. workerd rejects `/r/* /r/fallback/index.html 200` as a loop, and `_redirects` run before assets, so a catch-all would hide the real pages. The Worker serves an existing `/r/NNN/` asset, redirects a later puzzle number (`1`–`99999`) to `/?d=NNN`, sends a non-canonical number such as `/r/0029` to `/r/029/`, and returns the generic card for other `/r/` paths (`/r/abc`, `/r/000`, very long numbers). Any miss outside `/r/` stays a 404.
 
 ## Deploy (Workers Static Assets)
 

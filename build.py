@@ -51,16 +51,17 @@ def page_policy(script_hash, style_hash):
     )
 
 
+def r_csp():
+    """The /r/ header policy lives in the worker. _headers and meta tags copy it."""
+    match = re.search(r'const R_CSP = "([^"]+)"', (ROOT / 'worker' / 'share-routes.js').read_text())
+    if not match or 'unsafe-inline' in match.group(1):
+        raise SystemExit('FAIL build: worker R_CSP missing')
+    return match.group(1)
+
+
 def r_policy(script):
-    return (
-        "default-src 'self'; "
-        f"script-src {script}; "
-        "style-src 'none'; "
-        "img-src 'self' data:; "
-        "font-src 'self'; "
-        "object-src 'none'; "
-        "base-uri 'none'"
-    )
+    policy = re.sub(r"script-src [^;]+", f"script-src {script}", r_csp())
+    return re.sub(r"; frame-ancestors 'none'", '', policy)
 
 
 def apply_csp(html):
@@ -172,7 +173,7 @@ def fallback_page():
 
 
 FALLBACK_JS = """(function(){
-  var m = location.pathname.match(/\\/r\\/(\\d+)/);
+  var m = location.pathname.match(/^\\/r\\/(\\d{1,5})\\/?$/);
   if (!m) return;
   var n = parseInt(m[1], 10);
   if (!n || n < 1) return;
@@ -187,8 +188,10 @@ def write_headers(policy):
     # frame-ancestors is ignored in a meta tag, so it lives only in these headers.
     policy = policy + "; frame-ancestors 'none'"
     nosniff = 'X-Content-Type-Options: nosniff\n  Referrer-Policy: no-referrer'
-    rpol = r_policy("'self'") + "; frame-ancestors 'none'"
     text = (
+        '/*\n'
+        f'  {nosniff}\n'
+        '\n'
         '/\n'
         f'  Content-Security-Policy: {policy}\n'
         f'  {nosniff}\n'
@@ -198,7 +201,7 @@ def write_headers(policy):
         f'  {nosniff}\n'
         '\n'
         '/r/*\n'
-        f'  Content-Security-Policy: {rpol}\n'
+        f'  Content-Security-Policy: {r_csp()}\n'
         f'  {nosniff}\n'
     )
     (DIST / '_headers').write_text(text)

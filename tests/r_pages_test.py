@@ -2,7 +2,8 @@
 """ /r/ routes against wrangler dev --local (workerd), not a Python redirect emulation.
 
 Real pages 001 and 112 are assets. Later puzzle numbers redirect to /?d=NNN.
-Malformed paths return the generic card. CSP and nosniff stay on every response.
+Malformed /r/ paths return the generic card. Every other miss is a real 404.
+CSP and nosniff stay on the riddle responses.
 """
 import http.client, os, shutil, socket, subprocess, time
 from pathlib import Path
@@ -31,10 +32,27 @@ def fetch(port, path):
     conn = http.client.HTTPConnection('127.0.0.1', port, timeout=20)
     conn.request('GET', path)
     res = conn.getresponse()
-    body = res.read().decode('utf-8', 'replace')
+    raw = res.read()
     headers = {k.lower(): v for k, v in res.getheaders()}
     conn.close()
-    return res.status, headers, body
+    return res.status, headers, raw
+
+
+def text(raw):
+    return raw.decode('utf-8', 'replace')
+
+
+def location_is(headers, expected):
+    return headers.get('location', '') == expected
+
+
+def png_card(raw, headers):
+    ctype = headers.get('content-type', '').split(';')[0].strip().lower()
+    if ctype != 'image/png' or not raw.startswith(b'\x89PNG\r\n\x1a\n') or len(raw) < 24:
+        return False
+    width = int.from_bytes(raw[16:20], 'big')
+    height = int.from_bytes(raw[20:24], 'big')
+    return width == 1200 and height == 630
 
 
 def header_ok(headers):
@@ -90,39 +108,67 @@ def main():
             print('RESULT FAIL')
             raise SystemExit(1)
 
-        status, headers, body = fetch(port, '/r/001/')
+        status, headers, raw = fetch(port, '/r/001/')
+        body = text(raw)
         check('r/001 asset', status == 200 and f'{CANON}/r/001/' in body and 'Play riddle #001' in body, f'{status}')
         check('r/001 security headers', header_ok(headers), headers.get('content-security-policy', '')[:120])
 
-        status, headers, body = fetch(port, '/r/112/')
+        status, headers, raw = fetch(port, '/r/112/')
+        body = text(raw)
         check('r/112 asset', status == 200 and f'{CANON}/r/112/' in body and 'Play riddle #112' in body, f'{status}')
         check('r/112 security headers', header_ok(headers))
 
-        status, headers, body = fetch(port, '/r/113/')
+        status, headers, raw = fetch(port, '/r/029')
         loc = headers.get('location', '')
-        check('r/113 redirects past the last page', status == 302 and loc.endswith('/?d=113'), f'{status} {loc}')
+        check('r/029 adds the trailing slash', status == 307 and location_is(headers, '/r/029/'), f'{status} {loc}')
+
+        status, headers, raw = fetch(port, '/r/113/')
+        loc = headers.get('location', '')
+        check('r/113 redirects past the last page', status == 302 and location_is(headers, '/?d=113'), f'{status} {loc}')
         check('r/113 security headers', header_ok(headers))
 
         status, headers, _ = fetch(port, '/r/999')
         loc = headers.get('location', '')
-        check('r/999 redirects', status == 302 and loc.endswith('/?d=999'), f'{status} {loc}')
+        check('r/999 redirects', status == 302 and location_is(headers, '/?d=999'), f'{status} {loc}')
         check('r/999 security headers', header_ok(headers))
 
-        status, headers, body = fetch(port, '/r/abc')
+        status, headers, raw = fetch(port, '/r/abc')
+        body = text(raw)
         check('r/abc generic card', status == 200 and 'today.png' in body and 'A new science riddle is waiting' in body, f'{status}')
         check('r/abc security headers', header_ok(headers))
 
-        status, headers, body = fetch(port, '/r/000')
+        status, headers, raw = fetch(port, '/r/000')
+        body = text(raw)
         check('r/000 generic card', status == 200 and 'today.png' in body and 'A new science riddle is waiting' in body, f'{status}')
         check('r/000 security headers', header_ok(headers))
 
         status, headers, _ = fetch(port, '/r/0029')
         loc = headers.get('location', '')
-        check('r/0029 canonical page', status == 302 and loc.endswith('/r/029/'), f'{status} {loc}')
+        check('r/0029 canonical page', status == 302 and location_is(headers, '/r/029/'), f'{status} {loc}')
         check('r/0029 security headers', header_ok(headers))
 
-        status, headers, body = fetch(port, '/og/001.png')
-        check('og merge /og/001.png', status == 200 and int(headers.get('content-length', '0') or 0) > 1000, f'{status} {headers.get("content-type")}')
+        huge = '/r/' + ('9' * 30)
+        status, headers, raw = fetch(port, huge)
+        body = text(raw)
+        check('30 nines stay on the generic card', status == 200 and 'location' not in headers and 'A new science riddle is waiting' in body, f'{status} {headers.get("location", "")}')
+
+        longer = '/r/' + ('9' * 400)
+        status, headers, raw = fetch(port, longer)
+        body = text(raw)
+        check('400 digits stay on the generic card', status == 200 and 'location' not in headers and 'A new science riddle is waiting' in body and 'Infinity' not in body, f'{status} {headers.get("location", "")}')
+
+        status, headers, raw = fetch(port, '/nope')
+        check('missing path is a 404', status == 404 and 'A new science riddle is waiting' not in text(raw), f'{status} {headers.get("content-type")}')
+
+        status, headers, raw = fetch(port, '/og/999.png')
+        ctype = headers.get('content-type', '')
+        check('missing og is a 404', status == 404 and 'text/html' not in ctype.lower() and 'A new science riddle is waiting' not in text(raw), f'{status} {ctype}')
+
+        status, headers, raw = fetch(port, '/R/029/')
+        check('uppercase /R/ is a 404', status == 404 and 'A new science riddle is waiting' not in text(raw), f'{status}')
+
+        status, headers, raw = fetch(port, '/og/001.png')
+        check('og merge /og/001.png', status == 200 and png_card(raw, headers), f'{status} {headers.get("content-type")} {len(raw)}')
     finally:
         proc.terminate()
         try:
