@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OG</title>
+<style>
+@font-face{font-family:"Bricolage Grotesque";src:url("%%FONT_DISPLAY%%") format("truetype");font-weight:200 800;font-display:block}
+@font-face{font-family:"Atkinson Hyperlegible Next";src:url("%%FONT_BODY%%") format("truetype");font-weight:200 800;font-display:block}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:630px;overflow:hidden;background:#071526}
+.card{position:relative;width:1200px;height:630px;overflow:hidden;background:#071526}
+.card img.bg{position:absolute;inset:0;width:1200px;height:630px;object-fit:cover;object-position:center}
+.scrim{position:absolute;inset:0;background:linear-gradient(90deg,%%SCRIM0%% 0%,%%SCRIM1%% 38%,%%SCRIM2%% 68%,transparent 100%)}
+.bit{position:absolute;right:28px;bottom:-8px;width:500px;height:auto;z-index:2;filter:drop-shadow(0 18px 28px rgba(0,0,0,.45))}
+.copy{position:absolute;left:64px;top:0;bottom:0;width:680px;display:flex;flex-direction:column;justify-content:center;gap:22px}
+.kicker{display:inline-flex;align-self:flex-start;align-items:center;background:%%KICK_BG%%;color:%%KICK_FG%%;font-family:"Atkinson Hyperlegible Next",sans-serif;font-weight:800;font-size:28px;letter-spacing:.14em;text-transform:uppercase;padding:12px 22px;border-radius:999px}
+h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:760;font-size:68px;line-height:1.02;letter-spacing:-.02em;color:%%HOOK%%;max-width:640px}
+.handle{font-family:"Atkinson Hyperlegible Next",sans-serif;font-weight:700;font-size:32px;color:%%HANDLE%%;letter-spacing:.02em}
+</style>
+</head>
+<body>
+<div class="card">
+  <img class="bg" alt="" src="%%BG%%">
+  <div class="scrim"></div>
+  <img class="bit" alt="" src="%%BIT%%">
+  <div class="copy">
+    <div class="kicker">%%KICKER%%</div>
+    <h1>%%HOOKTEXT%%</h1>
+    <div class="handle">%%HANDLETEXT%%</div>
+  </div>
+</div>
+</body>
+</html>

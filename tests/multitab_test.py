@@ -28,7 +28,14 @@ def wait_saved(pg,k,who): return wait_js(pg,SAVED,k,f'{who} sees the save for {k
 def wait_cur(pg,back): return wait_js(pg,'(n)=>{const s=window.__BF.getState();return s.cur===s.today-n}',back,f'archive -{back} shown')
 def play_today(pg,right=True):
     a=pg.evaluate('()=>window.__BF.rid(window.__BF.getState().today).answer_index')
-    pg.locator('#choices button').nth(a if right else (a+1)%4).click()
+    n=pg.locator('#choices button').count()
+    if right:
+        pg.locator('#choices button').nth(a).click()
+    else:
+        # Use up every miss (choices.length-1). The day still counts, right or wrong.
+        for i in range(n):
+            if i==a: continue
+            pg.locator('#choices button').nth(i).click()
     wait_js(pg,'()=>document.querySelectorAll("#choices button:disabled").length>0',None,'answer shown')  # click handled
 with sync_playwright() as p:
     b=p.chromium.launch(executable_path='/usr/bin/google-chrome')
@@ -41,7 +48,8 @@ with sync_playwright() as p:
     wait_saved(t2,'2026-10-16','tab2')  # THE race: tab 2 must see tab 1's save before tab 2 saves
     t2.evaluate("()=>{window.__BF.remount()}")  # stale-tab path is merge-on-save; storage event also syncs
     t2.locator('#prev').click(); t2.locator('#prev').click(); wait_cur(t2,2)
-    t2.locator('#choices button').nth(0).click(); wait_saved(t2,'2026-10-14','tab2')
+    a2=t2.evaluate('()=>window.__BF.rid(window.__BF.getState().cur).answer_index')
+    t2.locator('#choices button').nth(a2).click(); wait_saved(t2,'2026-10-14','tab2')
     wait_saved(t1,'2026-10-14','tab1')  # and tab 1 sees tab 2's save before it reloads
     t1.reload(); t1.wait_for_function(READY); s=st(t1)
     check('multi-tab: streak survives stale tab save',s['streak']==5,s)
@@ -52,7 +60,9 @@ with sync_playwright() as p:
     # 1b. Pure stale write (no storage event): tab2 S older than disk
     c=b.new_context(); c.add_init_script(fake(2026,10,16)); t=c.new_page(); t.goto(URL); t.wait_for_function(READY)
     t.evaluate("()=>{window.__BF.setState({streak:4,best:4,last:'2026-10-15',ans:{}});localStorage.setItem('bf-riddle-v1',JSON.stringify({streak:5,best:5,last:'2026-10-16',ans:{'2026-10-16':1}}))}")
-    t.locator('#prev').click(); wait_cur(t,1); t.locator('#choices button').nth(0).click(); wait_saved(t,'2026-10-15','tab')
+    t.locator('#prev').click(); wait_cur(t,1)
+    aa=t.evaluate('()=>window.__BF.rid(window.__BF.getState().cur).answer_index')
+    t.locator('#choices button').nth(aa).click(); wait_saved(t,'2026-10-15','tab')
     import json; raw=json.loads(t.evaluate("()=>localStorage.getItem('bf-riddle-v1')"))
     check('merge-on-save: newer disk streak not overwritten',raw['streak']==5 and '2026-10-16' in raw['ans'],raw)
     c.close()
@@ -84,8 +94,8 @@ with sync_playwright() as p:
     check('normal storage: notice hidden',not t.locator('#noStore').is_visible())
     # 5. share + stats
     play_today(t); txt=t.evaluate('()=>window.__BF.shareText()')
-    check('share text single symbol, no answer/position','🟩 Got it!' in txt and 'Riddle #005' in txt and 'Electrons' not in txt and '⬜' not in txt and txt.count('🟩')+txt.count('🟥')==1 and 'Streak' in txt,txt.replace('\n',' | '))
-    check('share link uses location.origin','workers.dev' not in txt or t.evaluate('()=>location.origin') in txt,txt.replace('\n',' | '))
+    check('share text grid, no answer', txt.startswith('Bit & Fathom Daily #005') and '🟩' in txt and 'This week' in txt and 'Electrons' not in txt and '🔥' in txt and '/r/005/' in txt, txt.replace('\n',' | '))
+    check('share link uses canonical origin','bit-fathom-daily-next.gigantic-stranger.workers.dev/r/005/' in txt and '127.0.0.1' not in txt,txt.replace('\n',' | '))
     check('stats played 1 / 100%',t.locator('#stPlayed').inner_text()=='1' and t.locator('#stPct').inner_text()=='100%')
     check('how-to-play present',t.locator('#howto summary').count()==1)
     fs=t.evaluate("()=>[getComputedStyle(document.querySelector('#choices button')).fontSize,getComputedStyle(document.querySelector('#question')).fontSize,getComputedStyle(document.querySelector('.hint')).fontSize,getComputedStyle(document.querySelector('small')).opacity]")

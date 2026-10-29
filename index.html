@@ -1,199 +1,1213 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%A4%96%3C/text%3E%3C/svg%3E">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071526">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Daily Riddle">
+<meta name="description" content="Bit &amp; Fathom's daily science riddle. Guess first, then learn why. No accounts, no tracking.">
 <meta name="referrer" content="no-referrer">
-<title>Daily Riddle · Bit & Fathom · Ripple Parade</title>
-<meta name="description" content="Bit & Fathom's daily science riddle: guess, learn why, try it at home.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-P20yVDgmX4G/CJ5t9BEzNJC2FYRWOStrZXaPdjCog7c='; worker-src 'self'; style-src 'sha256-HvpMtqldT42qMOnlK5rgbeLRBRdJIecWO1xNqW4bNbk='; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'">
+<meta property="og:url" content="https://bit-fathom-daily-next.gigantic-stranger.workers.dev/">
+<meta property="og:title" content="Bit &amp; Fathom Daily Riddle">
+<meta property="og:description" content="Today's science riddle is waiting. Guess first, then learn why. No spoilers here.">
+<meta property="og:image" content="https://bit-fathom-daily-next.gigantic-stranger.workers.dev/og/today.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bit the robot on a starry card that says today's riddle is waiting. No answer is shown.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bit &amp; Fathom Daily Riddle">
+<meta name="twitter:description" content="Today's science riddle is waiting. Guess first, then learn why.">
+<meta name="twitter:image" content="https://bit-fathom-daily-next.gigantic-stranger.workers.dev/og/today.png">
+<meta name="twitter:image:alt" content="Bit the robot on a starry card that says today's riddle is waiting. No answer is shown.">
+<title>Daily Riddle · Bit &amp; Fathom · Ripple Parade</title>
+<link rel="icon" href="icon.svg">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="manifest" href="manifest.json">
 <style>
-:root{--navy:#0b1a33;--navy2:#13284d;--teal:#2ec4b6;--gold:#f2c14e;--bronze:#b5733a;--ink:#eaf4ff;--dim:#a9bbd3;--coral:#d67a6a}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at 50% 0,#1d3a6b,var(--navy) 60%);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:20px;line-height:1.5;font-size:20px}
-.card{max-width:640px;width:100%;background:rgba(19,40,77,.85);border:2px solid var(--gold);border-radius:24px;padding:24px;box-shadow:0 10px 40px #0008;align-self:flex-start}
-@media(max-width:420px){body{padding:12px}.card{padding:16px}}
-.tag{color:var(--gold);letter-spacing:.12em;font-size:16px;text-transform:uppercase;text-align:center}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:10px 0 4px}
-.nav{width:52px;height:52px;padding:0;border-radius:50%;font-size:26px;flex:none}
-.when{text-align:center;flex:1}.when b{display:block;color:var(--gold);font-size:16px;letter-spacing:.1em;text-transform:uppercase}.when span{color:var(--ink);font-size:17px}
-.streak{display:flex;justify-content:center;gap:10px;margin:6px 0 2px}
-.pill{background:var(--navy2);border:2px solid var(--bronze);border-radius:999px;padding:6px 14px;font-weight:700;font-size:17px;color:var(--ink)}.pill b{color:var(--gold)}
-h1{text-align:center;margin:.35em 0 .2em;font-size:clamp(26px,6vw,36px)}
-.chars{display:flex;justify-content:space-around;align-items:flex-end;margin:6px 0}.chars svg{height:96px;width:auto;transition:opacity .3s,transform .3s}
-.chars svg.quiet{opacity:.45;transform:scale(.9)}
-.bubble{background:var(--ink);color:var(--navy);border-radius:14px;padding:12px 16px;font-weight:600;margin:10px 0;line-height:1.45;font-size:21px}
-.choices{display:grid;gap:10px;margin-top:14px}
-button{font:inherit;font-size:21px;font-weight:700;min-height:52px;padding:12px 14px;border-radius:14px;border:2px solid var(--teal);background:var(--navy2);color:var(--ink);cursor:pointer;transition:.2s;touch-action:manipulation;text-align:left}
-.nav{text-align:center}
-@media(hover:hover) and (pointer:fine){button:hover:not(:disabled){background:var(--teal);color:var(--navy)}.links a:hover{background:var(--ink)}}
-button:active:not(:disabled){transform:scale(.97)}button:disabled{cursor:default}.nav:disabled{opacity:.3}
-button:focus-visible,.links a:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.choices button:active:not(:disabled){transform:scale(.97);background:rgba(242,193,78,.28);border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
-.choices button:focus-visible{outline:3px solid var(--gold);outline-offset:2px;box-shadow:0 0 0 2px rgba(242,193,78,.35)}
-.choices button:disabled{opacity:.6}.choices button.right{background:var(--teal);color:var(--navy);border-color:var(--teal);opacity:1}.choices button.right::after{content:'  ✓'}.choices button.wrong::after{content:' · your guess';font-weight:600;color:#e8a090}.choices button.wrong{background:rgba(214,122,106,.22);color:var(--ink);border-color:var(--coral);opacity:1;box-shadow:none}
-.when b .encore,.encore{display:inline-block;margin-left:6px;background:var(--gold);color:var(--navy);font-size:14px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.1em;vertical-align:middle;text-transform:uppercase}
-#reveal{display:none;margin-top:18px;border-top:2px dashed var(--bronze);padding-top:14px}
-#reveal.show{display:block;animation:fade .6s}@keyframes fade{from{opacity:0;transform:translateY(10px)}}
-#kept{color:var(--gold);font-weight:700;margin:.2em 0 .8em}#kept:empty{display:none}#verdict{font-weight:800;font-size:22px;margin:.2em 0}
-.explain{display:flex;gap:10px;align-items:flex-start}.explain .who{flex:none;width:64px}.explain .who svg{width:64px;height:auto}.explain .bubble{flex:1;margin-top:0}
-.tryit{background:var(--navy2);border:2px solid var(--teal);border-radius:16px;padding:14px;margin-top:12px}.tryit h2{font-size:18px;margin:0 0 .4em;color:var(--teal);letter-spacing:.08em;text-transform:uppercase}.tryit p{margin:0}
-.src{font-size:17px;color:var(--ink);margin:10px 0 0}.src a{color:var(--teal);display:flex;align-items:center;min-height:48px;padding:4px 0;line-height:1.3}
-.dots{display:flex;justify-content:center;gap:6px;margin:16px 0 0;flex-wrap:wrap}.dots i{width:9px;height:9px;border-radius:50%;background:#2a4572}.dots i.on{background:var(--gold)}.dots i.done{background:var(--teal)}
-.hint{text-align:center;color:var(--ink);font-size:16px;margin:6px 0 0}
-.links{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px}.links a{color:var(--navy);background:var(--gold);min-height:48px;display:inline-flex;align-items:center;padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:700}
-small{display:block;text-align:center;margin-top:14px;font-size:16px;color:var(--ink)}
-.notice{background:#4a2a12;border:2px solid var(--gold);border-radius:14px;padding:12px 14px;margin:10px 0;font-size:18px}.notice[hidden]{display:none}
-.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}.row button{text-align:center;font-size:20px}
-#shareMsg{text-align:center;color:var(--gold);font-weight:700;font-size:18px;min-height:1.4em;margin:6px 0 0;white-space:pre-line}
-.panel{background:var(--navy2);border:2px solid var(--bronze);border-radius:16px;padding:14px;margin-top:14px;font-size:18px}.panel h2{font-size:20px;margin:0 0 .4em;color:var(--gold)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}.stats b{display:block;font-size:26px;color:var(--gold)}.stats span{font-size:16px}
-details.panel summary{cursor:pointer;font-weight:800;color:var(--gold);min-height:48px;display:flex;align-items:center;font-size:20px}details.panel ol{margin:.4em 0 0;padding-left:1.3em}
-@media(max-width:420px){.stats{grid-template-columns:repeat(2,1fr)}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
-</style></head><body><main class="card" id="card">
-<div class="tag">Ripple Parade · Daily Riddle</div>
-<p class="notice" id="noStore" role="status" hidden>⚠️ Your browser is blocking saving (private or strict mode), so your streak can't be kept after you leave. You can still play every riddle!</p>
-<div class="topbar"><button class="nav" id="prev" aria-label="Older riddle">‹</button><div class="when"><b id="label">Today's riddle</b><span id="date"></span></div><button class="nav" id="next" aria-label="Newer riddle">›</button></div>
-<div class="streak" aria-live="polite"><span class="pill">🔥 Streak <b id="streak">0</b></span><span class="pill">⭐ Best <b id="best">0</b></span></div>
-<h1 id="title"></h1>
-<div class="chars" id="chars"><svg width="110" height="130" viewBox="0 0 110 130" role="img" aria-label="Bit, a teal robot"><line x1="55" y1="10" x2="55" y2="28" stroke="#2ec4b6" stroke-width="4"/><circle cx="55" cy="8" r="6" fill="#f2c14e"/><rect x="15" y="28" width="80" height="60" rx="18" fill="#2ec4b6"/><circle cx="38" cy="55" r="9" fill="#0b1a33"/><circle cx="72" cy="55" r="9" fill="#0b1a33"/><path d="M40 72q15 10 30 0" stroke="#0b1a33" stroke-width="4" fill="none"/><rect x="30" y="92" width="50" height="34" rx="10" fill="#1f8f85"/><text x="55" y="115" text-anchor="middle" fill="#eaf4ff" font-weight="700">BIT</text></svg><svg width="120" height="130" viewBox="0 0 120 130" role="img" aria-label="Fathom, a bronze steampunk robot"><rect x="20" y="20" width="80" height="66" rx="8" fill="#b5733a" stroke="#f2c14e" stroke-width="3"/><circle cx="45" cy="52" r="13" fill="#f2c14e"/><circle cx="45" cy="52" r="6" fill="#0b1a33"/><circle cx="78" cy="52" r="10" fill="#f2c14e"/><circle cx="78" cy="52" r="4" fill="#0b1a33"/><rect x="40" y="72" width="40" height="6" rx="3" fill="#0b1a33"/><g fill="#f2c14e"><circle cx="20" cy="20" r="5"/><circle cx="100" cy="20" r="5"/></g><rect x="32" y="92" width="56" height="34" rx="6" fill="#8a5427"/><text x="60" y="115" text-anchor="middle" fill="#eaf4ff" font-weight="700">FATHOM</text></svg></div>
-<div class="bubble">🤖 <b>Bit:</b> <span id="question"></span> <i>Guess first!</i></div>
-<div class="choices" id="choices"></div>
-<section id="reveal" aria-live="polite">
-<p id="verdict"></p><p id="kept"></p>
-<div class="explain"><div class="who" id="who"></div><div class="bubble" id="explainer"></div></div>
-<div class="tryit"><h2>🔬 Try it</h2><p id="tryit"></p></div>
-<p class="src">Fact-checked with: <a id="src" target="_blank" rel="noopener"></a></p>
-<div class="row"><button type="button" id="share">📤 Share my result</button></div>
-<p id="shareMsg" aria-live="polite"></p>
+/* Local shim for Tinker's juice kit. Swap this file for experiments/_shared/juice.css later. */
+.is-down{transform:scale(0.97)}
+.juice-pop{animation:juice-pop .42s cubic-bezier(0.2,0,0,1) both}
+@keyframes juice-pop{0%{transform:scale(.9)}100%{transform:scale(1)}}
+.juice-shake{animation:juice-shake .28s linear}
+@keyframes juice-shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-7px)}
+  40%{transform:translateX(7px)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(3px)}
+}
+.juice-flash{animation:juice-flash .28s linear}
+@keyframes juice-flash{0%,100%{filter:none}40%{filter:saturate(1.4) brightness(1.08)}}
+.juice-confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40}
+@media (prefers-reduced-motion:reduce){
+  .is-down,.juice-pop,.juice-shake,.juice-flash{animation:none!important;transform:none!important}
+  .juice-shake{outline:3px solid #d67a6a}
+}
+
+@font-face{font-family:"Bricolage Grotesque";src:url("assets/fonts/BricolageGrotesque-subset.woff2") format("woff2");font-weight:200 800;font-display:swap}
+@font-face{font-family:"Atkinson Hyperlegible Next";src:url("assets/fonts/AtkinsonHyperlegibleNext-subset.woff2") format("woff2");font-weight:200 800;font-display:swap}
+:root{--navy:#071526;--navy2:#13284d;--teal:#2cc6c3;--gold:#f2c14e;--ink:#14213d;--cream:#f4fcfc;--coral:#f2795e;--line:#0d3440}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;min-height:100%;background:#071526}
+html{overflow-x:clip;scroll-padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+body{font-family:"Atkinson Hyperlegible Next",sans-serif;color:var(--cream);line-height:1.45;font-size:20px;overflow-x:clip}
+img{max-width:100%;height:auto}
+.backdrop{position:fixed;inset:0;z-index:0;background:radial-gradient(120% 80% at 50% 0%,#1d4a6e,var(--navy) 62%)}
+.backdrop img{width:100%;height:100%;object-fit:cover;display:block}
+.app{position:relative;z-index:1;width:min(1180px,calc(100% - 20px));margin:0 auto;padding:calc(env(safe-area-inset-top) + 4px) 0 calc(env(safe-area-inset-bottom) + 64px)}
+header{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px;flex-wrap:wrap}
+.brand{font-size:14px;letter-spacing:.02em;text-transform:none;color:var(--gold);font-weight:800}
+.brand b{display:block;color:var(--cream);font-size:22px;letter-spacing:0;text-transform:none;font-family:"Bricolage Grotesque",sans-serif}
+.tools{display:flex;align-items:center;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(7,21,38,.72);border:2px solid var(--gold);border-radius:999px;padding:6px 12px;font-weight:800;min-height:44px}
+.pill b{color:var(--gold);font-size:22px}
+.iconbtn,button.nav{min-width:44px;min-height:44px;border-radius:999px;border:2px solid #2b4677;background:rgba(19,40,77,.9);color:var(--cream);font:inherit;font-size:20px;cursor:pointer}
+button{font-family:inherit;touch-action:manipulation;cursor:pointer}
+button:active:not(:disabled){transform:scale(0.97)}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+button:disabled{cursor:default;opacity:.72}
+.notice{background:#4a2a12;border:2px solid var(--gold);border-radius:14px;padding:12px 14px;margin:8px 0;font-size:18px}
+.notice[hidden]{display:none}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0 0 6px}
+.strip div{background:rgba(19,40,77,.88);border:2px solid #2b4677;border-radius:14px;text-align:center;padding:3px 2px;box-shadow:0 8px 18px rgba(0,0,0,.25)}
+.strip b{display:block;color:var(--gold);font-size:22px}
+.strip span{font-size:14px;letter-spacing:0;text-transform:none}
+.topbar{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.when{flex:1;text-align:center}
+.when b{display:block;color:var(--gold);font-size:16px;letter-spacing:0;text-transform:none}
+.when span{font-size:16px}
+@media(max-width:759px){.wday{display:none}}
+.encore{display:inline-block;margin-left:6px;background:var(--gold);color:var(--navy);font-size:14px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:0}
+.play{width:100%}
+.cardface{background:rgba(244,252,252,.96);color:var(--ink);border-radius:28px;padding:8px 10px;box-shadow:0 18px 50px rgba(0,0,0,.35);display:grid;grid-template-columns:44% 1fr;gap:4px 8px;align-items:start}
+.hero{grid-column:1;grid-row:1;overflow:visible}
+.bit{width:100%;height:auto;object-fit:contain;object-position:center;display:block;filter:drop-shadow(0 10px 16px rgba(7,21,38,.35))}
+.headcopy{grid-column:2;grid-row:1;min-width:0}
+.chip{display:inline-flex;align-items:center;min-height:28px;padding:2px 10px;border-radius:999px;background:var(--navy);color:var(--teal);font-size:14px;font-weight:800;letter-spacing:.04em}
+h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:760;font-size:clamp(26px,5vw,44px);line-height:1.05;margin:.2em 0 .15em;letter-spacing:-.02em}
+#question{font-size:21px;line-height:1.22;margin:.12em 0 .28em;grid-column:1 / -1;max-width:70ch}
+.choices{grid-column:1 / -1;display:grid;gap:6px}
+.choices button{width:100%;min-height:48px;text-align:left;font-size:21px;font-weight:700;padding:6px 12px;border-radius:16px;border:2px solid var(--line);background:#fff;color:var(--ink);box-shadow:0 6px 0 #c5ddd8, 0 12px 20px rgba(7,21,38,.12)}
+.choices button.wrong{background:#fde8e2;border-color:#9a3b1e;text-decoration:line-through;box-shadow:none}
+.choices button.right{background:#dff7ec;border-color:#1a7f5a;box-shadow:0 6px 0 #8fd4b8}
+.whynot{grid-column:1 / -1;margin:0;font-weight:800;color:#9a3b1e}
+#reveal{grid-column:1 / -1}
+#reveal[hidden]{display:none}
+#verdict{font-family:"Bricolage Grotesque",sans-serif;font-size:28px;margin:.2em 0}
+.bitline{font-weight:800;margin:.2em 0 .4em}
+.rise{font-family:"Bricolage Grotesque",sans-serif;font-size:28px;margin:0;color:#146b64;max-width:70ch}
+#riseNum{font-size:40px}
+#kept{color:#8a5427;font-weight:800;margin:.2em 0}
+#kept:empty{display:none}
+.explain{display:flex;gap:10px;align-items:flex-start;background:#e7f7f6;border-radius:16px;padding:10px}
+.explain img{width:72px;height:auto;flex:none}
+.bubble{font-size:18px;max-width:70ch}
+.tryit{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:12px;margin-top:10px;max-width:70ch}
+.tryit h2{font-size:16px;letter-spacing:0;text-transform:none;margin:0 0 .3em;color:#0e7c78}
+.tryit p{margin:0;font-size:18px}
+.src{font-size:17px;margin:10px 0 0}
+.src a{color:#0e7c78;min-height:44px;display:inline-flex;align-items:center}
+.cells{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:12px;font-size:28px}
+.cells i{font-style:normal;width:44px;height:44px;display:grid;place-items:center;border-radius:10px;background:#071526}
+.cells b{font-size:18px;margin-left:6px}
+.sharetext{white-space:pre-wrap;word-break:break-word;background:#071526;color:var(--cream);border-radius:12px;padding:10px 12px;font-size:16px;overflow:auto}
+.countdown{font-weight:800;margin:10px 0 0}
+#count{font-variant-numeric:tabular-nums;font-size:28px;font-family:"Bricolage Grotesque",sans-serif}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.row button{min-height:52px;padding:12px 16px;border-radius:16px;border:0;font-weight:800;font-size:20px;background:var(--navy);color:var(--teal);flex:1}
+#share{scroll-margin-bottom:calc(64px + env(safe-area-inset-bottom))}
+#shareMsg{min-height:1.3em;font-weight:800;color:#0e7c78;margin:.3em 0}
+.dots{display:flex;gap:6px;justify-content:center;margin:12px 0 0}
+.dots i{width:9px;height:9px;border-radius:50%;background:#2a4572}
+.dots i.on{background:var(--gold)}
+.dots i.done{background:var(--teal)}
+.hint{text-align:center;font-size:16px;line-height:1.5;margin:8px auto;max-width:52ch}
+.howto{background:rgba(19,40,77,.88);border-radius:16px;padding:8px 14px;margin:8px auto 0;max-width:52ch;line-height:1.5}
+.howto li{line-height:1.5}
+.howto summary{min-height:48px;display:flex;align-items:center;cursor:pointer;font-weight:800;color:var(--gold)}
+.links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.links a{color:var(--navy);background:var(--gold);min-height:48px;display:inline-flex;align-items:center;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:800}
+small{display:block;text-align:center;margin:12px auto 0;font-size:16px;opacity:1;max-width:70ch}
+.panel{margin-top:8px}
+.panel h2{font-family:"Bricolage Grotesque",sans-serif;margin:.2em 0 .6em}
+.hist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.hist li{background:rgba(244,252,252,.96);color:var(--ink);border-radius:14px;padding:12px;min-height:44px}
+.hist .empty{background:transparent;color:var(--cream)}
+.toggle{display:flex;justify-content:space-between;align-items:center;gap:8px;background:rgba(19,40,77,.88);border-radius:14px;padding:10px 12px;margin:8px 0;min-height:52px}
+.ghost{background:#e4e8f0;color:var(--ink);border:0;border-radius:14px;min-height:48px;padding:12px 14px;font-weight:800;font-size:18px;width:100%}
+.grown p{font-size:18px;max-width:70ch}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(7,21,38,.92);border-top:1px solid #2b4677;backdrop-filter:blur(10px);padding:6px 10px calc(env(safe-area-inset-bottom) + 6px)}
+.tabs{display:flex;gap:6px;width:min(1180px,100%);margin:0 auto}
+.tabs button{flex:1;min-height:48px;border:0;border-radius:14px;background:transparent;color:#c6d6ef;font-weight:800;font-size:16px}
+.tabs button span{display:block;font-size:18px}
+.tabs button[aria-current=page]{background:var(--navy2);color:var(--teal)}
+.modal,.gate{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.55);display:grid;place-items:center;padding:16px}
+.modal[hidden],.gate[hidden],section[hidden],#today[hidden]{display:none}
+.sheet,.gbox{width:min(440px,100%);background:var(--cream);color:var(--ink);border-radius:24px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.4);position:relative}
+.sheet h2,.gbox h2{font-family:"Bricolage Grotesque",sans-serif;margin:0 0 8px}
+#statsX{position:absolute;top:10px;right:10px}
+.stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;margin:8px 0 14px}
+.stats4 b{display:block;font-size:26px;color:#0e7c78}
+.stats4 span{font-size:14px}
+.bar{display:grid;grid-template-columns:72px 1fr 28px;gap:8px;align-items:center;margin:6px 0;font-size:16px}
+.track{display:block;height:16px;background:#e3eef0;border-radius:999px;overflow:hidden}
+.fill{display:block;height:100%;background:#2cc6c3;min-width:0;border-radius:999px}
+.bar.is-today .fill{background:#f2c14e}
+.bar.is-today span{font-weight:800}
+.gbox input{font:inherit;font-size:18px;width:100%;padding:12px;border-radius:12px;border:2px solid var(--navy);margin:8px 0}
+#gErr{min-height:1.2em;color:#9a3b1e;margin:0 0 8px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(min-width:760px){
+  .app{padding-top:calc(env(safe-area-inset-top) + 12px)}
+  .cardface{grid-template-columns:minmax(280px,42%) 1fr;gap:12px 24px;padding:22px}
+  .hero{grid-row:1 / span 5;align-self:center;max-height:none;overflow:visible}
+  .bit{width:100%;height:auto;max-height:none;object-fit:contain;object-position:center top}
+  .headcopy,#question,.choices,#whynot,#reveal{grid-column:2}
+  h1,#question,.bubble,.tryit,small,.grown p,.rise{max-width:70ch}
+  .hint,.howto{max-width:52ch}
+  .play{width:100%}
+  #question{line-height:1.35}
+}
+@media(min-width:760px) and (max-width:999px){
+  .hero{max-height:220px;align-self:start}
+  .bit{height:200px;width:auto;max-width:100%;min-height:0;object-fit:contain;object-position:center}
+}
+@media(min-width:1000px){
+  .hero{align-self:start;position:sticky;top:12px}
+}
+@media(min-width:1000px) and (max-height:820px){
+  .app{padding-top:4px}
+  header{margin-bottom:0}
+  .strip{margin-bottom:2px}
+  .cardface{padding:8px 16px;gap:6px 20px}
+  h1{margin:0}
+  #question{margin:0 0 .1em;line-height:1.25}
+  .choices{gap:4px}
+  .choices button{min-height:44px;padding:2px 12px;box-shadow:none}
+}
+@media(max-width:420px){
+  .strip b{font-size:18px}
+  h1{font-size:24px}
+  .brand{letter-spacing:0;font-size:14px}
+  .brand b{font-size:16px}
+  .pill{padding:2px 8px}
+}
+@media(max-height:700px){
+  .strip{display:none}
+  .hero{max-height:64px}
+  .bit{width:auto;max-width:100%;height:64px}
+  header{margin-bottom:0}
+  .app{padding-top:0}
+  .topbar{margin-bottom:0}
+  .cardface{padding:2px 8px 0}
+  h1{font-size:22px;margin:0}
+  #question{line-height:1.1;margin:0}
+  .choices{gap:4px}
+  .choices button{min-height:44px;padding:2px 10px;box-shadow:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  button:active:not(:disabled){transform:none;filter:brightness(.92)}
+}
+</style>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"><img id="sceneImg" alt="" src="assets/backgrounds/space-1200x675.png"></div>
+<div class="app">
+<header>
+  <div class="brand">Ripple Parade<b>Daily Riddle</b></div>
+  <div class="tools">
+    <span class="pill">🔥 <b id="streak">0</b></span>
+    <span class="pill">⭐ <b id="best">0</b></span>
+    <button type="button" class="iconbtn" id="soundBtn" aria-pressed="true" aria-label="Sound on">🔊</button>
+  </div>
+</header>
+<p class="notice" id="noStore" role="status" hidden>Your browser is blocking saving, so your streak can't be kept after you leave. You can still play every riddle.</p>
+<section class="strip" aria-label="Your stats">
+  <div><b id="stPlayed">0</b><span>Played</span></div>
+  <div><b id="stPct">0%</b><span>Right</span></div>
+  <div><b id="stStreak">0</b><span>Streak</span></div>
+  <div><b id="stBest">0</b><span>Best</span></div>
 </section>
-<section class="panel" aria-labelledby="statsH"><h2 id="statsH">📊 Your stats</h2><div class="stats"><div><b id="stPlayed">0</b><span>Played</span></div><div><b id="stPct">0%</b><span>Right</span></div><div><b id="stStreak">0</b><span>Streak</span></div><div><b id="stBest">0</b><span>Best</span></div></div></section>
-<details class="panel" id="howto"><summary>❓ How to play</summary><ol><li>Read Bit's riddle and <b>guess first</b>.</li><li>Tap an answer. Right or wrong, you learn <b>why</b>.</li><li>Try the experiment at home 🔬.</li><li>Play <b>today's</b> riddle every day to grow your 🔥 streak. Wrong guesses still count!</li><li>Use ‹ › to replay past riddles (they don't change your streak).</li><li>Tap 📤 Share to send your result. It shows one 🟩 or 🟥, your riddle number and streak, never the answer.</li></ol></details>
-<div class="dots" id="dots" aria-hidden="true"></div>
-<p class="hint">Swipe or use ‹ › to visit past riddles</p>
-<div class="links"><a href="https://www.youtube.com/@RippleParade" target="_blank" rel="noopener">▶ Watch on YouTube</a><a href="https://x.com/RippleParade" target="_blank" rel="noopener">𝕏 Follow @RippleParade</a></div>
-<small>Bit & Fathom · a kids museum for the internet · No accounts, no tracking — your streak stays on this device.</small>
-</main>
-<script type="application/json" id="inline-riddles">[{"id": "001", "title": "Can a Robot See Red?", "question": "My camera pointed at a strawberry and said \"red!\" Does that mean I see red like you do?", "choices": ["Yes, robots see colors exactly like people", "Kind of: it measures light and turns it into numbers", "No, robots only see black and white"], "answer_index": 1, "explainer": "A camera sensor is a grid of tiny light buckets with red, green and blue filters, and each one turns light into a number. Bit sees a big red number and small green and blue numbers, and its program says \"that's red!\" Your eyes use cone cells tuned to light too, but your brain turns it into an experience.", "try_it": "In a dark room, with a grown-up, gently cover a phone flashlight with your fingertip. It glows red because red light passes through skin best, which is how smartwatch pulse sensors work!", "source_title": "NASA Science: Visible Light", "source_url": "https://science.nasa.gov/ems/09_visiblelight/", "speaker": "bit"}, {"id": "002", "title": "Who Lets Electricity Go Only One Way?", "question": "I'm a tiny glowing gadget with two legs, one long and one short. Plug me in backwards and I stay dark and sulky. Plug me in the right way and I shine without getting very hot like old light bulbs. What am I?", "choices": ["A tiny light bulb with a wire inside", "An LED, a light-emitting diode", "A battery"], "answer_index": 1, "explainer": "A diode is a one-way street for electricity, so an LED only glows when its long leg goes to plus. Inside, electrons cross between two special layers and give off their extra energy as light. LEDs make light far more efficiently than old bulbs, so much less energy turns into heat.", "try_it": "With a grown-up, look around your home for LEDs: on chargers, TVs and remote controls. Count how many colors you find!", "source_title": "ENERGY STAR: Learn About LED Lighting", "source_url": "https://www.energystar.gov/products/light_bulbs/learn-about-led-lighting", "speaker": "fathom"}, {"id": "003", "title": "What Color Is a Sunset on Mars?", "question": "On Earth, sunsets glow orange and red. Our rover friend on Mars sent home a sunset photo. What color was the sky around the setting Sun?", "choices": ["Orange, just like on Earth", "Blue!", "Green, because Mars is an alien planet", "No color at all, Mars has no air"], "answer_index": 1, "explainer": "Mars has thin air full of super-fine dust that lets blue light through best near the Sun. NASA's Curiosity rover photographed a blue Martian sunset in 2015. Mars is an upside-down planet: dusty pinkish days and blue sunsets!", "try_it": "Look at sunset photos from Earth and NASA's Mars sunset photo side by side, then draw both skies with crayons. Never look straight at the real Sun.", "source_title": "NASA Science: Sunset in Mars' Gale Crater", "source_url": "https://science.nasa.gov/resource/sunset-in-mars-gale-crater/", "speaker": "bit"}, {"id": "004", "title": "How Long Does It Take to Text Voyager 1?", "question": "I want to send a quick \"Hi!\" to Voyager 1, the spacecraft launched in 1977 that is now the farthest human-made object from Earth. The message travels as radio waves at the speed of light. How long until Voyager 1 gets it?", "choices": ["About 1 second", "About 1 hour", "About a whole day", "About 1 year"], "answer_index": 2, "explainer": "Light is super fast, but space is super big. In November 2026, Voyager 1 reaches one light-day from Earth, the distance light travels in 24 hours. So one text plus a reply takes about 2 days!", "try_it": "Play \"slow text\" with a family member: pass notes between rooms, but wait a full minute before each delivery. How hard is it to chat?", "source_title": "NASA Science: Voyager 1 - What Is a Light-Day?", "source_url": "https://science.nasa.gov/mission/voyager/voyager-1/voyager-1-what-is-a-light-day/", "speaker": "bit"}, {"id": "005", "title": "The Hair-Raising Comb", "question": "I combed my hair on a dry day, and now my comb can pick up tiny bits of paper with no glue, no magnets and no batteries. What tiny thing jumped onto my comb?", "choices": ["Electrons", "Water drops", "Air bubbles"], "answer_index": 0, "explainer": "Rubbing some materials together moves tiny negative charges called electrons from one to the other. Your comb now has extra electrons, and that static charge tugs on light things like paper. That little zap from a doorknob is electrons leaving too!", "try_it": "Tear a tissue into tiny pieces on a table. Run a plastic comb through dry hair a few times, then hold it just above the pieces and watch them jump!", "source_title": "Library of Congress: How Does Static Electricity Work?", "source_url": "https://www.loc.gov/everyday-mysteries/categories/physics/item/how-does-static-electricity-work/", "speaker": "bit"}, {"id": "006", "title": "The Planet Where a Day Beats a Year", "question": "On one planet, a single day lasts longer than its whole year. You could have a birthday before tomorrow arrives! Which planet is it?", "choices": ["Venus", "Jupiter", "Mars", "Neptune"], "answer_index": 0, "explainer": "Venus spins super slowly: one day there lasts 243 Earth days. But it travels around the Sun in only 225 Earth days. Slow spinner, speedy traveler!", "try_it": "Put a chair in the middle of a room as the Sun. Walk one slow lap around it while turning your body less than once. Congrats, you're Venus!", "source_title": "NASA Science: Venus Facts", "source_url": "https://science.nasa.gov/venus/venus-facts/", "speaker": "fathom"}, {"id": "007", "title": "A Computer's Two Favorite Numbers", "question": "Every photo, song and game in a computer is stored using only two digits, over and over. Which two?", "choices": ["1 and 2", "0 and 9", "10 and 100", "0 and 1"], "answer_index": 3, "explainer": "Computers use the binary number system, with only two digits: 0 and 1. Each 0 or 1 is called a bit, like a tiny switch that is off or on. String enough bits together and you can store anything!", "try_it": "Make five cards with 1, 2, 4, 8 and 16 dots. Flip cards face-up (1) or face-down (0) to make every number from 0 to 31!", "source_title": "CS Unplugged (University of Canterbury): Binary Numbers", "source_url": "https://www.csunplugged.org/en/topics/binary-numbers/", "speaker": "bit"}, {"id": "008", "title": "How Does a Machine Learn?", "question": "Nobody wrote me a rule for every cat in the world, but I can still spot cats in photos. How did I learn?", "choices": ["Someone typed in a rule for every cat", "I guess randomly and get lucky", "I studied tons of examples"], "answer_index": 2, "explainer": "Machine learning is a kind of AI that learns patterns from lots of examples instead of following only hand-written rules. It works best with thousands or millions of examples. More good examples usually means a smarter guesser!", "try_it": "Show a family member 10 drawings sorted into \"zorbles\" and \"not zorbles\" by a hidden rule, like \"has a circle.\" Can they learn the rule from examples alone?", "source_title": "MIT Sloan: Machine Learning, Explained", "source_url": "https://mitsloan.mit.edu/ideas-made-to-matter/machine-learning-explained", "speaker": "fathom"}, {"id": "009", "title": "The First Flying Robot on Another Planet", "question": "I'm a small robot that flew through the thin air of Mars, 72 times! What kind of flying machine am I?", "choices": ["A hot-air balloon", "A paper airplane", "A rocket", "A helicopter"], "answer_index": 3, "explainer": "NASA's Ingenuity Mars Helicopter first flew on April 19, 2021. It went on to make 72 flights before its last one in January 2024. That was the first powered, controlled flight on another planet!", "try_it": "With a grown-up, cut a paper strip, slit the top into two blades, fold them opposite ways and add a paper clip to the bottom. Drop it from a step and watch it spin like a rotor!", "source_title": "NASA Science: Ingenuity Mars Helicopter", "source_url": "https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/", "speaker": "bit"}, {"id": "010", "title": "The Thunder Countdown", "question": "I see a lightning flash, then count 10 seconds before I hear the thunder. About how far away was the lightning?", "choices": ["About 2 miles", "About 10 miles", "Right on top of me"], "answer_index": 0, "explainer": "Light reaches you almost instantly, but sound takes about 5 seconds to travel a mile. Count the seconds and divide by 5 to get the miles. 10 seconds means about 2 miles away, which is still close enough to stay inside!", "try_it": "Next storm, stay indoors with a grown-up and watch from a window. Count from flash to boom, divide by 5, and track whether the storm is coming closer or moving away.", "source_title": "National Weather Service: Understanding Lightning - Thunder", "source_url": "https://www.weather.gov/safety/lightning-science-thunder", "speaker": "fathom"}, {"id": "011", "title": "Why Does a Compass Point North?", "question": "A compass needle always swings to point the same way, even in a dark closet. What's pulling it?", "choices": ["The wind", "The Moon", "Earth's magnetic field"], "answer_index": 2, "explainer": "Earth acts a lot like a giant bar magnet with a north and a south pole. A compass needle is a tiny magnet, so it lines up with Earth's magnetic field. That's how explorers find their way without GPS!", "try_it": "Open a compass, or a compass app with a grown-up, and slowly turn around in a circle. Then place a fridge magnet near the compass and watch the needle get confused!", "source_title": "NOAA NCEI: Geomagnetism Frequently Asked Questions", "source_url": "https://www.ncei.noaa.gov/products/geomagnetism-frequently-asked-questions", "speaker": "bit"}, {"id": "012", "title": "Sixteen Sunrises a Day", "question": "Astronauts on the International Space Station circle Earth so fast they can see lots of sunrises in one day. About how many?", "choices": ["1", "4", "16", "100"], "answer_index": 2, "explainer": "The space station zooms at about five miles every second. It orbits Earth about every 90 minutes, making 16 orbits in 24 hours. Every orbit brings a new sunrise, so good morning, again and again!", "try_it": "Hold a flashlight still as the Sun and slowly walk a globe or ball around in front of it with a sticker on top. Count each time the sticker comes into the light: that's a sunrise!", "source_title": "NASA: Space Station Facts and Figures", "source_url": "https://www.nasa.gov/international-space-station/space-station-facts-and-figures/", "speaker": "fathom"}, {"id": "013", "title": "The Moon's Shy Side", "question": "Every night you look up, the Moon shows you the same face. Why do we never see its other side from Earth?", "choices": ["The Moon doesn't spin at all", "The other side is always dark", "It spins exactly as fast as it circles Earth"], "answer_index": 2, "explainer": "The Moon spins once for every trip it makes around Earth. Scientists call this synchronous rotation. So the same side always faces us, and the far side stays hidden!", "try_it": "Have a friend stand in the middle as Earth. Walk in a circle around them while always facing them. Notice you spun around once too, and they never saw your back!", "source_title": "NASA Science: Moon Facts", "source_url": "https://science.nasa.gov/moon/facts/", "speaker": "bit"}, {"id": "014", "title": "Who Keeps Your Phone on Time?", "question": "Your phone's clock almost never runs fast or slow. Deep down, what does it get its time from?", "choices": ["A tiny sundial inside the phone", "Atomic clocks that count atom wiggles", "A clock tower in a big city", "Guessing"], "answer_index": 1, "explainer": "Phones and computers get their time from atomic clocks, like the ones run by NIST. Cesium atoms in these clocks react to microwaves that wiggle exactly 9,192,631,770 times per second. Count that many wiggles and you've measured one perfect second!", "try_it": "Start a phone stopwatch and try to stop it at exactly 10 seconds without looking. Try five times and see how close your brain clock gets!", "source_title": "NIST: How Do You Measure a Second?", "source_url": "https://www.nist.gov/how-do-you-measure-it/how-do-you-measure-second", "speaker": "fathom"}]</script>
+<div id="today">
+  <div class="topbar">
+    <button type="button" class="nav" id="prev" aria-label="Older riddle">‹</button>
+    <div class="when"><b id="label">Today's riddle</b><span id="date"></span></div>
+    <button type="button" class="nav" id="next" aria-label="Newer riddle">›</button>
+  </div>
+  <main class="play" id="card">
+    <div class="cardface">
+      <div class="hero"><img id="bit" class="bit" alt="Bit, thinking" width="400" height="440" src="assets/characters/bit-thinking.svg"></div>
+      <div class="headcopy">
+        <span class="chip" id="topic"></span>
+        <h1 id="title"></h1>
+      </div>
+      <p id="question"></p>
+      <div class="choices" id="choices" role="group" aria-label="Answer choices"></div>
+      <p id="whynot" class="whynot" hidden></p>
+      <section id="reveal" hidden>
+        <p id="verdict"></p>
+        <p id="bitLine" class="bitline"></p>
+        <p id="rise" class="rise" hidden><span id="riseNum"></span>-day streak</p>
+        <p id="kept"></p>
+        <div class="explain"><img id="whoBit" alt="" width="72" height="80" src="assets/characters/bit-happy.svg"><div class="bubble" id="explainer"></div></div>
+        <div class="tryit" id="tryBox"><h2>Try it</h2><p id="tryit"></p></div>
+        <p class="src">Fact-checked with: <a id="src" target="_blank" rel="noopener"></a></p>
+        <div class="cells" id="grid" aria-label="Share grid"></div>
+        <pre class="sharetext" id="sharePreview"></pre>
+        <p class="countdown" aria-hidden="true">Next riddle in <b id="count">--:--:--</b></p>
+        <p id="countSay" class="countdown" aria-hidden="true"></p>
+        <p id="countLive" class="sr" aria-live="polite"></p>
+        <div class="row">
+          <button type="button" id="share">Share</button>
+          <button type="button" id="statsBtn">📊 Stats</button>
+        </div>
+        <p id="shareMsg" aria-live="polite"></p>
+      </section>
+    </div>
+  </main>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+  <p class="hint">Swipe or use the arrows to visit past riddles</p>
+  <details class="howto" id="howto"><summary>How to play</summary>
+    <ol>
+      <li>Read the hook and guess.</li>
+      <li>A miss is crossed out. You can try again until one choice is left.</li>
+      <li>Right or wrong, playing today keeps your streak.</li>
+      <li>Share the grid. It never shows the answer.</li>
+      <li>Use the arrows to replay recent riddles. Those do not change your streak.</li>
+    </ol>
+  </details>
+  <div class="links">
+    <a href="https://www.youtube.com/@RippleParade" target="_blank" rel="noopener">Watch on YouTube</a>
+    <a href="https://x.com/RippleParade" target="_blank" rel="noopener">Follow @RippleParade</a>
+  </div>
+  <small>Bit &amp; Fathom · a kids museum for the internet · No accounts, no tracking. Your streak stays on this device.</small>
+</div>
+<section id="journal" class="panel" hidden>
+  <h2>Your riddle journal</h2>
+  <ul class="hist" id="histList"></ul>
+</section>
+<section id="grown" class="panel grown" hidden>
+  <h2>For grown-ups</h2>
+  <div class="toggle"><span>Sound effects</span><button type="button" class="iconbtn" id="soundBtn2" aria-label="Sound on">🔊</button></div>
+  <div class="toggle"><span>Vibration</span><button type="button" class="iconbtn" id="hapBtn" aria-pressed="true" aria-label="Vibration on">📳</button></div>
+  <p>Bit &amp; Fathom Daily Riddle is one short science riddle a day for curious kids. They guess first. Then a card explains why, with a real source.</p>
+  <p><b>Privacy:</b> no ads, no accounts, no tracking or analytics. Streaks and stats stay in this browser only.</p>
+  <button type="button" class="ghost" id="resetBtn">Reset progress on this device</button>
+</section>
+</div>
+<nav aria-label="Main"><div class="tabs">
+  <button type="button" data-tab="today" id="tabToday" aria-current="page"><span aria-hidden="true">🧩</span>Today</button>
+  <button type="button" data-tab="journal" id="tabJournal"><span aria-hidden="true">📓</span>Journal</button>
+  <button type="button" data-tab="grown" id="tabGrown"><span aria-hidden="true">🔒</span>Grown-ups</button>
+</div></nav>
+<div class="modal" id="statsModal" hidden role="dialog" aria-modal="true" aria-labelledby="statsTitle">
+  <div class="sheet">
+    <button type="button" class="iconbtn" id="statsX" aria-label="Close stats">✕</button>
+    <h2 id="statsTitle">Your stats</h2>
+    <div class="stats4">
+      <div><b id="mPlayed">0</b><span>Played</span></div>
+      <div><b id="mPct">0%</b><span>Win %</span></div>
+      <div><b id="mStreak">0</b><span>Streak</span></div>
+      <div><b id="mBest">0</b><span>Best</span></div>
+    </div>
+    <div id="bars"></div>
+  </div>
+</div>
+<div class="gate" id="gate" hidden role="dialog" aria-modal="true" aria-labelledby="gTitle">
+  <div class="gbox">
+    <h2 id="gTitle">Grown-ups only</h2>
+    <p>Please answer to continue: <b id="gQ"></b></p>
+    <input id="gA" inputmode="numeric" autocomplete="off" aria-label="Answer">
+    <p id="gErr" role="status"></p>
+    <div class="row"><button type="button" class="ghost" id="gNo">Cancel</button><button type="button" id="gGo">Continue</button></div>
+  </div>
+</div>
+<script type="application/json" id="inline-riddles">[{"id": "001", "title": "Can a Robot See Red?", "question": "My camera pointed at a strawberry and said \"red!\" Does that mean I see red like you do?", "choices": ["Yes, robots see colors exactly like people", "Kind of: it measures light and turns it into numbers", "No, robots only see black and white"], "answer_index": 1, "explainer": "A camera sensor is a grid of tiny light buckets with red, green and blue filters, and each one turns light into a number. Bit sees a big red number and small green and blue numbers, and its program says \"that's red!\" Your eyes use cone cells tuned to light too, but your brain turns it into an experience.", "try_it": "In a dark room, with a grown-up, gently cover a phone flashlight with your fingertip. It glows red because red light passes through skin best, which is how smartwatch pulse sensors work!", "source_title": "NASA Science: Visible Light", "source_url": "https://science.nasa.gov/ems/09_visiblelight/", "speaker": "bit", "topic": "Robots", "hook": "Can a camera see red like you do?", "bit_line": "Your eyes feel color. My camera just counts it."}, {"id": "002", "title": "Who Lets Electricity Go Only One Way?", "question": "I'm a tiny glowing gadget with two legs, one long and one short. Plug me in backwards and I stay dark and sulky. Plug me in the right way and I shine without getting very hot like old light bulbs. What am I?", "choices": ["A tiny light bulb with a wire inside", "An LED, a light-emitting diode", "A battery"], "answer_index": 1, "explainer": "A diode is a one-way street for electricity, so an LED only glows when its long leg goes to plus. Inside, electrons cross between two special layers and give off their extra energy as light. LEDs make light far more efficiently than old bulbs, so much less energy turns into heat.", "try_it": "With a grown-up, look around your home for LEDs: on chargers, TVs and remote controls. Count how many colors you find!", "source_title": "ENERGY STAR: Learn About LED Lighting", "source_url": "https://www.energystar.gov/products/light_bulbs/learn-about-led-lighting", "speaker": "fathom", "topic": "Electricity", "hook": "What only glows one way when plugged in?", "bit_line": "One-way street. No sulking when the legs are right."}, {"id": "003", "title": "What Color Is a Sunset on Mars?", "question": "On Earth, sunsets glow orange and red. Our rover friend on Mars sent home a sunset photo. What color was the sky around the setting Sun?", "choices": ["Orange, just like on Earth", "Blue!", "Green, because Mars is an alien planet", "No color at all, Mars has no air"], "answer_index": 1, "explainer": "Mars has thin air full of super-fine dust that lets blue light through best near the Sun. NASA's Curiosity rover photographed a blue Martian sunset in 2015. Mars is an upside-down planet: dusty pinkish days and blue sunsets!", "try_it": "Look at sunset photos from Earth and NASA's Mars sunset photo side by side, then draw both skies with crayons. Never look straight at the real Sun.", "source_title": "NASA Science: Sunset in Mars' Gale Crater", "source_url": "https://science.nasa.gov/resource/sunset-in-mars-gale-crater/", "speaker": "bit", "topic": "Space", "hook": "What color is a sunset on Mars?", "bit_line": "Blue sunsets. I would pack the good crayons."}, {"id": "004", "title": "How Long Does It Take to Text Voyager 1?", "question": "I want to send a quick \"Hi!\" to Voyager 1, the spacecraft launched in 1977 that is now the farthest human-made object from Earth. The message travels as radio waves at the speed of light. How long until Voyager 1 gets it?", "choices": ["About 1 second", "About 1 hour", "About a whole day", "About 1 year"], "answer_index": 2, "explainer": "Light is super fast, but space is super big. In November 2026, Voyager 1 reaches one light-day from Earth, the distance light travels in 24 hours. So one text plus a reply takes about 2 days!", "try_it": "Play \"slow text\" with a family member: pass notes between rooms, but wait a full minute before each delivery. How hard is it to chat?", "source_title": "NASA Science: Voyager 1 - What Is a Light-Day?", "source_url": "https://science.nasa.gov/mission/voyager/voyager-1/voyager-1-what-is-a-light-day/", "speaker": "bit", "topic": "Space", "hook": "How long until a text reaches Voyager 1?", "bit_line": "I sent hi. The reply comes after a whole weekend."}, {"id": "005", "title": "The Hair-Raising Comb", "question": "I combed my hair on a dry day, and now my comb can pick up tiny bits of paper with no glue, no magnets and no batteries. What tiny thing jumped onto my comb?", "choices": ["Electrons", "Water drops", "Air bubbles"], "answer_index": 0, "explainer": "Rubbing some materials together moves tiny negative charges called electrons from one to the other. Your comb now has extra electrons, and that static charge tugs on light things like paper. That little zap from a doorknob is electrons leaving too!", "try_it": "Tear a tissue into tiny pieces on a table. Run a plastic comb through dry hair a few times, then hold it just above the pieces and watch them jump!", "source_title": "Library of Congress: How Does Static Electricity Work?", "source_url": "https://www.loc.gov/everyday-mysteries/categories/physics/item/how-does-static-electricity-work/", "speaker": "bit", "topic": "Electricity", "hook": "What tiny thing jumps onto a comb?", "bit_line": "That little zap is electrons saying hello."}, {"id": "006", "title": "The Planet Where a Day Beats a Year", "question": "On one planet, a single day lasts longer than its whole year. You could have a birthday before tomorrow arrives! Which planet is it?", "choices": ["Venus", "Jupiter", "Mars", "Neptune"], "answer_index": 0, "explainer": "Venus spins super slowly: one day there lasts 243 Earth days. But it travels around the Sun in only 225 Earth days. Slow spinner, speedy traveler!", "try_it": "Put a chair in the middle of a room as the Sun. Walk one slow lap around it while turning your body less than once. Congrats, you're Venus!", "source_title": "NASA Science: Venus Facts", "source_url": "https://science.nasa.gov/venus/venus-facts/", "speaker": "fathom", "topic": "Space", "hook": "Which planet's day outlasts its year?", "bit_line": "Slow spinner, speedy traveler. Happy almost-birthday."}, {"id": "007", "title": "A Computer's Two Favorite Numbers", "question": "Every photo, song and game in a computer is stored using only two digits, over and over. Which two?", "choices": ["1 and 2", "0 and 9", "10 and 100", "0 and 1"], "answer_index": 3, "explainer": "Computers use the binary number system, with only two digits: 0 and 1. Each 0 or 1 is called a bit, like a tiny switch that is off or on. String enough bits together and you can store anything!", "try_it": "Make five cards with 1, 2, 4, 8 and 16 dots. Flip cards face-up (1) or face-down (0) to make every number from 0 to 31!", "source_title": "CS Unplugged (University of Canterbury): Binary Numbers", "source_url": "https://www.csunplugged.org/en/topics/binary-numbers/", "speaker": "bit", "topic": "Computers", "hook": "Which two digits build every computer?", "bit_line": "Off and on. That is my whole language."}, {"id": "008", "title": "How Does a Machine Learn?", "question": "Nobody wrote me a rule for every cat in the world, but I can still spot cats in photos. How did I learn?", "choices": ["Someone typed in a rule for every cat", "I guess randomly and get lucky", "I studied tons of examples"], "answer_index": 2, "explainer": "Machine learning is a kind of AI that learns patterns from lots of examples instead of following only hand-written rules. It works best with thousands or millions of examples. More good examples usually means a smarter guesser!", "try_it": "Show a family member 10 drawings sorted into \"zorbles\" and \"not zorbles\" by a hidden rule, like \"has a circle.\" Can they learn the rule from examples alone?", "source_title": "MIT Sloan: Machine Learning, Explained", "source_url": "https://mitsloan.mit.edu/ideas-made-to-matter/machine-learning-explained", "speaker": "fathom", "topic": "Learning", "hook": "How can a machine learn to spot cats?", "bit_line": "Show me enough examples and I start to notice."}, {"id": "009", "title": "The First Flying Robot on Another Planet", "question": "I'm a small robot that flew through the thin air of Mars, 72 times! What kind of flying machine am I?", "choices": ["A hot-air balloon", "A paper airplane", "A rocket", "A helicopter"], "answer_index": 3, "explainer": "NASA's Ingenuity Mars Helicopter first flew on April 19, 2021. It went on to make 72 flights before its last one in January 2024. That was the first powered, controlled flight on another planet!", "try_it": "With a grown-up, cut a paper strip, slit the top into two blades, fold them opposite ways and add a paper clip to the bottom. Drop it from a step and watch it spin like a rotor!", "source_title": "NASA Science: Ingenuity Mars Helicopter", "source_url": "https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/", "speaker": "bit", "topic": "Space", "hook": "What kind of robot first flew on Mars?", "bit_line": "Seventy-two flights. My rotors are jealous."}, {"id": "010", "title": "The Thunder Countdown", "question": "I see a lightning flash, then count 10 seconds before I hear the thunder. About how far away was the lightning?", "choices": ["About 2 miles", "About 10 miles", "Right on top of me"], "answer_index": 0, "explainer": "Light reaches you almost instantly, but sound takes about 5 seconds to travel a mile. Count the seconds and divide by 5 to get the miles. 10 seconds means about 2 miles away, which is still close enough to stay inside!", "try_it": "Next storm, stay indoors with a grown-up and watch from a window. Count from flash to boom, divide by 5, and track whether the storm is coming closer or moving away.", "source_title": "National Weather Service: Understanding Lightning - Thunder", "source_url": "https://www.weather.gov/safety/lightning-science-thunder", "speaker": "fathom", "topic": "Weather", "hook": "How far away was that lightning flash?", "bit_line": "Count, divide by five, and stay inside."}, {"id": "011", "title": "Why Does a Compass Point North?", "question": "A compass needle always swings to point the same way, even in a dark closet. What's pulling it?", "choices": ["The wind", "The Moon", "Earth's magnetic field"], "answer_index": 2, "explainer": "Earth acts a lot like a giant bar magnet with a north and a south pole. A compass needle is a tiny magnet, so it lines up with Earth's magnetic field. That's how explorers find their way without GPS!", "try_it": "Open a compass, or a compass app with a grown-up, and slowly turn around in a circle. Then place a fridge magnet near the compass and watch the needle get confused!", "source_title": "NOAA NCEI: Geomagnetism Frequently Asked Questions", "source_url": "https://www.ncei.noaa.gov/products/geomagnetism-frequently-asked-questions", "speaker": "bit", "topic": "Earth", "hook": "What pulls a compass needle north?", "bit_line": "Earth is a giant magnet. I just like pointing."}, {"id": "012", "title": "Sixteen Sunrises a Day", "question": "Astronauts on the International Space Station circle Earth so fast they can see lots of sunrises in one day. About how many?", "choices": ["1", "4", "16", "100"], "answer_index": 2, "explainer": "The space station zooms at about five miles every second. It orbits Earth about every 90 minutes, making 16 orbits in 24 hours. Every orbit brings a new sunrise, so good morning, again and again!", "try_it": "Hold a flashlight still as the Sun and slowly walk a globe or ball around in front of it with a sticker on top. Count each time the sticker comes into the light: that's a sunrise!", "source_title": "NASA: Space Station Facts and Figures", "source_url": "https://www.nasa.gov/international-space-station/space-station-facts-and-figures/", "speaker": "fathom", "topic": "Space", "hook": "How many sunrises fill one space day?", "bit_line": "Good morning, sixteen times. I would never sleep."}, {"id": "013", "title": "The Moon's Shy Side", "question": "Every night you look up, the Moon shows you the same face. Why do we never see its other side from Earth?", "choices": ["The Moon doesn't spin at all", "The other side is always dark", "It spins exactly as fast as it circles Earth"], "answer_index": 2, "explainer": "The Moon spins once for every trip it makes around Earth. Scientists call this synchronous rotation. So the same side always faces us, and the far side stays hidden!", "try_it": "Have a friend stand in the middle as Earth. Walk in a circle around them while always facing them. Notice you spun around once too, and they never saw your back!", "source_title": "NASA Science: Moon Facts", "source_url": "https://science.nasa.gov/moon/facts/", "speaker": "bit", "topic": "Space", "hook": "Why does the Moon show only one face?", "bit_line": "I walked a circle facing you. You never saw my back."}, {"id": "014", "title": "Who Keeps Your Phone on Time?", "question": "Your phone's clock almost never runs fast or slow. Deep down, what does it get its time from?", "choices": ["A tiny sundial inside the phone", "Atomic clocks that count atom wiggles", "A clock tower in a big city", "Guessing"], "answer_index": 1, "explainer": "Phones and computers get their time from atomic clocks, like the ones run by NIST. Cesium atoms in these clocks react to microwaves that wiggle exactly 9,192,631,770 times per second. Count that many wiggles and you've measured one perfect second!", "try_it": "Start a phone stopwatch and try to stop it at exactly 10 seconds without looking. Try five times and see how close your brain clock gets!", "source_title": "NIST: How Do You Measure a Second?", "source_url": "https://www.nist.gov/how-do-you-measure-it/how-do-you-measure-second", "speaker": "fathom", "topic": "Time", "hook": "What keeps a phone clock perfectly on time?", "bit_line": "Atom wiggles. That is how I know snack time."}]</script>
 <script>
-(function(){
-/* Streak rules (kid-friendly):
- * - Playing today's riddle keeps/builds the streak whether the answer is right or wrong.
- * - Only one streak change per local calendar day (first play of today).
- * - Archive (past) riddles never change the streak.
- * - Skipping a local day resets streak to 0 on the next visit (before you play).
- * - Dates use the device's local calendar (getFullYear/Month/Date), stable across TZ/DST.
+/* Local shim for Tinker's juice kit. Swap this file for experiments/_shared/juice.js later.
+   Web Audio only, after the first call (a user gesture). No bare sine oscillators. */
+(function(global){
+  var soundOn=true, reduced=false, ac=null, canvas=null, raf=0;
+  function syncMotion(){
+    try{reduced=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){reduced=false}
+    juice.reducedMotion=reduced;
+  }
+  function ctx(){
+    if(ac) return ac;
+    var C=global.AudioContext||global.webkitAudioContext;
+    if(!C) return null;
+    ac=new C();
+    juice._audio=true;
+    return ac;
+  }
+  function tone(type,freq,t,dur,peak,cut){
+    var a=ctx(); if(!a) return;
+    var o=a.createOscillator(), f=a.createBiquadFilter(), g=a.createGain();
+    o.type=type;
+    o.frequency.setValueAtTime(freq,t);
+    f.type='lowpass';
+    f.frequency.setValueAtTime(cut||1800,t);
+    f.Q.value=0.6;
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.0002,peak), t+0.018);
+    g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+    o.connect(f); f.connect(g); g.connect(a.destination);
+    o.start(t); o.stop(t+dur+0.02);
+  }
+  function play(name){
+    if(!soundOn) return;
+    var a=ctx(); if(!a) return;
+    if(a.state==='suspended'){try{var resumed=a.resume(); if(resumed&&resumed.catch) resumed.catch(function(){})}catch(e){}}
+    var t=a.currentTime+0.01;
+    if(name==='tap'){
+      tone('triangle',740,t,0.05,0.04,2200);
+    } else if(name==='wrong'){
+      tone('sawtooth',311,t,0.14,0.045,900);
+      tone('triangle',220,t+0.09,0.2,0.06,700);
+    } else if(name==='correct'){
+      [261.63,329.63,392,523.25].forEach(function(f,i){tone('triangle',f,t+i*0.09,0.26,0.1,2400)});
+    } else if(name==='finish'){
+      tone('triangle',392,t+0.32,0.16,0.07,2000);
+      tone('sawtooth',392,t+0.32,0.16,0.02,1100);
+      tone('triangle',523.25,t+0.46,0.3,0.1,2400);
+    } else if(name==='streak'){
+      [261.63,329.63,392,523.25,659.25,783.99,1046.5].forEach(function(f,i){
+        tone('triangle',f,t+i*0.07,0.24,0.09,2600);
+        if(i%2===0) tone('sawtooth',f,t+i*0.07,0.12,0.02,1400);
+      });
+    }
+  }
+  function burst(origin){
+    if(reduced) return;
+    if(canvas&&canvas.parentNode) canvas.parentNode.removeChild(canvas);
+    canvas=document.createElement('canvas');
+    canvas.className='juice-confetti';
+    canvas.width=global.innerWidth;
+    canvas.height=global.innerHeight;
+    document.body.appendChild(canvas);
+    var g=canvas.getContext('2d');
+    var colors=['#2CC6C3','#F2C14E','#F2795E','#F4FCFC','#7FE7FF','#5BE3A8'];
+    var rect=origin&&origin.getBoundingClientRect?origin.getBoundingClientRect():{left:canvas.width/2,top:canvas.height/3,width:0,height:0};
+    var x0=rect.left+rect.width/2, y0=rect.top+rect.height/3;
+    var bits=[];
+    for(var i=0;i<70;i++){
+      var ang=Math.random()*Math.PI*2, sp=3+Math.random()*7;
+      bits.push({x:x0,y:y0,vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp-4,w:6+Math.random()*6,h:8+Math.random()*8,c:colors[i%colors.length],r:Math.random()*6,vr:(Math.random()-.5)*.4,life:1});
+    }
+    var start=performance.now();
+    cancelAnimationFrame(raf);
+    function frame(now){
+      var k=(now-start)/900;
+      g.clearRect(0,0,canvas.width,canvas.height);
+      var alive=false;
+      bits.forEach(function(b){
+        b.vy+=0.18; b.x+=b.vx; b.y+=b.vy; b.r+=b.vr; b.life=1-k;
+        if(b.life<=0) return;
+        alive=true;
+        g.save(); g.translate(b.x,b.y); g.rotate(b.r); g.globalAlpha=Math.max(0,b.life);
+        g.fillStyle=b.c; g.fillRect(-b.w/2,-b.h/2,b.w,b.h); g.restore();
+      });
+      if(alive&&k<1) raf=requestAnimationFrame(frame);
+      else if(canvas&&canvas.parentNode) canvas.parentNode.removeChild(canvas);
+    }
+    raf=requestAnimationFrame(frame);
+  }
+  var juice={
+    reducedMotion:false,
+    _audio:false,
+    sound:{
+      on:function(){soundOn=true},
+      off:function(){soundOn=false}
+    },
+    press:function(el){
+      if(!el) return;
+      el.classList.add('is-down');
+      setTimeout(function(){el.classList.remove('is-down')},100);
+    },
+    pop:function(el){
+      if(!el) return;
+      el.classList.remove('juice-pop');
+      if(reduced){el.classList.add('juice-flash'); return}
+      void el.offsetWidth;
+      el.classList.add('juice-pop');
+    },
+    shake:function(el){
+      if(!el) return;
+      el.classList.remove('juice-shake'); el.classList.remove('juice-flash');
+      void el.offsetWidth;
+      el.classList.add(reduced?'juice-flash':'juice-shake');
+    },
+    confetti:function(el){if(!reduced) burst(el)},
+    countUp:function(el,n){
+      if(!el) return;
+      n=n|0;
+      if(reduced){el.textContent=String(n); return}
+      var from=0, start=performance.now(), dur=420;
+      function step(t){
+        var k=Math.min(1,(t-start)/dur);
+        var eased=1-Math.pow(1-k,3);
+        el.textContent=String(Math.round(from+(n-from)*eased));
+        if(k<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    },
+    sfx:function(name){try{play(name)}catch(e){}},
+    haptic:function(kind){
+      try{
+        if(!navigator.vibrate) return;
+        if(kind==='ok') navigator.vibrate(15);
+        else navigator.vibrate([30,40,30]);
+      }catch(e){}
+    }
+  };
+  syncMotion();
+  try{
+    var mq=matchMedia('(prefers-reduced-motion: reduce)');
+    if(mq.addEventListener) mq.addEventListener('change',syncMotion);
+    else if(mq.addListener) mq.addListener(syncMotion);
+  }catch(e){}
+  global.juice=juice;
+})(window);
+
+/* Spoiler-free Wordle-style share grid. No answer text, no choice text, no option letters. */
+(function(global){
+  var EMOJI={
+    Robots:'🤖', Electricity:'⚡', Space:'🚀', Computers:'💻', Learning:'🧠',
+    Weather:'⛈️', Earth:'🧭', Time:'⏱️', Moon:'🌙', Light:'🌈', Sound:'🔊',
+    Magnetism:'🧭', AI:'🧠', Colors:'🌈'
+  };
+  function emoji(topic){return EMOJI[topic]||'🔬'}
+  function pad(n){n=String(n); while(n.length<3) n='0'+n; return n}
+  function shareGrid(state, cur, api){
+    var r=api.rid(cur);
+    var num=pad(cur+1);
+    var play=state.plays[api.key(api.dateOf(cur))];
+    var max=api.maxTries(r);
+    var cells='', frac='';
+    if(play&&play.tries&&play.tries.length&&play.done){
+      if(play.ok){
+        for(var i=0;i<play.tries.length-1;i++) cells+='🟥';
+        cells+='🟩';
+        frac=play.tries.length+'/'+max;
+      } else {
+        for(var j=0;j<play.tries.length;j++) cells+='🟥';
+        cells+='📘';
+      }
+    }
+    var week='';
+    for(var d=cur-6; d<=cur; d++){
+      if(d<0){week+='⬜'; continue}
+      var p=state.plays[api.key(api.dateOf(d))];
+      if(!p||!p.done) week+='⬜';
+      else if(!p.ok) week+='📘';
+      else if(!p.tries||p.tries.length<=1) week+='🟩';
+      else week+='🟨';
+    }
+    var tail=(cur===api.today)?('🔥 '+state.streak):'(archive)';
+    var row=cells+(frac?('  '+frac):'');
+    var origin=api.origin||'';
+    return 'Bit & Fathom Daily #'+num+' '+emoji(r.topic)+'\n'+row+'\nThis week '+week+'  '+tail+'\n'+origin+'/r/'+num+'/';
+  }
+  global.BFShare={shareGrid:shareGrid, emoji:emoji, pad:pad};
+})(window);
+
+/* On-device stats. Distribution: 1st / 2nd / 3rd try, and Learned (not ok). */
+(function(global){
+  function aggregate(state, api){
+    var played=0, wins=0, dist=[0,0,0,0];
+    var plays=state.plays||{};
+    for(var k in plays){
+      var n=api.kday(k);
+      if(!(n>=0)||n>api.today) continue;
+      var p=plays[k];
+      if(!p||!p.done) continue;
+      played++;
+      if(p.ok){
+        wins++;
+        var len=(p.tries&&p.tries.length)||1;
+        var b=len<=1?0:len===2?1:2;
+        dist[b]++;
+      } else dist[3]++;
+    }
+    return {
+      played:played,
+      wins:wins,
+      winPct:played?Math.round(100*wins/played):0,
+      streak:state.streak|0,
+      best:state.best|0,
+      dist:dist
+    };
+  }
+  global.BFStats={aggregate:aggregate};
+})(window);
+
+/* Countdown to the next local midnight. Ticks every second, pauses while hidden.
+   The visible sentence can name the seconds. The aria-live label changes once
+   a minute, and through the last minute it stays on "less than a minute". */
+(function(global){
+  function msUntilNextLocalMidnight(now){
+    var n=now||new Date();
+    var next=new Date(n.getFullYear(), n.getMonth(), n.getDate()+1, 0, 0, 0, 0);
+    return next.getTime()-n.getTime();
+  }
+  function pad(x){return (x<10?'0':'')+x}
+  function formatHMS(ms){
+    if(ms<0) ms=0;
+    var s=Math.floor(ms/1000);
+    return pad(Math.floor(s/3600))+':'+pad(Math.floor((s%3600)/60))+':'+pad(s%60);
+  }
+  function piece(n, one, many){return n+' '+(n===1?one:many)}
+  function liveText(ms){
+    if(ms<0) ms=0;
+    if(ms<60000){
+      var sec=Math.ceil(ms/1000);
+      if(sec>=60) return 'Next riddle in 1 minute';
+      if(sec<=0) return 'Next riddle in less than a minute';
+      return 'Next riddle in '+piece(sec,'second','seconds');
+    }
+    var h=Math.floor(ms/3600000), m=Math.floor((ms%3600000)/60000);
+    if(h===0) return 'Next riddle in '+piece(m,'minute','minutes');
+    if(m===0) return 'Next riddle in '+piece(h,'hour','hours');
+    return 'Next riddle in '+piece(h,'hour','hours')+' and '+piece(m,'minute','minutes');
+  }
+  function announceText(ms){
+    if(ms<60000) return 'Next riddle in less than a minute';
+    return liveText(ms);
+  }
+  function startTicker(opts){
+    var timer=null, lastText='';
+    function tick(){
+      var ms=msUntilNextLocalMidnight(new Date());
+      if(opts.el) opts.el.textContent=formatHMS(ms);
+      if(opts.visualEl) opts.visualEl.textContent=liveText(ms);
+      if(opts.liveEl){
+        var text=announceText(ms);
+        if(text!==lastText){ lastText=text; opts.liveEl.textContent=text; }
+      }
+    }
+    function stop(){if(timer){clearInterval(timer); timer=null}}
+    function arm(){
+      stop();
+      tick();
+      if(document.hidden) return;
+      timer=setInterval(tick,1000);
+    }
+    document.addEventListener('visibilitychange', function(){if(document.hidden) stop(); else arm()});
+    arm();
+    return {stop:stop, tick:tick, arm:arm};
+  }
+  global.BFCount={msUntilNextLocalMidnight:msUntilNextLocalMidnight, formatHMS:formatHMS, liveText:liveText, announceText:announceText, startTicker:startTicker};
+})(window);
+
+/* Bit & Fathom Daily Riddle — web streak rules + app shell.
+ * Streak (STREAK.md): playing today counts right or wrong, once per local day;
+ * archive never changes it; a skipped local day resets it. Dates are local.
+ * Tries: up to choices.length-1. A correct pick or the last miss ends the riddle.
  */
-var K='bf-riddle-v1',OK=true,S;
-function blank(o){o=o&&typeof o==='object'?o:{};o.ans=o.ans||{};o.streak=o.streak||0;o.best=o.best||0;return o}
-function load(){try{return blank(JSON.parse(localStorage.getItem(K)))}catch(e){return blank()}}
-try{localStorage.setItem(K+'-t','1');localStorage.removeItem(K+'-t')}catch(e){OK=false}
-S=load();
-var EPOCH=new Date(2026,9,12),$=function(i){return document.getElementById(i)},R=[],today=0,cur=0;
-var svgs=$('chars').querySelectorAll('svg');
+(function(){
+var K1='bf-riddle-v1', K2='bf-riddle-v2', KAPP='bfdr.v1', OK=true, S;
+var ORIGIN='https://bit-fathom-daily-next.gigantic-stranger.workers.dev';
+var EPOCH=new Date(2026,9,12), R=[], today=0, cur=0, grownOK=false, lastFocus=null;
+var $=function(i){return document.getElementById(i)};
+var WHY=[
+  'Not that one. Cross it out and look again.',
+  'The science goes a different way. Try another.',
+  'That guess stays on the bench. One more look.'
+];
+var LEARNED=[
+  'Not this time, and that is how robots learn.',
+  'Crossed out and remembered. That is science.',
+  'Misses are clues. I am proud you looked.'
+];
+var POSE={
+  thinking:'assets/characters/bit-thinking.svg',
+  happy:'assets/characters/bit-happy.svg',
+  surprised:'assets/characters/bit-surprised.svg',
+  curious:'assets/characters/bit-curious.svg'
+};
+var SCENES=['space','ocean','lab'];
+
+function blank(){return {v:2,plays:{},streak:0,best:0,last:null,sound:true,haptics:true,ans:{}}}
+function num(x){return (typeof x==='number'&&isFinite(x)&&x>=0)?Math.floor(x):0}
 function localMidnight(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate())}
 function dayNum(d){return Math.round((localMidnight(d)-EPOCH)/864e5)}
 function dateOf(n){var d=new Date(EPOCH.getTime());d.setDate(EPOCH.getDate()+n);return d}
 function key(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
-// Lens F3 Low (2026-10-22): an unreadable or junk saved date counts as very old (-1e9), so the streak resets.
 function kday(k){if(!k)return -1e9;var p=String(k).split('-'),n=dayNum(new Date(+p[0],p[1]-1,+p[2]));return isNaN(n)?-1e9:n}
-// Clock skew (Proto 2026-10-23): a saved date later than the real today means the device clock was ahead.
-// Count it as TODAY: the streak is kept, a second play the same real day does not count twice (Tinker's
-// edge case), and the play saves the real date, so the next real day grows the streak (no freeze).
 function lday(k){var n=kday(k),t=Math.max(0,dayNum(new Date()));return n>t?t:n}
 function future(k){return kday(k)>Math.max(0,dayNum(new Date()))}
-function fmt(d){return d.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}
 function rid(n){return R[((n%R.length)+R.length)%R.length]}
 function isEncore(n){return n>=R.length}
 function todayKey(){return key(dateOf(today))}
 function yesterdayKey(){return key(dateOf(today-1))}
-/** A streak is only alive if the last play was today or yesterday (local). */
 function stale(o){return o.last&&kday(o.last)<today-1}
-/** Merge two copies of saved progress (this tab + storage) without losing either. */
+function maxTries(r){return Math.max(1,(r.choices||[]).length-1)}
+function normKey(k){var n=kday(k); if(!(n>-1e8)||isNaN(n)) return null; return key(dateOf(n))}
+function syncAnsOn(s){
+  s.ans={};
+  for(var k in s.plays){
+    var p=s.plays[k];
+    if(p&&p.done&&p.tries&&p.tries.length) s.ans[k]=p.tries[p.tries.length-1];
+  }
+}
+function preferPlay(a,b){
+  if(!a||!a.tries) return b||null;
+  if(!b||!b.tries) return a;
+  if(!!a.done!==!!b.done) return a.done?a:b;
+  return a.tries.length>=b.tries.length?a:b;
+}
+function mergePlays(a,b){
+  var m={}, seen={};
+  if(b) for(var k in b) seen[k]=1;
+  if(a) for(var k2 in a) seen[k2]=1;
+  for(var k3 in seen){
+    var w=preferPlay(a&&a[k3], b&&b[k3]);
+    if(w) m[k3]=w;
+  }
+  return m;
+}
 function merge(a,b){
-  var m={ans:Object.assign({},b.ans,a.ans)},la=lday(a.last),lb=lday(b.last);
-  if(la>lb){m.last=a.last;m.streak=a.streak}else if(lb>la){m.last=b.last;m.streak=b.streak}else{m.last=(a.last&&!future(a.last))?a.last:(b.last&&!future(b.last))?b.last:(a.last||b.last);m.streak=Math.max(a.streak,b.streak)}
-  m.best=Math.max(a.best,b.best,m.streak);if(stale(m))m.streak=0;return m}
-function sync(){if(OK)S=merge(S,load())}
-function save(){if(!OK)return;S=merge(S,load());try{localStorage.setItem(K,JSON.stringify(S))}catch(e){OK=false;notice()}}
-function notice(){$('noStore').hidden=OK}
-/** On visit: if last play was neither today nor yesterday (local), reset streak to 0. */
-function applySkipReset(){var tk=todayKey();/* Lens C5: today was already answered while the clock was ahead, and last is yesterday or that future date. Count today as played, with no increment, so the streak is not lost tomorrow. */if(S.ans[tk]!=null&&S.last!==tk&&lday(S.last)>=today-1){S.last=tk;save()}if(stale(S))S.streak=0}
-/** Recompute "today" (focus, tab shown, midnight). Keeps you on today's riddle if you were on it. */
-function refreshDay(){if(!R.length)return;var t=Math.max(0,dayNum(new Date()));sync();if(t!==today){var was=cur===today;today=t;if(was||cur>today)cur=today}applySkipReset();render()}
-var mt=null;function armMidnight(){clearTimeout(mt);var n=new Date(),m=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1,0,0,1);mt=setTimeout(function(){refreshDay();armMidnight()},Math.max(1000,m-n))}
-window.addEventListener('storage',function(e){if(e.key===K||e.key===null)refreshDay()});
-window.addEventListener('focus',refreshDay);
-document.addEventListener('visibilitychange',function(){if(!document.hidden)refreshDay()});
-function start(data){
-  R=(data.riddles||data).slice();
-  today=Math.max(0,dayNum(new Date()));
-  cur=today;
-  sync();applySkipReset();notice();
-  render();armMidnight();
+  a=a||blank(); b=b||blank();
+  var m={v:2,plays:mergePlays(a.plays,b.plays),sound:a.sound,haptics:a.haptics};
+  var la=lday(a.last), lb=lday(b.last);
+  if(la>lb){m.last=a.last;m.streak=a.streak|0}
+  else if(lb>la){m.last=b.last;m.streak=b.streak|0}
+  else{m.last=(a.last&&!future(a.last))?a.last:(b.last&&!future(b.last))?b.last:(a.last||b.last||null);m.streak=Math.max(a.streak|0,b.streak|0)}
+  m.best=Math.max(a.best|0,b.best|0,m.streak|0);
+  if(stale(m)) m.streak=0;
+  syncAnsOn(m);
+  return m;
+}
+function readJSON(k){
+  try{var t=localStorage.getItem(k); if(!t) return null; var o=JSON.parse(t); return (o&&typeof o==='object'&&!Array.isArray(o))?o:null}
+  catch(e){return null}
+}
+function playFromGuess(k,idx,okFlag){
+  var n=kday(k), r=rid(n);
+  var ok = (okFlag===true||okFlag===false) ? okFlag===true : idx===r.answer_index;
+  return {id:r.id, tries:[idx], ok:ok, t:0, done:true};
+}
+function v1ToState(o){
+  var s=blank(); if(!o) return s;
+  s.streak=num(o.streak); s.best=num(o.best); s.last=(typeof o.last==='string')?o.last:null;
+  var ans=(o.ans&&typeof o.ans==='object'&&!Array.isArray(o.ans))?o.ans:{};
+  for(var k in ans){
+    if(typeof ans[k]!=='number') continue;
+    var nk=normKey(k); if(!nk) continue;
+    s.plays[nk]=playFromGuess(nk, ans[k]);
+  }
+  syncAnsOn(s); return s;
+}
+function appToState(o){
+  if(!o||!o.h||typeof o.h!=='object'||Array.isArray(o.h)) return null;
+  var s=blank(); s.sound=o.sound===true; s.best=num(o.best); s.haptics=true;
+  for(var k in o.h){
+    var e=o.h[k]; if(!e||typeof e!=='object'||Array.isArray(e)) continue;
+    var nk=normKey(k); if(!nk) continue;
+    var g=(typeof e.g==='number')?e.g:0;
+    s.plays[nk]=playFromGuess(nk, g, e.ok===true);
+  }
+  syncAnsOn(s); return s;
+}
+function v2ToState(o){
+  if(!o||!o.plays||typeof o.plays!=='object'||Array.isArray(o.plays)) return null;
+  var s=blank();
+  s.streak=num(o.streak); s.best=num(o.best); s.last=(typeof o.last==='string')?o.last:null;
+  s.sound=o.sound!==false; s.haptics=o.haptics!==false;
+  for(var k in o.plays){
+    var p=o.plays[k]; if(!p||typeof p!=='object') continue;
+    var nk=normKey(k); if(!nk) continue;
+    var tries=Array.isArray(p.tries)?p.tries.filter(function(x){return typeof x==='number'}):[];
+    if(!tries.length) continue;
+    s.plays[nk]={id:p.id||rid(kday(nk)).id, tries:tries, ok:p.ok===true, t:p.t||0, done:p.done===true||p.ok===true};
+  }
+  syncAnsOn(s); return s;
+}
+function load(){
+  var rawApp=readJSON(KAPP), raw1=readJSON(K1), raw2=readJSON(K2);
+  var app=appToState(rawApp), v1=raw1?v1ToState(raw1):null, v2=v2ToState(raw2);
+  var s=blank();
+  if(app) s=merge(app,s);
+  if(v1) s=merge(v1,s);
+  if(v2) s=merge(v2,s);
+  if(raw2) s.sound=raw2.sound!==false;
+  else if(rawApp && rawApp.sound===false) s.sound=false;
+  else if(rawApp && rawApp.sound===true) s.sound=true;
+  if(raw2 && raw2.haptics===false) s.haptics=false;
+  s.best=Math.max(s.best|0, app?num(app.best):0, v1?num(v1.best):0, v2?num(v2.best):0, s.streak|0);
+  syncAnsOn(s);
+  return s;
+}
+function persist(s){return {v:2,plays:s.plays,streak:s.streak|0,best:s.best|0,last:s.last||null,sound:!!s.sound,haptics:s.haptics!==false}}
+function v1view(s){
+  var ans={}; syncAnsOn(s);
+  for(var k in s.ans) ans[k]=s.ans[k];
+  var o={ans:ans,streak:s.streak|0,best:s.best|0};
+  if(s.last) o.last=s.last;
+  return o;
+}
+function probe(){try{localStorage.setItem(K2+'-t','1'); localStorage.removeItem(K2+'-t'); return true}catch(e){return false}}
+function notice(){var n=$('noStore'); if(n) n.hidden=OK}
+function sync(){if(!OK) return; S=merge(S, load())}
+function save(){
+  if(!OK) return;
+  S=merge(S, load());
+  try{localStorage.setItem(K2, JSON.stringify(persist(S))); localStorage.setItem(K1, JSON.stringify(v1view(S)))}
+  catch(e){OK=false; notice()}
+}
+function applySkipReset(){
+  var tk=todayKey();
+  if(S.ans[tk]!=null&&S.last!==tk&&lday(S.last)>=today-1){S.last=tk; save()}
+  if(stale(S)) S.streak=0;
+}
+function refreshDay(){
+  if(!R.length) return;
+  var t=Math.max(0,dayNum(new Date()));
+  sync();
+  if(t!==today){var was=cur===today; today=t; if(was||cur>today) cur=today}
+  applySkipReset(); render();
+}
+var mt=null;
+function armMidnight(){
+  clearTimeout(mt);
+  var n=new Date(), m=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1,0,0,1);
+  mt=setTimeout(function(){refreshDay(); armMidnight()}, Math.max(1000, m-n));
+}
+window.addEventListener('storage', function(e){if(!e.key||e.key===K1||e.key===K2||e.key===KAPP) refreshDay()});
+window.addEventListener('focus', refreshDay);
+document.addEventListener('visibilitychange', function(){if(!document.hidden) refreshDay()});
+
+function applyDeepLink(){
+  var d=null;
+  try{d=new URLSearchParams(location.search).get('d')}catch(e){}
+  if(!d||!/^\d{1,5}$/.test(d)) return;
+  var n=parseInt(d,10);
+  if(!n||n<1) return;
+  var idx=n-1;
+  if(idx<0) return;
+  if(idx>today) return;
+  cur=idx;
+}
+function paintSound(){
+  ['soundBtn','soundBtn2'].forEach(function(id){
+    var b=$(id); if(!b) return;
+    b.textContent=S.sound?'🔊':'🔇';
+    b.setAttribute('aria-pressed', S.sound?'true':'false');
+    b.setAttribute('aria-label', S.sound?'Sound on':'Sound off');
+  });
+}
+function paintHap(){
+  var b=$('hapBtn'); if(!b) return;
+  b.textContent=S.haptics?'📳':'📴';
+  b.setAttribute('aria-pressed', S.haptics?'true':'false');
+  b.setAttribute('aria-label', S.haptics?'Vibration on':'Vibration off');
+}
+function setBit(name){
+  var img=$('bit'); if(!img) return;
+  var src=POSE[name]||POSE.thinking;
+  if(img.getAttribute('src')!==src) img.setAttribute('src', src);
+  img.alt='Bit, '+name;
+}
+function sceneFor(r){return SCENES[(parseInt(r.id,10)-1)%SCENES.length]}
+function currentPlay(){return S.plays[key(dateOf(cur))]||null}
+function shareText(){
+  return window.BFShare.shareGrid(S, cur, {rid:rid, key:key, dateOf:dateOf, today:today, origin:ORIGIN, maxTries:maxTries});
+}
+function paintStats(){
+  var agg=window.BFStats.aggregate(S, {kday:kday, today:today});
+  $('stPlayed').textContent=agg.played;
+  $('stPct').textContent=agg.winPct+'%';
+  $('stStreak').textContent=agg.streak;
+  $('stBest').textContent=agg.best;
+  if($('best')) $('best').textContent=agg.best;
+  $('streak').textContent=S.streak;
+}
+function paintBars(){
+  var agg=window.BFStats.aggregate(S, {kday:kday, today:today});
+  $('mPlayed').textContent=agg.played;
+  $('mPct').textContent=agg.winPct+'%';
+  $('mStreak').textContent=agg.streak;
+  $('mBest').textContent=agg.best;
+  var labels=['1st try','2nd try','3rd try','Learned'];
+  var peak=1; agg.dist.forEach(function(n){if(n>peak) peak=n});
+  var tp=S.plays[todayKey()];
+  var bucket=-1;
+  if(tp&&tp.done) bucket=tp.ok?Math.min(Math.max((tp.tries||[]).length,1),3)-1:3;
+  var box=$('bars'); box.textContent='';
+  labels.forEach(function(lab,i){
+    var row=document.createElement('div');
+    row.className='bar'+(i===bucket?' is-today':'');
+    var name=document.createElement('span'); name.textContent=lab;
+    var track=document.createElement('span'); track.className='track';
+    var fill=document.createElement('span'); fill.className='fill';
+    fill.style.width=Math.round(100*agg.dist[i]/peak)+'%';
+    var count=document.createElement('b'); count.textContent=String(agg.dist[i]);
+    track.appendChild(fill); row.appendChild(name); row.appendChild(track); row.appendChild(count);
+    box.appendChild(row);
+  });
+}
+function renderGrid(r,p){
+  var box=$('grid'); if(!box) return;
+  box.textContent='';
+  var text=shareText();
+  if($('sharePreview')) $('sharePreview').textContent=text;
+  if(!p||!p.done) return;
+  var cells=[];
+  if(p.ok){
+    for(var i=0;i<p.tries.length-1;i++) cells.push('miss');
+    cells.push('hit');
+  } else {
+    for(var j=0;j<p.tries.length;j++) cells.push('miss');
+    cells.push('book');
+  }
+  cells.forEach(function(kind){
+    var s=document.createElement('i');
+    s.className=kind;
+    s.textContent=kind==='hit'?'🟩':kind==='book'?'📘':'🟥';
+    box.appendChild(s);
+  });
+  var frac=document.createElement('b');
+  frac.textContent=p.ok?(' '+p.tries.length+'/'+maxTries(r)):' learned';
+  box.appendChild(frac);
 }
 function render(){
-  var r=rid(cur),d=dateOf(cur),a=S.ans[key(d)];
+  var r=rid(cur), d=dateOf(cur), p=currentPlay();
   var whenB=$('label');
   whenB.textContent='';
-  whenB.appendChild(document.createTextNode(cur===today?"Today's riddle":'Riddle #'+r.id));
-  if(isEncore(cur)){whenB.appendChild(document.createTextNode(' '));var en=document.createElement('span');en.className='encore';en.textContent='Encore';whenB.appendChild(en)}
-  $('date').textContent=fmt(d);
-  $('prev').disabled=cur<=0||today-cur>=R.length-1;$('next').disabled=cur>=today;
-  $('title').textContent=r.title;$('question').textContent=r.question;
-  $('streak').textContent=S.streak;$('best').textContent=S.best;stats();$('shareMsg').textContent='';
-  var c=$('choices');c.innerHTML='';
-  r.choices.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.textContent=String.fromCharCode(65+i)+') '+t;b.onclick=function(){guess(i)};c.appendChild(b)});
-  var dots=$('dots');dots.innerHTML='';var n=Math.min(R.length,today+1);for(var j=today-n+1;j<=today;j++){var i=document.createElement('i');if(j===cur)i.className='on';else if(S.ans[key(dateOf(j))]!=null)i.className='done';dots.appendChild(i)}
-  svgs[0].classList.remove('quiet');svgs[1].classList.remove('quiet');
-  $('reveal').classList.remove('show');if(a!=null)reveal(a,false);
+  var puzzleNo=window.BFShare.pad(cur+1);
+  whenB.appendChild(document.createTextNode(cur===today?("Today's riddle #"+puzzleNo):('Riddle #'+puzzleNo)));
+  var dateEl=$('date');
+  dateEl.textContent='';
+  var wday=document.createElement('span');
+  wday.className='wday';
+  wday.textContent=d.toLocaleDateString(undefined,{weekday:'long'})+', ';
+  dateEl.appendChild(wday);
+  dateEl.appendChild(document.createTextNode(d.toLocaleDateString(undefined,{month:'long',day:'numeric'})));
+  if(isEncore(cur)){
+    dateEl.appendChild(document.createTextNode(' '));
+    var en=document.createElement('span'); en.className='encore'; en.textContent='Encore of #'+r.id;
+    dateEl.appendChild(en);
+  }
+  $('prev').disabled=cur<=0||today-cur>=R.length-1;
+  $('next').disabled=cur>=today;
+  $('title').textContent=r.hook||r.title;
+  $('question').textContent=r.question;
+  var topic=$('topic');
+  if(topic) topic.textContent=(window.BFShare.emoji(r.topic)+' '+(r.topic||'Science'));
+  var sc=sceneFor(r);
+  var simg=$('sceneImg');
+  if(simg) simg.src='assets/backgrounds/'+sc+'-1200x675.png';
+  document.body.setAttribute('data-scene', sc);
+  paintStats();
+  if($('shareMsg')) $('shareMsg').textContent='';
+  var c=$('choices'); c.textContent='';
+  var done=p&&p.done;
+  r.choices.forEach(function(t,i){
+    var b=document.createElement('button');
+    b.type='button';
+    b.className='choice';
+    b.textContent=t;
+    var picked=p&&p.tries&&p.tries.indexOf(i)>=0;
+    if(done){
+      b.disabled=true;
+      if(i===r.answer_index) b.classList.add('right');
+      else if(picked) b.classList.add('wrong');
+    } else if(picked){
+      b.disabled=true; b.classList.add('wrong');
+    } else if(cur>today){
+      b.disabled=true;
+    } else {
+      b.addEventListener('click', function(){guess(i)});
+    }
+    c.appendChild(b);
+  });
+  var why=$('whynot');
+  if(why){
+    if(p&&p.tries&&p.tries.length&&!done){
+      why.hidden=false;
+      why.textContent=WHY[(p.tries.length-1)%WHY.length];
+    } else why.hidden=true;
+  }
+  var dots=$('dots');
+  if(dots){
+    dots.textContent='';
+    var n=Math.min(R.length, today+1);
+    for(var j=today-n+1;j<=today;j++){
+      var dot=document.createElement('i');
+      if(j===cur) dot.className='on';
+      else if(S.ans[key(dateOf(j))]!=null) dot.className='done';
+      dots.appendChild(dot);
+    }
+  }
+  var rev=$('reveal');
+  if(!done){
+    rev.hidden=true;
+    if(p&&p.tries&&p.tries.length) setBit('surprised');
+    else setBit('thinking');
+    return;
+  }
+  rev.hidden=false;
+  var ok=!!p.ok;
+  $('verdict').textContent=ok?'Yes! You fathomed it!':'Nice try — robots learn from mistakes too!';
+  var line=(ok?(r.bit_line):(LEARNED[(p.tries.length)%LEARNED.length]))||'';
+  $('bitLine').textContent=line;
+  $('kept').textContent=cur===today?('🔥 Streak: '+S.streak+(S.streak===1?' day':' days')+'. A new riddle arrives tomorrow!'):'';
+  var whoName=r.speaker==='fathom'?'Fathom':'Bit';
+  var expl=$('explainer');
+  expl.textContent='';
+  var strong=document.createElement('b');
+  strong.textContent=whoName+': ';
+  expl.appendChild(strong);
+  expl.appendChild(document.createTextNode(r.explainer));
+  $('tryit').textContent=r.try_it||'';
+  $('tryBox').hidden=!r.try_it;
+  var src=$('src');
+  src.textContent=r.source_title||'';
+  if(r.source_url) src.href=r.source_url; else src.removeAttribute('href');
+  src.parentNode.hidden=!r.source_title;
+  setBit(ok?'happy':'curious');
+  var who=$('whoBit');
+  if(who) who.setAttribute('src', ok?POSE.happy:POSE.curious);
+  renderGrid(r,p);
+  if($('rise')){
+    if(ok&&cur===today){
+      $('rise').hidden=false;
+      if($('riseNum')) $('riseNum').textContent=String(S.streak);
+    } else $('rise').hidden=true;
+  }
 }
 function guess(i){
-  sync();var d=key(dateOf(cur));
-  if(S.ans[d]!=null){render();return}
-  S.ans[d]=i;
-  // Archive never changes streak. Today: play counts win or lose; one increment/day.
-  if(cur===today){
-    var l=lday(S.last); // Lens F3: compare day numbers, so padded '2027-03-12' == unpadded '2027-3-12'
-    if(l===today){/* already counted today */}
-    else if(l===today-1){S.streak=S.streak+1}
-    else{S.streak=1}
-    S.last=d;
-    if(S.streak>S.best)S.best=S.streak;
-    $('streak').textContent=S.streak;$('best').textContent=S.best;
+  if(cur>today) return;
+  sync();
+  var dkey=key(dateOf(cur)), r=rid(cur);
+  var p=S.plays[dkey];
+  if(p&&p.done){render(); return}
+  if(p&&p.tries&&p.tries.indexOf(i)>=0) return;
+  if(!p){p={id:r.id, tries:[], ok:false, t:Date.now(), done:false}; S.plays[dkey]=p}
+  var first=p.tries.length===0;
+  p.tries.push(i);
+  var correct=i===r.answer_index;
+  if(correct){p.ok=true; p.done=true}
+  else if(p.tries.length>=maxTries(r)){p.ok=false; p.done=true}
+  var milestone=false;
+  if(cur===today && first){
+    var l=lday(S.last);
+    if(l===today){}
+    else if(l===today-1) S.streak=S.streak+1;
+    else S.streak=1;
+    S.last=dkey;
+    if(S.streak>S.best) S.best=S.streak;
+    milestone=(S.streak===3||S.streak===7||S.streak===14);
   }
-  save();$('streak').textContent=S.streak;$('best').textContent=S.best;stats();reveal(i,true);render_dots();
+  syncAnsOn(S);
+  save();
+  render();
+  var btn=$('choices').children[i];
+  juice.press(btn);
+  juice.sfx('tap');
+  if(correct){
+    juice.pop(btn); juice.pop($('bit')); juice.confetti($('card'));
+    juice.sfx('correct');
+    if(milestone) juice.sfx('streak'); else juice.sfx('finish');
+    if(S.haptics) juice.haptic('ok');
+    if(cur===today && $('riseNum')) juice.countUp($('riseNum'), S.streak);
+  } else {
+    juice.shake(btn);
+    juice.sfx('wrong');
+    if(p.done) juice.sfx('finish');
+    if(S.haptics) juice.haptic('bad');
+  }
 }
-function stats(){var p=0,w=0;for(var k in S.ans){var n=kday(k);if(n<0||n>today)continue;p++;if(S.ans[k]===rid(n).answer_index)w++}
-  $('stPlayed').textContent=p;$('stPct').textContent=(p?Math.round(100*w/p):0)+'%';$('stStreak').textContent=S.streak;$('stBest').textContent=S.best}
-function shareText(){var r=rid(cur),a=S.ans[key(dateOf(cur))],ok=a===r.answer_index;
-  return 'Bit & Fathom Daily Riddle #'+r.id+'\n'+(ok?'🟩 Got it!':'🟥 Learned something!')+(cur===today?'\n🔥 Streak '+S.streak:'')+'\n'+location.origin+'/'}
-$('share').onclick=function(){var t=shareText(),m=$('shareMsg');
-  function copied(){m.textContent='✅ Copied! Paste it to share.'}
-  function fallback(){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(copied,function(){m.textContent=t});else m.textContent=t}
-  if(navigator.share&&matchMedia('(pointer:coarse)').matches)navigator.share({text:t}).catch(function(e){if(e&&e.name!=='AbortError')fallback()});else fallback()};
-function render_dots(){var ds=$('dots').children,n=ds.length;for(var k=0;k<n;k++){var j=today-n+1+k;if(j!==cur&&S.ans[key(dateOf(j))]!=null)ds[k].className='done'}}
-function reveal(i,scroll){var r=rid(cur),ok=i===r.answer_index,bs=$('choices').children;
-  for(var k=0;k<bs.length;k++){bs[k].disabled=true;if(k===r.answer_index)bs[k].classList.add('right');else if(k===i)bs[k].classList.add('wrong')}
-  var L=String.fromCharCode(65+r.answer_index);
-  $('verdict').textContent=(ok?'Yes! You fathomed it! 🎉':'Nice try — robots learn from mistakes too!')+' The answer is '+L+'.';
-  $('kept').textContent=cur===today?'🔥 Streak: '+S.streak+(S.streak===1?' day':' days')+'. A new riddle arrives tomorrow!':'';
-  var f=r.speaker!=='bit';$('who').innerHTML='';$('who').appendChild(svgs[f?1:0].cloneNode(true));
-  svgs[f?0:1].classList.add('quiet');
-  $('explainer').innerHTML='';var b=document.createElement('b');b.textContent=(f?'⚙️ Fathom: ':'🤖 Bit: ');$('explainer').appendChild(b);$('explainer').appendChild(document.createTextNode((f?"Let's fathom it! ":'')+r.explainer));
-  $('tryit').textContent=r.try_it||'';$('tryit').parentNode.hidden=!r.try_it;$('src').textContent=r.source_title||'';if(r.source_url)$('src').href=r.source_url;else $('src').removeAttribute('href');$('src').parentNode.hidden=!r.source_title;
-  var s=$('reveal');s.classList.add('show');
-  if(scroll){var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;s.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'})}}
-function go(dl){var n=cur+dl;if(n>today||n<0||today-n>R.length-1)return;cur=n;render();window.scrollTo(0,0)}
-$('prev').onclick=function(){go(-1)};$('next').onclick=function(){go(1)};
-document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1)});
-var sx=null,sy=0;$('card').addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
-$('card').addEventListener('touchend',function(e){if(sx==null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>60&&Math.abs(dx)>1.5*Math.abs(dy))go(dx<0?1:-1)},{passive:true});
-// Test hooks: only on local file/localhost builds, never on the live site.
-if(location.protocol==='file:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')window.__BF={
-  getState:function(){return{streak:S.streak,best:S.best,last:S.last,ans:Object.assign({},S.ans),today:today,cur:cur,storage:OK}},
-  dayNum:dayNum,key:key,dateOf:dateOf,rid:function(n){return rid(n)},isEncore:isEncore,
-  applySkipReset:applySkipReset,todayKey:todayKey,yesterdayKey:yesterdayKey,refreshDay:refreshDay,shareText:shareText,
-  setState:function(o){if(o.streak!=null)S.streak=o.streak;if(o.best!=null)S.best=o.best;if('last' in o)S.last=o.last;if(o.ans)S.ans=o.ans;if(OK)try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}},
-  remount:function(){applySkipReset();cur=today;render()}
-};
-// Riddles are inlined at build time (no network fetch, no riddles.json 404).
+function go(dl){
+  var n=cur+dl;
+  if(n>today||n<0||today-n>R.length-1) return;
+  cur=n; render(); window.scrollTo(0,0);
+}
+function showTab(name){
+  ['today','journal','grown'].forEach(function(id){var el=$(id); if(el) el.hidden=id!==name});
+  document.querySelectorAll('nav button').forEach(function(b){
+    if(b.getAttribute('data-tab')===name) b.setAttribute('aria-current','page');
+    else b.removeAttribute('aria-current');
+  });
+  if(name==='journal') renderJournal();
+  window.scrollTo(0,0);
+}
+function renderJournal(){
+  var ul=$('histList'); if(!ul) return;
+  ul.textContent='';
+  var keys=Object.keys(S.plays).filter(function(k){return S.plays[k]&&S.plays[k].done&&kday(k)>=0&&kday(k)<=today});
+  keys.sort(function(a,b){return kday(b)-kday(a)});
+  if(!keys.length){
+    var empty=document.createElement('li');
+    empty.className='empty';
+    empty.textContent='No riddles yet. Play today to start your journal.';
+    ul.appendChild(empty); return;
+  }
+  keys.forEach(function(k){
+    var p=S.plays[k], n=kday(k), r=rid(n);
+    var li=document.createElement('li');
+    var mark=document.createElement('b'); mark.textContent=p.ok?'🟩':'📘';
+    var text=document.createElement('span');
+    text.textContent=' #'+window.BFShare.pad(n+1)+' · '+(r.hook||r.title)+' · '+(p.ok?'Fathomed':'Learned');
+    li.appendChild(mark); li.appendChild(text); ul.appendChild(li);
+  });
+}
+function focusables(root){
+  return Array.prototype.filter.call(root.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'), function(el){
+    return !el.disabled && el.offsetParent!==null;
+  });
+}
+function trapKey(e, root, closer){
+  if(e.key==='Escape'){e.preventDefault(); closer(); return}
+  if(e.key!=='Tab') return;
+  var f=focusables(root); if(!f.length){e.preventDefault(); return}
+  var first=f[0], last=f[f.length-1];
+  if(e.shiftKey && document.activeElement===first){e.preventDefault(); last.focus()}
+  else if(!e.shiftKey && document.activeElement===last){e.preventDefault(); first.focus()}
+}
+function openStats(){
+  lastFocus=document.activeElement;
+  paintBars();
+  $('statsModal').hidden=false;
+  $('statsX').focus();
+}
+function closeStats(){
+  $('statsModal').hidden=true;
+  if(lastFocus&&lastFocus.focus) lastFocus.focus();
+  else if($('statsBtn')) $('statsBtn').focus();
+}
+var gAns=null, gAfter=null;
+function openGate(after){
+  var a=6+Math.floor(Math.random()*7), b=3+Math.floor(Math.random()*6);
+  gAns=a*b; gAfter=after;
+  $('gQ').textContent=a+' × '+b+' = ?';
+  $('gA').value=''; $('gErr').textContent='';
+  $('gate').hidden=false; $('gA').focus();
+}
+function closeGate(){
+  $('gate').hidden=true; gAfter=null;
+  var tab=$('tabToday'); if(tab) tab.focus();
+}
+function submitGate(){
+  if(parseInt($('gA').value,10)===gAns){
+    var fn=gAfter; $('gate').hidden=true; gAfter=null; grownOK=true; if(fn) fn();
+  } else $('gErr').textContent='Not quite. Ask a grown-up.';
+}
+function wire(){
+  $('prev').addEventListener('click', function(){go(-1)});
+  $('next').addEventListener('click', function(){go(1)});
+  $('share').addEventListener('click', function(){
+    var t=shareText(), m=$('shareMsg');
+    function copied(){m.textContent='Copied! Paste it anywhere'}
+    var write=(navigator.clipboard&&navigator.clipboard.writeText)?navigator.clipboard.writeText(t):Promise.reject();
+    var coarse=false; try{coarse=matchMedia('(pointer:coarse)').matches}catch(e){}
+    if(coarse&&navigator.share){
+      write.then(copied, function(){m.textContent=t});
+      navigator.share({text:t}).catch(function(err){
+        if(err&&err.name==='AbortError') return;
+        write.then(copied, function(){m.textContent=t});
+      });
+    } else write.then(copied, function(){m.textContent=t});
+  });
+  $('statsBtn').addEventListener('click', openStats);
+  $('statsX').addEventListener('click', closeStats);
+  $('statsModal').addEventListener('keydown', function(e){trapKey(e, $('statsModal'), closeStats)});
+  $('statsModal').addEventListener('click', function(e){if(e.target===$('statsModal')) closeStats()});
+  function toggleSound(){S.sound=!S.sound; if(S.sound) juice.sound.on(); else juice.sound.off(); paintSound(); if(S.sound) juice.sfx('tap'); save()}
+  $('soundBtn').addEventListener('click', toggleSound);
+  if($('soundBtn2')) $('soundBtn2').addEventListener('click', toggleSound);
+  if($('hapBtn')) $('hapBtn').addEventListener('click', function(){S.haptics=!S.haptics; paintHap(); save()});
+  if($('resetBtn')) $('resetBtn').addEventListener('click', function(){
+    if(!confirm('Erase streaks and journal on this device?')) return;
+    var sound=S.sound, hap=S.haptics;
+    S=blank(); S.sound=sound; S.haptics=hap; syncAnsOn(S); save(); location.reload();
+  });
+  document.querySelectorAll('nav button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var name=b.getAttribute('data-tab');
+      if(name==='grown' && !grownOK) openGate(function(){showTab('grown')});
+      else showTab(name);
+    });
+  });
+  $('gNo').addEventListener('click', closeGate);
+  $('gGo').addEventListener('click', submitGate);
+  $('gate').addEventListener('keydown', function(e){
+    if(e.key==='Enter'&&e.target===$('gA')){e.preventDefault(); submitGate(); return}
+    trapKey(e, $('gate'), closeGate);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape'){
+      if(!$('statsModal').hidden){closeStats(); return}
+      if(!$('gate').hidden){closeGate(); return}
+    }
+    if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')) return;
+    if(!$('statsModal').hidden||!$('gate').hidden) return;
+    if(e.key==='ArrowLeft') go(-1);
+    if(e.key==='ArrowRight') go(1);
+  });
+  var sx=null, sy=0, card=$('card');
+  card.addEventListener('touchstart', function(e){sx=e.touches[0].clientX; sy=e.touches[0].clientY},{passive:true});
+  card.addEventListener('touchend', function(e){
+    if(sx==null) return;
+    var dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy; sx=null;
+    if(Math.abs(dx)>60&&Math.abs(dx)>1.5*Math.abs(dy)) go(dx<0?1:-1);
+  },{passive:true});
+}
+function start(data){
+  R=(data.riddles||data).slice();
+  OK=probe();
+  today=Math.max(0, dayNum(new Date()));
+  S=OK?load():blank();
+  cur=today;
+  sync();
+  applyDeepLink();
+  applySkipReset();
+  notice();
+  if(S.sound) juice.sound.on(); else juice.sound.off();
+  paintSound(); paintHap();
+  wire();
+  render();
+  armMidnight();
+  if(window.BFCount) window.BFCount.startTicker({el:$('count'), visualEl:$('countSay'), liveEl:$('countLive')});
+  if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){
+    window.addEventListener('load', function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
+  }
+}
+if(false){
+  window.__BF={
+    getState:function(){return {streak:S.streak,best:S.best,last:S.last,ans:Object.assign({},S.ans),today:today,cur:cur,storage:OK}},
+    dayNum:dayNum, key:key, dateOf:dateOf, rid:function(n){return rid(n)}, isEncore:isEncore,
+    applySkipReset:applySkipReset, todayKey:todayKey, yesterdayKey:yesterdayKey, refreshDay:refreshDay, shareText:shareText,
+    setState:function(o){
+      if(o.streak!=null) S.streak=o.streak;
+      if(o.best!=null) S.best=o.best;
+      if('last' in o) S.last=o.last;
+      if(o.ans){
+        S.plays={};
+        for(var k in o.ans){
+          if(typeof o.ans[k]!=='number') continue;
+          var nk=normKey(k)||k;
+          var n=kday(nk);
+          var r=rid(n);
+          S.plays[nk]={id:r.id, tries:[o.ans[k]], ok:o.ans[k]===r.answer_index, t:0, done:true};
+        }
+      }
+      syncAnsOn(S);
+      if(OK){try{localStorage.setItem(K2, JSON.stringify(persist(S))); localStorage.setItem(K1, JSON.stringify(v1view(S)))}catch(e){}}
+    },
+    remount:function(){applySkipReset(); cur=today; render()}
+  };
+  window.__bf=window.__BF;
+}
 start(JSON.parse($('inline-riddles').textContent));
 })();
-</script></body></html>
+
+</script>
+</body>
+</html>

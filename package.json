@@ -1,0 +1,9 @@
+{
+  "name": "bit-fathom-daily-riddle",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Bit & Fathom Daily Riddle. Static PWA. wrangler.jsonc serves publish/ (dist plus /og/) with a Worker for /r/*.",
+  "devDependencies": {
+    "wrangler": "4.155.0"
+  }
+}

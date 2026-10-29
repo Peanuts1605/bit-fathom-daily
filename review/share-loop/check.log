@@ -1,0 +1,20 @@
+USING tooling/pyenv/bin/python (playwright 1.64.0)
+PASS build: PASS build
+SKIP source-link network check (set LINKS=1 to run it)
+PASS riddles: PASS: 14 riddles valid (source links NOT checked: BF_SKIP_LINKS=1)
+PASS smoke: RESULT PASS
+PASS streak-date: RESULT PASS
+PASS streak-padded: RESULT PASS
+PASS multitab: RESULT PASS
+PASS clock-skew: RESULT PASS
+PASS og: RESULT PASS
+PASS r-pages: RESULT PASS
+PASS csp: RESULT PASS
+PASS hook: RESULT PASS
+PASS share: RESULT PASS
+PASS e2e: RESULT PASS
+PASS release: PASS build
+PASS release build omits test hook
+PASS review: PASS review artifacts /workspace/review/share-loop
+PASS no runtime fetch
+CHECK PASS

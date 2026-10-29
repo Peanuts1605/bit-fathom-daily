@@ -87,9 +87,9 @@ with sync_playwright() as p:
 
     # --- Encore on day 14 (0-based: day 14 = 15th day = first loop of 001) ---
     ctx, pg = page_at(2026, 10, 26)  # epoch Oct12 + 14 days = Oct26
-    st = pg.evaluate('() => ({day: window.__BF.dayNum(new Date()), id: window.__BF.rid(window.__BF.getState().today).id, encore: !!document.querySelector(".encore"), label: document.getElementById("label").textContent})')
+    st = pg.evaluate('() => ({day: window.__BF.dayNum(new Date()), id: window.__BF.rid(window.__BF.getState().today).id, encore: !!document.querySelector(".encore"), label: document.querySelector(".when").textContent})')
     check('day 14 maps to 001', st['id'] == '001' and st['day'] == 14, str(st))
-    check('Encore label on day 14+', st['encore'] is True and 'Encore' in st['label'], st['label'])
+    check('Encore label on day 14+', st['encore'] is True and 'Encore' in st['label'] and '#015' in st['label'], st['label'])
     ctx.close()
 
     # day 15 -> 002 encore
@@ -100,11 +100,14 @@ with sync_playwright() as p:
 
     # --- Streak: wrong answer still counts as played (kid-friendly), +1 once ---
     ctx, pg = page_at(2026, 10, 16)
-    # pick wrong: answer_index 0 for 005, click button 2
+    # Misses allowed = choices.length-1. Exhaust them so the riddle resolves as "learned".
     ans = pg.evaluate('() => window.__BF.rid(window.__BF.getState().today).answer_index')
-    wrong = 1 if ans != 1 else 2
-    pg.click(f'#choices button:nth-child({wrong+1})')
-    pg.wait_for_timeout(200)
+    nbtn = pg.evaluate('() => document.querySelectorAll("#choices button").length')
+    for i in range(nbtn):
+        if i == ans:
+            continue
+        pg.click(f'#choices button:nth-child({i+1})')
+        pg.wait_for_timeout(80)
     st = pg.evaluate('() => window.__BF.getState()')
     check('wrong answer sets streak to 1', st['streak'] == 1, str(st))
     check('wrong marked on UI', pg.evaluate('() => !!document.querySelector(".choices button.wrong")'))
