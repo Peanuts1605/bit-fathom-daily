@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Render 1200x630 og:image cards with Playwright (dpr 1) and quantize to <=150 KB.
 
+Cards are written to static-assets/og/ (or BF_OG_DIR), not into dist/.
+Workers Static Assets should publish that folder. dist/ stays the HTML bundle.
+
 Usage:
-  python3 og/render_og.py            # write dist/og/*.png
+  python3 og/render_og.py            # write static-assets/og/*.png
   python3 og/render_og.py --check    # verify dims and size only
 """
 import json, os, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DIST = ROOT / 'dist'
-OG = DIST / 'og'
+OG = Path(os.environ['BF_OG_DIR']) if os.environ.get('BF_OG_DIR') else (ROOT / 'static-assets' / 'og')
 TPL = Path(__file__).with_name('template.html')
 CHROME = '/usr/bin/google-chrome'
 MAX_BYTES = 150 * 1024
@@ -68,7 +70,7 @@ def render_html(card):
     def esc(s):
         return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     html = TPL.read_text()
-    # Card HTML is written to dist/og/_card.html, two levels below the repo root.
+    # Card HTML is written next to the pngs, two levels below the repo root.
     mapping = {
         '%%FONT_DISPLAY%%': '../../assets/fonts/BricolageGrotesque-opsz-wdth-wght.ttf',
         '%%FONT_BODY%%': '../../assets/fonts/AtkinsonHyperlegibleNext-wght.ttf',
@@ -91,18 +93,18 @@ def render_html(card):
 
 
 def quantize(path: Path):
-    """pngquant in place. Repeat at lower quality until <=150 KB or give up."""
-    if path.stat().st_size <= MAX_BYTES:
-        return
+    """pngquant in place. Required. Fail later if the file is still over 150 KB."""
     if not shutil_which('pngquant'):
-        return
+        raise SystemExit('FAIL og: pngquant is not installed (see requirements.txt)')
     tmp = path.with_suffix('.q.png')
-    for q in ('65-85', '50-70', '35-55', '20-40', '10-30'):
+    for q in ('55-75', '40-60', '25-45', '15-30', '5-20'):
         r = subprocess.run(
             ['pngquant', '--quality', q, '--speed', '1', '--force', '--output', str(tmp), str(path)],
             capture_output=True)
-        if r.returncode == 0 and tmp.exists():
+        if r.returncode == 0 and tmp.exists() and tmp.stat().st_size < path.stat().st_size:
             tmp.replace(path)
+        elif tmp.exists():
+            tmp.unlink()
         if path.stat().st_size <= MAX_BYTES:
             return
 

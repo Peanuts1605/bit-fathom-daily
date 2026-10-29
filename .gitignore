@@ -9,5 +9,8 @@ node_modules/
 
 # generated site (./check.sh rebuilds it). Review samples live in review/share-loop/
 /dist/
+# og cards for Workers Static Assets (publish this folder; it is not in the worker bundle)
+/static-assets/
+assets/fonts/*.woff2
 __pycache__/
 *.pyc

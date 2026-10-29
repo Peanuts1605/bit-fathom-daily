@@ -95,7 +95,7 @@ with sync_playwright() as p:
     # 5. share + stats
     play_today(t); txt=t.evaluate('()=>window.__BF.shareText()')
     check('share text grid, no answer', txt.startswith('Bit & Fathom Daily #005') and '🟩' in txt and 'This week' in txt and 'Electrons' not in txt and '🔥' in txt and '/r/005/' in txt, txt.replace('\n',' | '))
-    check('share link uses location.origin','workers.dev' not in txt or t.evaluate('()=>location.origin') in txt,txt.replace('\n',' | '))
+    check('share link uses canonical origin','bit-fathom-daily-next.gigantic-stranger.workers.dev/r/005/' in txt and '127.0.0.1' not in txt,txt.replace('\n',' | '))
     check('stats played 1 / 100%',t.locator('#stPlayed').inner_text()=='1' and t.locator('#stPct').inner_text()=='100%')
     check('how-to-play present',t.locator('#howto summary').count()==1)
     fs=t.evaluate("()=>[getComputedStyle(document.querySelector('#choices button')).fontSize,getComputedStyle(document.querySelector('#question')).fontSize,getComputedStyle(document.querySelector('.hint')).fontSize,getComputedStyle(document.querySelector('small')).opacity]")

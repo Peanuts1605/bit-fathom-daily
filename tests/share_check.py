@@ -39,6 +39,26 @@ with sync_playwright() as p:
     spoiled = [c for c in info['choices'] if c and c in text]
     check('no choice or answer text', not spoiled and info['answer'] not in text, str(spoiled))
     check('no option letters', not re.search(r'\b[A-D]\)', text))
+    canon = 'https://bit-fathom-daily-next.gigantic-stranger.workers.dev'
+    check('canonical share host', canon in text and '127.0.0.1' not in text and 'file://' not in text, text.split('\n')[-1])
+    rise = page.locator('#rise').inner_text()
+    check('streak label', 'day streak' in rise, rise)
+    page.locator('#prev').click()
+    lab = page.locator('#label').inner_text()
+    num = page.evaluate('() => window.BFShare.pad(window.__BF.getState().cur + 1)')
+    check('archive number matches puzzle number', f'#{num}' in lab, lab.replace('\n', ' '))
+    plurals = page.evaluate('''() => ({
+      oneMin: window.BFCount.liveText(60000),
+      twoMin: window.BFCount.liveText(120000),
+      oneHour: window.BFCount.liveText(3600000),
+      both: window.BFCount.liveText(3660000),
+      zero: window.BFCount.liveText(0)
+    })''')
+    check('1 minute', plurals['oneMin'] == 'Next riddle in 1 minute', plurals['oneMin'])
+    check('2 minutes', plurals['twoMin'] == 'Next riddle in 2 minutes', plurals['twoMin'])
+    check('1 hour', plurals['oneHour'] == 'Next riddle in 1 hour', plurals['oneHour'])
+    check('1 hour and 1 minute', plurals['both'] == 'Next riddle in 1 hour and 1 minute', plurals['both'])
+    check('0 minutes', plurals['zero'] == 'Next riddle in 0 minutes', plurals['zero'])
     c1 = page.locator('#count').inner_text()
     page.wait_for_timeout(1100)
     c2 = page.locator('#count').inner_text()

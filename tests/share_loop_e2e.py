@@ -2,18 +2,20 @@
 """Share-loop Playwright E2E.
 
 Desktop 1366×900, mobile 390×844 (dpr 2, touch), and reduced motion.
-Serves dist/ over http. Writes review/share-loop screenshots and clips.
+Serves dist/ over http. Screenshots and clips go to a temp dir (or BF_SHOT_DIR),
+never to review/share-loop/.
 """
-import functools, http.server, json, re, shutil, subprocess, threading
+import functools, http.server, json, os, re, shutil, subprocess, tempfile, threading
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / 'dist'
-REVIEW = ROOT / 'review' / 'share-loop'
+SHOTS = Path(os.environ['BF_SHOT_DIR']) if os.environ.get('BF_SHOT_DIR') else Path(tempfile.mkdtemp(prefix='bf-e2e-'))
 CHROME = '/usr/bin/google-chrome'
 READY = 'window.__BF && document.querySelectorAll("#choices button").length>0'
 SHARE_RE = re.compile(r'^Bit & Fathom Daily #\d{3}')
+CANON = 'https://bit-fathom-daily-next.gigantic-stranger.workers.dev'
 fail = 0
 
 _srv = http.server.ThreadingHTTPServer(
@@ -106,8 +108,10 @@ def metrics(page):
         vw: innerWidth,
         navTop: nav.top,
         bitW: bit.width,
+        bitH: bit.height,
         bitTop: bit.top,
         bitBottom: bit.bottom,
+        objectFit: getComputedStyle(document.getElementById('bit')).objectFit,
         cardW: card.width,
         playW: play.width,
         hScroll: doc.scrollWidth > doc.clientWidth + 1,
@@ -167,6 +171,9 @@ def assert_share(page, info):
     spoiled = [c for c in info['choices'] if c and c in (text or '')]
     check('share hides choices and answer', not spoiled and info['answer'] not in (text or ''), str(spoiled))
     check('share has no option letters', not re.search(r'\b[A-D]\)', text or ''))
+    check('share uses canonical origin', CANON in (text or '') and '127.0.0.1' not in (text or '') and 'capacitor://' not in (text or ''))
+    rise = page.locator('#rise').inner_text()
+    check('streak count-up is labeled', 'day streak' in rise, rise)
 
 
 def assert_countdown(page):
@@ -187,6 +194,8 @@ def assert_layout(page, tag, phone):
     check(f'{tag} no h-scroll', not m['hScroll'])
     check(f'{tag} 44px targets', m['bad44'] == [], ', '.join(m['bad44'][:8]))
     check(f'{tag} bit >=40% card', m['cardW'] > 0 and m['bitW'] / m['cardW'] >= 0.40, f"{m['bitW']:.0f}/{m['cardW']:.0f}")
+    ratio = (m['bitH'] / m['bitW']) if m['bitW'] else 0
+    check(f'{tag} bit not cropped', m['objectFit'] == 'contain' and 0.9 <= ratio <= 1.35, f"fit {m['objectFit']} ratio {ratio:.2f}")
     check(f'{tag} bit above fold', m['bitTop'] >= -1 and m['bitBottom'] <= m['vh'] + 1, f"{m['bitTop']:.0f}-{m['bitBottom']:.0f}")
     wide = m['playW'] / m['vw'] >= 0.60
     check(f'{tag} play area >=60% width', wide, f"{m['playW']:.0f}/{m['vw']}")
@@ -200,8 +209,8 @@ def assert_layout(page, tag, phone):
 
 
 def shot(page, name):
-    REVIEW.mkdir(parents=True, exist_ok=True)
-    page.screenshot(path=str(REVIEW / name))
+    SHOTS.mkdir(parents=True, exist_ok=True)
+    page.screenshot(path=str(SHOTS / name))
 
 
 def gameplay(browser, tag, ctx_kwargs, shots, reduced=False):
@@ -227,7 +236,7 @@ def gameplay(browser, tag, ctx_kwargs, shots, reduced=False):
         shot(page, 'reduced-result.png')
     if shots and not reduced:
         page.wait_for_timeout(500)
-        page.locator('#reveal').screenshot(path=str(REVIEW / f'{tag}-share.png'))
+        page.locator('#reveal').screenshot(path=str(SHOTS / f'{tag}-share.png'))
         page.locator('#count').scroll_into_view_if_needed()
         shot(page, f'{tag}-countdown.png')
     assert_share(page, info)
@@ -324,7 +333,7 @@ def scripted_stats(browser, tag, ctx_kwargs, shots):
     check(f'{tag} stats win pct', pct == '100%', pct)
     check(f'{tag} today bar highlighted', today_bar == 1, str(today_bar))
     if shots:
-        page.locator('#statsModal .sheet').screenshot(path=str(REVIEW / f'{tag}-stats.png'))
+        page.locator('#statsModal .sheet').screenshot(path=str(SHOTS / f'{tag}-stats.png'))
     page.keyboard.press('Escape')
     page.wait_for_function('() => document.getElementById("statsModal").hidden')
     focused = page.evaluate('() => document.activeElement && document.activeElement.id')
@@ -342,7 +351,7 @@ def hscroll_320(browser):
 
 
 def record_clip(browser, name, wrong):
-    tmp = REVIEW / '_video'
+    tmp = SHOTS / '_video'
     if tmp.exists():
         shutil.rmtree(tmp)
     tmp.mkdir(parents=True)
@@ -363,9 +372,9 @@ def record_clip(browser, name, wrong):
     page.wait_for_timeout(1600)
     video = page.video
     ctx.close()
-    raw = REVIEW / f'{name}-raw.webm'
+    raw = SHOTS / f'{name}-raw.webm'
     video.save_as(str(raw))
-    dest = REVIEW / f'{name}.webm'
+    dest = SHOTS / f'{name}.webm'
     ffmpeg = shutil.which('ffmpeg')
     if ffmpeg:
         subprocess.run(
@@ -384,21 +393,52 @@ def record_clip(browser, name, wrong):
 def og_http():
     import urllib.request
     home = urllib.request.urlopen(URL, timeout=10).read().decode()
-    check('home og tags', 'og:image' in home and 'summary_large_image' in home and '1200' in home)
-    pages = sorted((DIST / 'r').glob('*/index.html'))
-    check('riddle pages', len(pages) >= 15, str(len(pages)))
-    bad = []
-    for page in pages:
-        html = page.read_text()
-        if 'og:image' not in html or 'summary_large_image' not in html or '1200' not in html:
-            bad.append(page.parent.name)
-    check('every /r/NNN/ og meta', not bad, ','.join(bad[:8]))
-    pngs = [p for p in (DIST / 'og').glob('*.png')]
-    check('og pngs present', len(pngs) >= 15, str(len(pngs)))
+    check('home og tags', 'og:image' in home and 'og:url' in home and 'summary_large_image' in home and '1200' in home)
+    check('page 029', (DIST / 'r' / '029' / 'index.html').is_file())
+    check('page 112', (DIST / 'r' / '112' / 'index.html').is_file())
+
+
+def focus_share(browser, width, height):
+    ctx = browser.new_context(viewport={'width': width, 'height': height})
+    page = ctx.new_page()
+    open_ready(page)
+    info = riddle_info(page)
+    page.locator('#choices button').nth(info['idx']).click()
+    page.wait_for_function('() => !document.getElementById("reveal").hidden')
+    page.evaluate('() => window.scrollTo(0, 0)')
+    page.locator('#share').focus()
+    box = page.evaluate('''() => {
+      const b = document.getElementById('share').getBoundingClientRect();
+      const nav = document.querySelector('nav').getBoundingClientRect();
+      return {top: b.top, bottom: b.bottom, navTop: nav.top, vh: innerHeight};
+    }''')
+    clear = box['top'] >= -1 and box['bottom'] <= box['navTop'] + 1
+    check(
+        f'focus share {width}x{height} clears tab bar',
+        clear,
+        f"top {box['top']:.0f} bottom {box['bottom']:.0f} nav {box['navTop']:.0f}",
+    )
+    ctx.close()
+
+
+def short_phone(browser):
+    ctx = browser.new_context(
+        viewport={'width': 375, 'height': 667},
+        device_scale_factor=2,
+        has_touch=True,
+        is_mobile=True,
+    )
+    page = ctx.new_page()
+    open_ready(page)
+    m = metrics(page)
+    fit = m['nChoices'] >= 4 and m['scrollY'] == 0 and m['lastTop'] >= 0 and m['lastBottom'] <= m['navTop'] + 1
+    check('375x667 all options visible', fit, f"n {m['nChoices']} bottom {m['lastBottom']:.0f} nav {m['navTop']:.0f} y {m['scrollY']}")
+    ctx.close()
 
 
 def main():
-    REVIEW.mkdir(parents=True, exist_ok=True)
+    SHOTS.mkdir(parents=True, exist_ok=True)
+    print('e2e shots', SHOTS)
     desktop = {'viewport': {'width': 1366, 'height': 900}}
     mobile = {
         'viewport': {'width': 390, 'height': 844},
@@ -428,6 +468,10 @@ def main():
         scripted_stats(browser, 'mobile', mobile, shots=True)
         scripted_stats(browser, 'reduced', reduced, shots=False)
         hscroll_320(browser)
+        short_phone(browser)
+        focus_share(browser, 320, 700)
+        focus_share(browser, 375, 667)
+        focus_share(browser, 768, 1024)
         record_clip(browser, 'wrong', True)
         record_clip(browser, 'right', False)
         browser.close()

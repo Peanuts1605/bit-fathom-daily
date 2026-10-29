@@ -5,7 +5,7 @@ The playable game is the repo-root build (`src.html` → `index.html` and `dist/
 ## What moved
 
 - Layout ideas from the app: bottom tabs (Today / Journal / Grown-ups), grown-up math gate, sound toggle, manifest, icon, service worker.
-- Rules from the web: local date, epoch 12 Oct 2026 = puzzle #001, Encore after 14 days, archive arrows, `sync()` multi-tab merge, clock-skew (`lday` / future dates count as today), `window.__BF` test hooks.
+- Rules from the web: local date, epoch 12 Oct 2026 = puzzle #001, Encore after 14 days, archive arrows, `sync()` multi-tab merge, clock-skew (`lday` / future dates count as today). `window.__BF` is compiled in only when the build is run with `BF_TEST_HOOK=1` (check.sh sets that). A normal `python build.py` leaves the hook out, including on localhost and in Capacitor.
 - Capacitor config now lives at the repo root with `webDir` set to `dist`. No native build was run.
 
 ## Storage
@@ -25,7 +25,17 @@ Up to `choices.length - 1` guesses. A wrong pick strikes that option out. The ex
 
 ## Share numbers
 
-`#NNN` and `/r/NNN/` are the 1-based local day from the epoch (12 Oct 2026 = #001). #018 is 29 Oct 2026. The riddle content loops every 14 days; the puzzle number does not. Static pages and og images are generated for puzzles **001–028** plus `og/today.png` (the generic card for `/`). Past that window the free-plan inline worker budget is the limit — see the dist size in the PR. If `dist/` is over 2.5 MB, host the files with Workers Static Assets instead of inlining them.
+`#NNN` and `/r/NNN/` are the 1-based local day from the epoch (12 Oct 2026 = #001). #018 is 29 Oct 2026. The riddle content loops every 14 days; the puzzle number does not. The archive label, the share text, and the URL all use that puzzle number. An encore adds a separate “Encore of #id” chip for the looping riddle.
+
+Static `/r/NNN/` pages and og cards are generated for every day from **#001 through 31 Jan 2027** (#112), plus `og/today.png`. A request for any other `/r/NNN/` is rewritten to `r/fallback/` (`dist/_redirects`), which redirects the browser to `/?d=NNN` and shows the generic card.
+
+Share text and `og:url` use the build-time origin `BF_ORIGIN` (default `https://bit-fathom-daily-next.gigantic-stranger.workers.dev`), including on localhost and in Capacitor.
+
+## Bundle vs Workers Static Assets
+
+`dist/` is the inline-worker bundle (HTML, shell, woff2 subsets, backgrounds, `/r/` pages). The build exits non-zero if `dist/` is over 2.5 MB. Og cards are written to `static-assets/og/` and are not part of that measurement. Publish `static-assets/` as Workers Static Assets so `https://<host>/og/NNN.png` resolves, and keep `dist/` as the worker HTML bundle. `_headers` and `_redirects` live in `dist/`. Fonts ship as WOFF2 subsets; the kit TTF files stay in `assets/fonts/` and are not copied into `dist/`.
+
+`./check.sh` builds twice. The first build sets `BF_TEST_HOOK=1` so the tests can call `window.__BF`. The second build leaves `index.html` without that hook. `BF_SKIP_OG=1` on the second build reuses cards already written in that same check; it prints the skip and does not run unless the variable is set. A normal `python build.py` always renders the cards and always requires pngquant.
 
 ## App-only riddles — candidates for #015+
 

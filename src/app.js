@@ -5,6 +5,7 @@
  */
 (function(){
 var K1='bf-riddle-v1', K2='bf-riddle-v2', KAPP='bfdr.v1', OK=true, S;
+var ORIGIN='%%ORIGIN%%';
 var EPOCH=new Date(2026,9,12), R=[], today=0, cur=0, grownOK=false, lastFocus=null;
 var $=function(i){return document.getElementById(i)};
 var WHY=[
@@ -210,7 +211,7 @@ function setBit(name){
 function sceneFor(r){return SCENES[(parseInt(r.id,10)-1)%SCENES.length]}
 function currentPlay(){return S.plays[key(dateOf(cur))]||null}
 function shareText(){
-  return window.BFShare.shareGrid(S, cur, {rid:rid, key:key, dateOf:dateOf, today:today, origin:location.origin, maxTries:maxTries});
+  return window.BFShare.shareGrid(S, cur, {rid:rid, key:key, dateOf:dateOf, today:today, origin:ORIGIN, maxTries:maxTries});
 }
 function paintStats(){
   var agg=window.BFStats.aggregate(S, {kday:kday, today:today});
@@ -273,8 +274,8 @@ function render(){
   var r=rid(cur), d=dateOf(cur), p=currentPlay();
   var whenB=$('label');
   whenB.textContent='';
-  whenB.appendChild(document.createTextNode(cur===today?"Today's riddle":'Riddle #'+r.id));
-  if(isEncore(cur)){whenB.appendChild(document.createTextNode(' ')); var en=document.createElement('span'); en.className='encore'; en.textContent='Encore'; whenB.appendChild(en)}
+  whenB.appendChild(document.createTextNode(cur===today?"Today's riddle":('Riddle #'+window.BFShare.pad(cur+1))));
+  if(isEncore(cur)){whenB.appendChild(document.createTextNode(' ')); var en=document.createElement('span'); en.className='encore'; en.textContent='Encore of #'+r.id; whenB.appendChild(en)}
   $('date').textContent=fmt(d);
   $('prev').disabled=cur<=0||today-cur>=R.length-1;
   $('next').disabled=cur>=today;
@@ -357,7 +358,12 @@ function render(){
   var who=$('whoBit');
   if(who) who.setAttribute('src', ok?POSE.happy:POSE.curious);
   renderGrid(r,p);
-  if($('rise')&&ok&&cur===today) $('rise').textContent=String(S.streak);
+  if($('rise')){
+    if(ok&&cur===today){
+      $('rise').hidden=false;
+      if($('riseNum')) $('riseNum').textContent=String(S.streak);
+    } else $('rise').hidden=true;
+  }
 }
 function guess(i){
   if(cur>today) return;
@@ -393,7 +399,7 @@ function guess(i){
     juice.sfx('correct');
     if(milestone) juice.sfx('streak'); else juice.sfx('finish');
     if(S.haptics) juice.haptic('ok');
-    if(cur===today && $('rise')) juice.countUp($('rise'), S.streak);
+    if(cur===today && $('riseNum')) juice.countUp($('riseNum'), S.streak);
   } else {
     juice.shake(btn);
     juice.sfx('wrong');
@@ -556,7 +562,7 @@ function start(data){
     window.addEventListener('load', function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
   }
 }
-if(location.protocol==='file:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){
+if(%%TESTHOOK%%){
   window.__BF={
     getState:function(){return {streak:S.streak,best:S.best,last:S.last,ans:Object.assign({},S.ans),today:today,cur:cur,storage:OK}},
     dayNum:dayNum, key:key, dateOf:dateOf, rid:function(n){return rid(n)}, isEncore:isEncore,

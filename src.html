@@ -9,6 +9,8 @@
 <meta name="apple-mobile-web-app-title" content="Daily Riddle">
 <meta name="description" content="Bit &amp; Fathom's daily science riddle. Guess first, then learn why. No accounts, no tracking.">
 <meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="%%CSP%%">
+<meta property="og:url" content="%%ORIGIN%%/">
 <meta property="og:title" content="Bit &amp; Fathom Daily Riddle">
 <meta property="og:description" content="Today's science riddle is waiting. Guess first, then learn why. No spoilers here.">
 <meta property="og:image" content="%%ORIGIN%%/og/today.png">
@@ -27,20 +29,20 @@
 <link rel="manifest" href="manifest.json">
 <style>
 %%JUICECSS%%
-@font-face{font-family:"Bricolage Grotesque";src:url("assets/fonts/BricolageGrotesque-opsz-wdth-wght.ttf") format("truetype");font-weight:200 800;font-display:swap}
-@font-face{font-family:"Atkinson Hyperlegible Next";src:url("assets/fonts/AtkinsonHyperlegibleNext-wght.ttf") format("truetype");font-weight:200 800;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url("assets/fonts/BricolageGrotesque-subset.woff2") format("woff2");font-weight:200 800;font-display:swap}
+@font-face{font-family:"Atkinson Hyperlegible Next";src:url("assets/fonts/AtkinsonHyperlegibleNext-subset.woff2") format("woff2");font-weight:200 800;font-display:swap}
 :root{--navy:#071526;--navy2:#13284d;--teal:#2cc6c3;--gold:#f2c14e;--ink:#14213d;--cream:#f4fcfc;--coral:#f2795e;--line:#0d3440}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{margin:0;min-height:100%;background:#071526}
-html{overflow-x:hidden}
+html{overflow-x:hidden;scroll-padding-bottom:calc(76px + env(safe-area-inset-bottom))}
 body{font-family:"Atkinson Hyperlegible Next",sans-serif;color:var(--cream);line-height:1.45;font-size:20px;overflow-x:hidden}
 img{max-width:100%;height:auto}
 .backdrop{position:fixed;inset:0;z-index:0;background:radial-gradient(120% 80% at 50% 0%,#1d4a6e,var(--navy) 62%)}
 .backdrop img{width:100%;height:100%;object-fit:cover;display:block}
 .app{position:relative;z-index:1;width:min(1180px,calc(100% - 20px));margin:0 auto;padding:calc(env(safe-area-inset-top) + 4px) 0 calc(env(safe-area-inset-bottom) + 76px)}
 header{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px;flex-wrap:wrap}
-.brand{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:800}
+.brand{font-size:14px;letter-spacing:.02em;text-transform:none;color:var(--gold);font-weight:800}
 .brand b{display:block;color:var(--cream);font-size:22px;letter-spacing:0;text-transform:none;font-family:"Bricolage Grotesque",sans-serif}
 .tools{display:flex;align-items:center;gap:8px}
 .pill{display:inline-flex;align-items:center;gap:6px;background:rgba(7,21,38,.72);border:2px solid var(--gold);border-radius:999px;padding:6px 12px;font-weight:800;min-height:44px}
@@ -55,20 +57,20 @@ button:disabled{cursor:default;opacity:.72}
 .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0 0 6px}
 .strip div{background:rgba(19,40,77,.88);border:2px solid #2b4677;border-radius:14px;text-align:center;padding:3px 2px;box-shadow:0 8px 18px rgba(0,0,0,.25)}
 .strip b{display:block;color:var(--gold);font-size:22px}
-.strip span{font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.strip span{font-size:14px;letter-spacing:0;text-transform:none}
 .topbar{display:flex;align-items:center;gap:8px;margin-bottom:4px}
 .when{flex:1;text-align:center}
-.when b{display:block;color:var(--gold);font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.when b{display:block;color:var(--gold);font-size:16px;letter-spacing:0;text-transform:none}
 .when span{font-size:16px}
-.encore{display:inline-block;margin-left:6px;background:var(--gold);color:var(--navy);font-size:12px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.08em}
+.encore{display:inline-block;margin-left:6px;background:var(--gold);color:var(--navy);font-size:14px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:0}
 .play{width:100%}
 .cardface{background:rgba(244,252,252,.96);color:var(--ink);border-radius:28px;padding:8px 10px;box-shadow:0 18px 50px rgba(0,0,0,.35);display:grid;grid-template-columns:44% 1fr;gap:4px 8px;align-items:start}
-.hero{grid-column:1;grid-row:1;max-height:128px;overflow:hidden}
-.bit{width:100%;height:128px;object-fit:cover;object-position:center top;display:block;filter:drop-shadow(0 10px 16px rgba(7,21,38,.35))}
+.hero{grid-column:1;grid-row:1;overflow:visible}
+.bit{width:100%;height:auto;object-fit:contain;object-position:center;display:block;filter:drop-shadow(0 10px 16px rgba(7,21,38,.35))}
 .headcopy{grid-column:2;grid-row:1;min-width:0}
 .chip{display:inline-flex;align-items:center;min-height:28px;padding:2px 10px;border-radius:999px;background:var(--navy);color:var(--teal);font-size:14px;font-weight:800;letter-spacing:.04em}
 h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:760;font-size:clamp(26px,5vw,44px);line-height:1.05;margin:.2em 0 .15em;letter-spacing:-.02em}
-#question{font-size:21px;line-height:1.22;margin:.12em 0 .28em;grid-column:1 / -1}
+#question{font-size:21px;line-height:1.22;margin:.12em 0 .28em;grid-column:1 / -1;max-width:70ch}
 .choices{grid-column:1 / -1;display:grid;gap:6px}
 .choices button{width:100%;min-height:48px;text-align:left;font-size:21px;font-weight:700;padding:6px 12px;border-radius:16px;border:2px solid var(--line);background:#fff;color:var(--ink);box-shadow:0 6px 0 #c5ddd8, 0 12px 20px rgba(7,21,38,.12)}
 .choices button.wrong{background:#fde8e2;border-color:#9a3b1e;text-decoration:line-through;box-shadow:none}
@@ -78,15 +80,15 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:760;font-size:clamp(
 #reveal[hidden]{display:none}
 #verdict{font-family:"Bricolage Grotesque",sans-serif;font-size:28px;margin:.2em 0}
 .bitline{font-weight:800;margin:.2em 0 .4em}
-.rise{font-family:"Bricolage Grotesque",sans-serif;font-size:42px;margin:0;color:#146b64}
-.rise:empty{display:none}
+.rise{font-family:"Bricolage Grotesque",sans-serif;font-size:28px;margin:0;color:#146b64;max-width:70ch}
+#riseNum{font-size:40px}
 #kept{color:#8a5427;font-weight:800;margin:.2em 0}
 #kept:empty{display:none}
 .explain{display:flex;gap:10px;align-items:flex-start;background:#e7f7f6;border-radius:16px;padding:10px}
 .explain img{width:72px;height:auto;flex:none}
-.bubble{font-size:18px}
-.tryit{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:12px;margin-top:10px}
-.tryit h2{font-size:16px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 .3em;color:#0e7c78}
+.bubble{font-size:18px;max-width:70ch}
+.tryit{background:#fff;border:2px solid var(--teal);border-radius:16px;padding:12px;margin-top:10px;max-width:70ch}
+.tryit h2{font-size:16px;letter-spacing:0;text-transform:none;margin:0 0 .3em;color:#0e7c78}
 .tryit p{margin:0;font-size:18px}
 .src{font-size:17px;margin:10px 0 0}
 .src a{color:#0e7c78;min-height:44px;display:inline-flex;align-items:center}
@@ -98,17 +100,18 @@ h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:760;font-size:clamp(
 #count{font-variant-numeric:tabular-nums;font-size:28px;font-family:"Bricolage Grotesque",sans-serif}
 .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .row button{min-height:52px;padding:12px 16px;border-radius:16px;border:0;font-weight:800;font-size:20px;background:var(--navy);color:var(--teal);flex:1}
+#share{scroll-margin-bottom:calc(76px + env(safe-area-inset-bottom))}
 #shareMsg{min-height:1.3em;font-weight:800;color:#0e7c78;margin:.3em 0}
 .dots{display:flex;gap:6px;justify-content:center;margin:12px 0 0}
 .dots i{width:9px;height:9px;border-radius:50%;background:#2a4572}
 .dots i.on{background:var(--gold)}
 .dots i.done{background:var(--teal)}
-.hint{text-align:center;font-size:16px;margin:8px 0}
-.howto{background:rgba(19,40,77,.88);border-radius:16px;padding:8px 14px;margin-top:8px}
+.hint{text-align:center;font-size:16px;margin:8px auto;max-width:70ch}
+.howto{background:rgba(19,40,77,.88);border-radius:16px;padding:8px 14px;margin:8px auto 0;max-width:70ch}
 .howto summary{min-height:48px;display:flex;align-items:center;cursor:pointer;font-weight:800;color:var(--gold)}
 .links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
 .links a{color:var(--navy);background:var(--gold);min-height:48px;display:inline-flex;align-items:center;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:800}
-small{display:block;text-align:center;margin-top:12px;font-size:16px;opacity:1}
+small{display:block;text-align:center;margin:12px auto 0;font-size:16px;opacity:1;max-width:70ch}
 .panel{margin-top:8px}
 .panel h2{font-family:"Bricolage Grotesque",sans-serif;margin:.2em 0 .6em}
 .hist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
@@ -116,7 +119,7 @@ small{display:block;text-align:center;margin-top:12px;font-size:16px;opacity:1}
 .hist .empty{background:transparent;color:var(--cream)}
 .toggle{display:flex;justify-content:space-between;align-items:center;gap:8px;background:rgba(19,40,77,.88);border-radius:14px;padding:10px 12px;margin:8px 0;min-height:52px}
 .ghost{background:#e4e8f0;color:var(--ink);border:0;border-radius:14px;min-height:48px;padding:12px 14px;font-weight:800;font-size:18px;width:100%}
-.grown p{font-size:18px}
+.grown p{font-size:18px;max-width:70ch}
 nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(7,21,38,.92);border-top:1px solid #2b4677;backdrop-filter:blur(10px);padding:6px 10px calc(env(safe-area-inset-bottom) + 6px)}
 .tabs{display:flex;gap:6px;width:min(1180px,100%);margin:0 auto}
 .tabs button{flex:1;min-height:48px;border:0;border-radius:14px;background:transparent;color:#c6d6ef;font-weight:800;font-size:16px}
@@ -129,7 +132,7 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(7,21,38,.92
 #statsX{position:absolute;top:10px;right:10px}
 .stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;margin:8px 0 14px}
 .stats4 b{display:block;font-size:26px;color:#0e7c78}
-.stats4 span{font-size:13px}
+.stats4 span{font-size:14px}
 .bar{display:grid;grid-template-columns:72px 1fr 28px;gap:8px;align-items:center;margin:6px 0;font-size:16px}
 .track{display:block;height:16px;background:#e3eef0;border-radius:999px;overflow:hidden}
 .fill{display:block;height:100%;background:#2cc6c3;min-width:0;border-radius:999px}
@@ -140,18 +143,33 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(7,21,38,.92
 .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(min-width:1000px){
   .app{padding-top:calc(env(safe-area-inset-top) + 12px)}
-  .cardface{grid-template-columns:minmax(46%,560px) 1fr;gap:12px 24px;padding:22px}
-  .hero{max-height:280px}
-  .bit{height:280px}
+  .cardface{grid-template-columns:minmax(280px,42%) 1fr;gap:12px 24px;padding:22px}
+  .hero{grid-row:1 / span 5;align-self:center;max-height:none;overflow:visible}
+  .bit{width:100%;height:auto;max-height:none;object-fit:contain;object-position:center top}
+  .headcopy,#question,.choices,#whynot,#reveal{grid-column:2}
+  h1,#question,.bubble,.tryit,.hint,small,.grown p,.howto,.rise{max-width:70ch}
   .play{width:100%}
   #question{line-height:1.35}
 }
 @media(max-width:420px){
   .strip b{font-size:18px}
   h1{font-size:24px}
-  .brand{letter-spacing:.08em;font-size:11px}
+  .brand{letter-spacing:0;font-size:14px}
   .brand b{font-size:16px}
   .pill{padding:2px 8px}
+}
+@media(max-height:700px){
+  .strip{display:none}
+  .hero{max-height:64px}
+  .bit{width:auto;max-width:100%;height:64px}
+  header{margin-bottom:0}
+  .app{padding-top:0}
+  .topbar{margin-bottom:0}
+  .cardface{padding:2px 8px 0}
+  h1{font-size:22px;margin:0}
+  #question{line-height:1.1;margin:0}
+  .choices{gap:4px}
+  .choices button{min-height:44px;padding:2px 10px;box-shadow:none}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -196,7 +214,7 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(7,21,38,.92
       <section id="reveal" hidden>
         <p id="verdict"></p>
         <p id="bitLine" class="bitline"></p>
-        <p id="rise" class="rise" aria-hidden="true"></p>
+        <p id="rise" class="rise" hidden><span id="riseNum"></span>-day streak</p>
         <p id="kept"></p>
         <div class="explain"><img id="whoBit" alt="" width="72" height="80" src="assets/characters/bit-happy.svg"><div class="bubble" id="explainer"></div></div>
         <div class="tryit" id="tryBox"><h2>Try it</h2><p id="tryit"></p></div>

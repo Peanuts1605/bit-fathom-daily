@@ -12,6 +12,14 @@
     var s=Math.floor(ms/1000);
     return pad(Math.floor(s/3600))+':'+pad(Math.floor((s%3600)/60))+':'+pad(s%60);
   }
+  function piece(n, one, many){return n+' '+(n===1?one:many)}
+  function liveText(ms){
+    if(ms<0) ms=0;
+    var h=Math.floor(ms/3600000), m=Math.floor((ms%3600000)/60000);
+    if(h===0) return 'Next riddle in '+piece(m,'minute','minutes');
+    if(m===0) return 'Next riddle in '+piece(h,'hour','hours');
+    return 'Next riddle in '+piece(h,'hour','hours')+' and '+piece(m,'minute','minutes');
+  }
   function startTicker(opts){
     var timer=null, lastMin=-1;
     function tick(){
@@ -20,8 +28,7 @@
       var minute=Math.floor(ms/60000);
       if(opts.liveEl && minute!==lastMin){
         lastMin=minute;
-        var h=Math.floor(ms/3600000), m=Math.floor((ms%3600000)/60000);
-        opts.liveEl.textContent='Next riddle in '+h+' hours and '+m+' minutes';
+        opts.liveEl.textContent=liveText(ms);
       }
     }
     function stop(){if(timer){clearInterval(timer); timer=null}}
@@ -35,5 +42,5 @@
     arm();
     return {stop:stop, tick:tick, arm:arm};
   }
-  global.BFCount={msUntilNextLocalMidnight:msUntilNextLocalMidnight, formatHMS:formatHMS, startTicker:startTicker};
+  global.BFCount={msUntilNextLocalMidnight:msUntilNextLocalMidnight, formatHMS:formatHMS, liveText:liveText, startTicker:startTicker};
 })(window);
