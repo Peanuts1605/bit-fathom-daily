@@ -1,0 +1,44 @@
+{
+  "space": {
+    "hook": "#F4FCFC",
+    "handle": "#F4FCFC",
+    "kicker_bg": "#2CC6C3",
+    "kicker_fg": "#071526",
+    "dark": true
+  },
+  "ocean": {
+    "hook": "#071526",
+    "handle": "#071526",
+    "kicker_bg": "#071526",
+    "kicker_fg": "#F4FCFC",
+    "dark": false
+  },
+  "lab": {
+    "hook": "#071526",
+    "handle": "#071526",
+    "kicker_bg": "#071526",
+    "kicker_fg": "#F4FCFC",
+    "dark": false
+  },
+  "aurora": {
+    "hook": "#F4FCFC",
+    "handle": "#F4FCFC",
+    "kicker_bg": "#5BE3A8",
+    "kicker_fg": "#071526",
+    "dark": true
+  },
+  "stars": {
+    "hook": "#F4FCFC",
+    "handle": "#F4FCFC",
+    "kicker_bg": "#2CC6C3",
+    "kicker_fg": "#071526",
+    "dark": true
+  },
+  "storm": {
+    "hook": "#F4FCFC",
+    "handle": "#F4FCFC",
+    "kicker_bg": "#C9F3F5",
+    "kicker_fg": "#071526",
+    "dark": true
+  }
+}
