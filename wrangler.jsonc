@@ -7,6 +7,6 @@
   "assets": {
     "directory": "./publish",
     "binding": "ASSETS",
-    "run_worker_first": ["/r/*"]
+    "run_worker_first": ["/r/*", "/404", "/404.html"]
   }
 }

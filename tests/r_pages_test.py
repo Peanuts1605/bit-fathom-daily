@@ -5,7 +5,7 @@ Real pages 001 and 112 are assets. Later puzzle numbers redirect to /?d=NNN.
 Malformed /r/ paths return the generic card. Every other miss is a real 404.
 CSP and nosniff stay on the riddle responses.
 """
-import http.client, os, shutil, socket, subprocess, time
+import base64, hashlib, http.client, os, re, shutil, socket, subprocess, time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -159,6 +159,24 @@ def main():
 
         status, headers, raw = fetch(port, '/nope')
         check('missing path is a 404', status == 404 and 'A new science riddle is waiting' not in text(raw), f'{status} {headers.get("content-type")}')
+        page_html = (ROOT / 'publish' / '404.html').read_text()
+        style = re.search(r'<style>(.*?)</style>', page_html, re.S)
+        style_hash = 'sha256-' + base64.b64encode(hashlib.sha256(style.group(1).encode('utf-8')).digest()).decode('ascii')
+        csp = headers.get('content-security-policy', '')
+        check(
+            '404 page csp',
+            "default-src 'none'" in csp
+            and f"style-src '{style_hash}'" in csp
+            and "font-src 'self'" in csp
+            and "base-uri 'none'" in csp
+            and "form-action 'none'" in csp
+            and "frame-ancestors 'none'" in csp
+            and 'unsafe-inline' not in csp,
+            csp[:200],
+        )
+
+        status, headers, raw = fetch(port, '/404')
+        check('/404 is status 404', status == 404 and 'Page not found' in text(raw), f'{status} {headers.get("location", "")}')
 
         status, headers, raw = fetch(port, '/og/999.png')
         ctype = headers.get('content-type', '')

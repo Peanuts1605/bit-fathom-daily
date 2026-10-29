@@ -4,6 +4,7 @@
    A _redirects splat cannot do this: it runs before assets and either loops
    or hides /r/001/–/r/112/. */
 const R_CSP = "default-src 'self'; script-src 'self'; style-src 'none'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'";
+const NOT_FOUND_CSP = "default-src 'none'; style-src 'sha256-RaloRxbE3NDnQYHC6+wdtT2RjH5J0h8h8xjtys70374='; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
 const R_PATH = /^\/r\/(\d{1,5})\/?$/;
 
 function securityHeaders(extra) {
@@ -29,19 +30,30 @@ function hasFileExtension(pathname) {
   return /\.[a-z0-9]+$/i.test(pathname);
 }
 
+function notFoundHeaders() {
+  const headers = new Headers();
+  headers.set('content-type', 'text/html; charset=utf-8');
+  headers.set('X-Content-Type-Options', 'nosniff');
+  headers.set('Referrer-Policy', 'no-referrer');
+  headers.set('Content-Security-Policy', NOT_FOUND_CSP);
+  return headers;
+}
+
+async function brandedNotFound(env, origin) {
+  const page = await env.ASSETS.fetch(new Request(new URL('/404.html', origin), { method: 'GET' }));
+  if (page.status === 404) {
+    return new Response('<!doctype html><title>Page not found</title><p>That page is not here.</p>', { status: 404, headers: notFoundHeaders() });
+  }
+  return new Response(page.body, { status: 404, headers: notFoundHeaders() });
+}
+
 async function notFound(env, url, asset) {
   const ctype = (asset.headers.get('content-type') || '').toLowerCase();
   if (hasFileExtension(url.pathname)) {
     if (ctype.includes('text/html')) return new Response(null, { status: 404, headers: securityHeaders() });
     return asset;
   }
-  const page = await env.ASSETS.fetch(new Request(new URL('/404.html', url.origin), { method: 'GET' }));
-  if (page.status === 404) return asset;
-  const headers = new Headers();
-  headers.set('content-type', 'text/html; charset=utf-8');
-  headers.set('X-Content-Type-Options', 'nosniff');
-  headers.set('Referrer-Policy', 'no-referrer');
-  return new Response(page.body, { status: 404, headers });
+  return brandedNotFound(env, url.origin);
 }
 
 async function genericCard(env, origin) {
@@ -56,6 +68,8 @@ async function genericCard(env, origin) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    const bare = url.pathname.replace(/\/+$/, '') || '/';
+    if (bare === '/404' || bare === '/404.html') return brandedNotFound(env, url.origin);
     const asset = await env.ASSETS.fetch(request);
     if (asset.status !== 404) return seal(asset);
 

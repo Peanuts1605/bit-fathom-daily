@@ -51,6 +51,33 @@ def page_policy(script_hash, style_hash):
     )
 
 
+def emit_not_found_csp():
+    """Write the 404 page's style hash into the worker. The page text is the source."""
+    style = re.search(r'<style>(.*?)</style>', NOT_FOUND_HTML, re.S)
+    if not style:
+        raise SystemExit('FAIL build: 404 page is missing its style')
+    policy = (
+        "default-src 'none'; "
+        f"style-src '{csp_hash(style.group(1))}'; "
+        "font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+    )
+    if 'unsafe-inline' in policy:
+        raise SystemExit('FAIL build: 404 CSP is unsafe')
+    path = ROOT / 'worker' / 'share-routes.js'
+    text = path.read_text()
+    updated, count = re.subn(
+        r'const NOT_FOUND_CSP = "(?:[^"\\]|\\.)*"',
+        'const NOT_FOUND_CSP = "' + policy + '"',
+        text,
+        count=1,
+    )
+    if count != 1:
+        raise SystemExit('FAIL build: NOT_FOUND_CSP missing from worker/share-routes.js')
+    if updated != text:
+        path.write_text(updated)
+    return policy
+
+
 def r_csp():
     """The /r/ header policy lives in the worker. _headers and meta tags copy it."""
     match = re.search(r'const R_CSP = "([^"]+)"', (ROOT / 'worker' / 'share-routes.js').read_text())
@@ -294,6 +321,7 @@ def merge_publish():
 
 
 def main():
+    emit_not_found_csp()
     require_pngquant()
     try:
         import PIL  # noqa: F401

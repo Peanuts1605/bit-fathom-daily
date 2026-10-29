@@ -449,15 +449,20 @@ def bit_head_after_answer(browser, width, height):
     info = riddle_info(page)
     page.locator('#choices button').nth(info['idx']).click()
     page.wait_for_function('() => !document.getElementById("reveal").hidden')
+    if width >= 1000:
+        page.evaluate('() => window.scrollTo(0, 500)')
+        page.wait_for_function('() => window.scrollY >= 500')
     box = page.evaluate('''() => {
       const bit = document.getElementById('bit').getBoundingClientRect();
-      return {top: bit.top, height: bit.height, head: bit.top + bit.height * 0.32, vh: innerHeight};
+      return {top: bit.top, height: bit.height, head: bit.top + bit.height * 0.32, vh: innerHeight, y: window.scrollY};
     }''')
     head_in_view = box['top'] >= -1 and box['top'] < box['vh'] * 0.45 and 0 <= box['head'] <= box['vh'] - 8
+    if width >= 1000:
+        head_in_view = head_in_view and box['y'] >= 500
     check(
         f'{width}x{height} bit head stays in view after answer',
         head_in_view,
-        f"top {box['top']:.0f} head {box['head']:.0f} vh {box['vh']}",
+        f"top {box['top']:.0f} head {box['head']:.0f} y {box['y']:.0f} vh {box['vh']}",
     )
     ctx.close()
 
@@ -532,6 +537,7 @@ def main():
         band_999(browser)
         desktop_1024(browser)
         bit_head_after_answer(browser, 1366, 900)
+        bit_head_after_answer(browser, 1366, 768)
         bit_head_after_answer(browser, 1024, 768)
         focus_share(browser, 320, 700)
         focus_share(browser, 375, 667)
