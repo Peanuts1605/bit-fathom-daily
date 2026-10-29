@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Daily Riddle">
 <meta name="description" content="Bit &amp; Fathom's daily science riddle. Guess first, then learn why. No accounts, no tracking.">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-P20yVDgmX4G/CJ5t9BEzNJC2FYRWOStrZXaPdjCog7c='; worker-src 'self'; style-src 'sha256-ZCWnaoHGIoy4/spsUACVhiX2vUF7CtpvogL9OLd3l0s='; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-P20yVDgmX4G/CJ5t9BEzNJC2FYRWOStrZXaPdjCog7c='; worker-src 'self'; style-src 'sha256-f2qKu0oRQltfeidkbr5zJd3noY+L+51rmvwbzed29Z4='; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'">
 <meta property="og:url" content="https://bit-fathom-daily-next.gigantic-stranger.workers.dev/">
 <meta property="og:title" content="Bit &amp; Fathom Daily Riddle">
 <meta property="og:description" content="Today's science riddle is waiting. Guess first, then learn why. No spoilers here.">
@@ -176,6 +176,9 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(7,21,38,.92
 @media(min-width:760px) and (max-width:999px){
   .hero{max-height:220px;align-self:start}
   .bit{height:200px;width:auto;max-width:100%;min-height:0;object-fit:contain;object-position:center}
+}
+@media(min-width:1000px){
+  .hero{align-self:start;position:sticky;top:12px}
 }
 @media(min-width:1000px) and (max-height:820px){
   .app{padding-top:4px}

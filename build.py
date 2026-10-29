@@ -55,7 +55,7 @@ def r_csp():
     """The /r/ header policy lives in the worker. _headers and meta tags copy it."""
     match = re.search(r'const R_CSP = "([^"]+)"', (ROOT / 'worker' / 'share-routes.js').read_text())
     if not match or 'unsafe-inline' in match.group(1):
-        raise SystemExit('FAIL build: worker R_CSP missing')
+        raise SystemExit('FAIL build: worker R_CSP missing or unsafe')
     return match.group(1)
 
 
@@ -184,6 +184,29 @@ FALLBACK_JS = """(function(){
 """
 
 
+NOT_FOUND_HTML = '''<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found · Bit &amp; Fathom</title>
+<style>
+@font-face{font-family:"Bricolage Grotesque";src:url("/assets/fonts/BricolageGrotesque-subset.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Atkinson Hyperlegible Next";src:url("/assets/fonts/AtkinsonHyperlegibleNext-subset.woff2") format("woff2");font-weight:400 800;font-display:swap}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#071526;color:#f4fcfc;font-family:"Atkinson Hyperlegible Next",sans-serif;text-align:center;padding:24px}
+h1{font-family:"Bricolage Grotesque",sans-serif;color:#f2c14e;font-size:40px;margin:0 0 8px}
+p{font-size:20px;max-width:36ch;line-height:1.5}
+a{display:inline-flex;min-height:48px;align-items:center;padding:10px 18px;border-radius:999px;background:#f2c14e;color:#071526;font-weight:800;text-decoration:none}
+</style>
+</head><body>
+<main>
+<h1>Page not found</h1>
+<p>That link is not on this ship. The daily riddle is still waiting.</p>
+<p><a href="/">Play today's riddle</a></p>
+</main>
+</body></html>
+'''
+
+
 def write_headers(policy):
     # frame-ancestors is ignored in a meta tag, so it lives only in these headers.
     policy = policy + "; frame-ancestors 'none'"
@@ -194,15 +217,12 @@ def write_headers(policy):
         '\n'
         '/\n'
         f'  Content-Security-Policy: {policy}\n'
-        f'  {nosniff}\n'
         '\n'
         '/index.html\n'
         f'  Content-Security-Policy: {policy}\n'
-        f'  {nosniff}\n'
         '\n'
         '/r/*\n'
         f'  Content-Security-Policy: {r_csp()}\n'
-        f'  {nosniff}\n'
     )
     (DIST / '_headers').write_text(text)
 
@@ -312,6 +332,7 @@ def main():
     (fb / 'index.html').write_text(fallback_page())
     (fb / 'go.js').write_text(FALLBACK_JS)
     write_headers(policy)
+    (DIST / '404.html').write_text(NOT_FOUND_HTML)
     os.environ['BF_OG_DAYS'] = str(count)
     os.environ['BF_OG_DIR'] = str(OG_DIR)
     have = len(list(OG_DIR.glob('*.png'))) if OG_DIR.exists() else 0

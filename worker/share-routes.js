@@ -1,6 +1,6 @@
 /* /r/* is listed in run_worker_first, but a static-assets worker also runs for
    any path that does not match a file. Only ^/r/ gets the riddle card.
-   Every other miss is the asset 404, unchanged.
+   A page-shaped miss outside /r/ is 404.html. A missing file stays a non-HTML 404.
    A _redirects splat cannot do this: it runs before assets and either loops
    or hides /r/001/–/r/112/. */
 const R_CSP = "default-src 'self'; script-src 'self'; style-src 'none'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'";
@@ -25,6 +25,25 @@ function seal(response, status) {
   return new Response(response.body, { status: status == null ? response.status : status, headers });
 }
 
+function hasFileExtension(pathname) {
+  return /\.[a-z0-9]+$/i.test(pathname);
+}
+
+async function notFound(env, url, asset) {
+  const ctype = (asset.headers.get('content-type') || '').toLowerCase();
+  if (hasFileExtension(url.pathname)) {
+    if (ctype.includes('text/html')) return new Response(null, { status: 404, headers: securityHeaders() });
+    return asset;
+  }
+  const page = await env.ASSETS.fetch(new Request(new URL('/404.html', url.origin), { method: 'GET' }));
+  if (page.status === 404) return asset;
+  const headers = new Headers();
+  headers.set('content-type', 'text/html; charset=utf-8');
+  headers.set('X-Content-Type-Options', 'nosniff');
+  headers.set('Referrer-Policy', 'no-referrer');
+  return new Response(page.body, { status: 404, headers });
+}
+
 async function genericCard(env, origin) {
   const fallback = await env.ASSETS.fetch(new Request(new URL('/r/fallback/index.html', origin), { method: 'GET' }));
   if (fallback.status === 404) {
@@ -40,7 +59,7 @@ export default {
     const asset = await env.ASSETS.fetch(request);
     if (asset.status !== 404) return seal(asset);
 
-    if (!url.pathname.startsWith('/r/')) return asset;
+    if (!url.pathname.startsWith('/r/')) return notFound(env, url, asset);
 
     const digits = url.pathname.match(R_PATH);
     if (!digits) return genericCard(env, url.origin);
